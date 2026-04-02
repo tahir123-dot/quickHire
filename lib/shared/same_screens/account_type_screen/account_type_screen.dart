@@ -3,6 +3,8 @@ import 'package:go_router/go_router.dart';
 import 'package:mobile/components/category/category.dart';
 import 'package:mobile/core/size_config/size_config.dart';
 import 'package:mobile/core/themes/app_text_theme.dart';
+import 'package:mobile/core/themes/colors.dart';
+import 'package:mobile/routes/professional_routes/professional_routes_constants.dart';
 import 'package:mobile/routes/user_routes/user_routes_constants.dart';
 import '../../../routes/shared_routes/shared_routes_constant.dart';
 
@@ -26,7 +28,7 @@ class AccountTypeScreen extends StatelessWidget {
                 width: SizeConfig.blockWidth * 90,
                 child: Text(
                   'How You Want to Use QuickHire',
-                  style: AppTextTheme.h1.copyWith(fontSize: 30, height: 1.4),
+                  style: AppTextTheme.h1,
                   textAlign: TextAlign.center,
                 ),
               ),
@@ -36,8 +38,8 @@ class AccountTypeScreen extends StatelessWidget {
                 description:
                     "Find Plumber, Electrician, Barber, Painter, AC Repair, etc.",
                 image: "assets/images/book.png",
-                borderColor: Colors.black,
-                backgroundColor: Colors.white,
+                borderColor: AppColors.blackColor,
+                backgroundColor: AppColors.whiteColor,
                 onTap: () {
                   context.go(UserRoutesConstants.userHome);
                 },
@@ -47,10 +49,24 @@ class AccountTypeScreen extends StatelessWidget {
                 title: "Provide Services",
                 description: "Earn money by offering your skills locally.",
                 image: "assets/images/provider.png",
-                borderColor: Colors.black,
-                backgroundColor: Colors.white,
+                borderColor: AppColors.blackColor,
+                backgroundColor: AppColors.whiteColor,
                 onTap: () {
                   context.go(SharedRoutesConstant.serviceCategoryScreen);
+                },
+              ),
+              SizedBox(height: 20),
+              Category(
+                title: "Join as a Professional",
+                description:
+                    "Work with a service provider as part of their team",
+                image: "assets/images/professional.png",
+                borderColor: AppColors.blackColor,
+                backgroundColor: AppColors.whiteColor,
+                onTap: () {
+                  context.go(
+                    ProfessionalRoutesConstants.professionalHomeScreen,
+                  );
                 },
               ),
             ],

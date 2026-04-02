@@ -5,7 +5,6 @@ import 'package:mobile/core/size_config/size_config.dart';
 import 'package:mobile/core/themes/app_input_theme.dart';
 import 'package:mobile/core/themes/app_text_theme.dart';
 import 'package:mobile/routes/user_routes/user_routes_constants.dart';
-
 import '../../../../core/themes/app_button_theme.dart';
 import '../../../../core/themes/colors.dart';
 import '../../../../routes/shared_routes/shared_routes_constant.dart';
@@ -38,7 +37,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 width: SizeConfig.blockWidth * 65,
                 child: Text(
                   'Login in to your account',
-                  style: AppTextTheme.h1.copyWith(fontSize: 30, height: 1.4),
+                  style: AppTextTheme.h1,
                 ),
               ),
               SizedBox(height: 25),
@@ -73,12 +72,12 @@ class _LoginScreenState extends State<LoginScreen> {
               AppButtonTheme.iconTextButton(
                 text: 'Continue',
                 icon: null,
-                iconColor: Colors.white,
+                iconColor: AppColors.whiteColor,
                 iconSize: 30,
                 gap: 30,
-                backgroundColor: Colors.black,
+                backgroundColor: AppColors.blackColor,
                 elevation: 1,
-                textColor: Colors.white,
+                textColor: AppColors.whiteColor,
                 onPressed: () {
                   context.go(UserRoutesConstants.userHome);
                 },
@@ -89,7 +88,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   // Left horizontal line
                   Expanded(
                     child: Divider(
-                      color: Colors.grey, // line color
+                      color: AppColors.greyColor, // line color
                       thickness: 1, // line thickness
                     ),
                   ),
@@ -100,14 +99,14 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: Text(
                       'or continue with',
                       style: TextStyle(
-                        color: Colors.black,
+                        color: AppColors.blackColor,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
 
                   // Right horizontal line
-                  Expanded(child: Divider(color: Colors.grey, thickness: 1)),
+                  Expanded(child: Divider(color: AppColors.greyColor, thickness: 1)),
                 ],
               ),
               SizedBox(height: 15),
@@ -117,10 +116,10 @@ class _LoginScreenState extends State<LoginScreen> {
                 iconSize: 40,
                 gap: 10,
                 backgroundColor: AppColors.transparentBackground,
-                overlay: Colors.grey,
+                overlay: AppColors.greyColor,
                 opacity: 1.0,
                 elevation: 0,
-                textColor: Colors.black,
+                textColor: AppColors.blackColor,
                 onPressed: () {
                   print('click on Google');
                 },

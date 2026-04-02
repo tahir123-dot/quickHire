@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:mobile/core/themes/colors.dart';
 import '../../core/size_config/size_config.dart';
 
 class HeroSection extends StatefulWidget {
@@ -15,8 +15,8 @@ class _HeroSectionState extends State<HeroSection> {
     return Container(
       width: double.infinity,
       height: SizeConfig.blockHeight*22,
-      color: Colors.black,
-      child: Image.asset("assets/images/user.png"),
+      color: AppColors.blackColor,
+      child: Image.asset("assets/images/hero.png"),
     );
   }
 }

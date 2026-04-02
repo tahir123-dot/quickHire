@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mobile/core/navigation/circle_button.dart';
 import 'package:mobile/core/themes/app_input_theme.dart';
-
+import 'package:mobile/core/themes/colors.dart';
 import '../../../../core/size_config/size_config.dart';
 import '../../../../core/themes/app_button_theme.dart';
 import '../../../../core/themes/app_text_theme.dart';
@@ -37,10 +37,7 @@ class _EmailScreenState extends State<EmailScreen> {
 
               SizedBox(
                 width: SizeConfig.blockWidth * 50,
-                child: Text(
-                  'Enter your Email',
-                  style: AppTextTheme.h1.copyWith(fontSize: 30, height: 1.4),
-                ),
+                child: Text('Enter your Email', style: AppTextTheme.h1),
               ),
               SizedBox(height: 25),
               TextFormField(
@@ -60,14 +57,16 @@ class _EmailScreenState extends State<EmailScreen> {
               AppButtonTheme.iconTextButton(
                 text: 'Continue',
                 icon: null,
-                iconColor: Colors.white,
+                iconColor: AppColors.whiteColor,
                 iconSize: 30,
                 gap: 30,
-                backgroundColor: Colors.black,
+                backgroundColor: AppColors.blackColor,
                 elevation: 1,
-                textColor: Colors.white,
+                textColor: AppColors.whiteColor,
                 onPressed: () {
-                  context.push(SharedRoutesConstant.passwordScreen);// in this we also check first email to sent otp and then go to otp screen then password screen
+                  context.push(
+                    SharedRoutesConstant.passwordScreen,
+                  ); // in this we also check first email to sent otp and then go to otp screen then password screen
                 },
               ),
             ],

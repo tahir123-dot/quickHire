@@ -3,8 +3,10 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mobile/components/input_box/hero_section.dart';
 import 'package:mobile/components/category/filter_category/category_section.dart';
 import 'package:mobile/components/service_offer/service_preview.dart';
+import 'package:mobile/components/top_bar_widget/top_bar_widget.dart';
 import 'package:mobile/core/size_config/size_config.dart';
 import 'package:mobile/core/themes/app_input_theme.dart';
+
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -14,6 +16,9 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+
+  List<String> categories = ["Barber", "Electrician", "Plumber", "Doctor"];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,55 +26,18 @@ class _HomeScreenState extends State<HomeScreen> {
       body: SafeArea(
         child: ListView(
           physics: BouncingScrollPhysics(),
-          children:[
+          children: [
             Column(
               children: [
                 SizedBox(height: SizeConfig.blockHeight * 3),
-                // top bar
                 Padding(
                   padding: EdgeInsets.symmetric(
-                    horizontal: SizeConfig.blockWidth * 8.0,
+                    horizontal: SizeConfig.blockWidth * 4.0,
                   ),
                   child: Column(
                     children: [
                       // top bar
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            children: [
-                              CircleAvatar(
-                                radius: 25,
-                                backgroundImage: AssetImage(
-                                  "assets/images/user.png",
-                                ),
-                              ),
-                              SizedBox(width: 10),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'Morning!',
-                                    style: TextStyle(fontSize: 10),
-                                  ),
-
-                                  Text(
-                                    'Hi, Tahir',
-                                    style: TextStyle(fontSize: 17),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              SvgPicture.asset("assets/icons/notification.svg"),
-                              SizedBox(width: 12),
-                              SvgPicture.asset("assets/icons/setting.svg"),
-                            ],
-                          ),
-                        ],
-                      ),
+                      TopBarWidget(),
                       SizedBox(height: 16),
                       // search bar
                       TextFormField(
@@ -86,16 +54,17 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 // service category
-                CategorySection(),
+                CategorySection(categories: categories,),
                 SizedBox(height: 16),
                 // hero section bar ads
                 HeroSection(),
                 SizedBox(height: 16),
+
                 // service Provider cards
                 ServicePreview(),
               ],
             ),
-          ]
+          ],
         ),
       ),
     );

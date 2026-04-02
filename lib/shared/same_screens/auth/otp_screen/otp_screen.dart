@@ -33,10 +33,7 @@ class _OtpScreenState extends State<OtpScreen> {
               SizedBox(height: SizeConfig.blockHeight * 15),
               SizedBox(
                 width: SizeConfig.blockWidth * 50,
-                child: Text(
-                  'Verify OTP',
-                  style: AppTextTheme.h1.copyWith(fontSize: 30, height: 1.4),
-                ),
+                child: Text('Verify OTP', style: AppTextTheme.h1),
               ),
               SizedBox(height: 25),
               Text(
@@ -67,7 +64,9 @@ class _OtpScreenState extends State<OtpScreen> {
               RichText(
                 text: TextSpan(
                   text: 'Resend available: ',
-                  style: AppTextTheme.paragraph.copyWith(color: Colors.black),
+                  style: AppTextTheme.paragraph.copyWith(
+                    color: AppColors.blackColor,
+                  ),
                   children: [
                     TextSpan(
                       text: 'Resend OTP',
@@ -88,10 +87,7 @@ class _OtpScreenState extends State<OtpScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    'Verify',
-                    style: TextStyle(fontSize: 25, fontWeight: FontWeight.w900),
-                  ),
+                  Text('Verify', style: AppTextTheme.otpVerifyTheme),
                   CircleButton(
                     icon: Icons.arrow_forward,
                     route: SharedRoutesConstant.accountTypeScreen,
@@ -102,12 +98,12 @@ class _OtpScreenState extends State<OtpScreen> {
               AppButtonTheme.iconTextButton(
                 text: 'Back',
                 icon: Icons.arrow_back,
-                iconColor: Colors.white,
+                iconColor: AppColors.whiteColor,
                 iconSize: 20,
                 gap: 10,
-                backgroundColor: Colors.black,
+                backgroundColor: AppColors.blackColor,
                 elevation: 1,
-                textColor: Colors.white,
+                textColor: AppColors.whiteColor,
                 onPressed: () {
                   context.go(SharedRoutesConstant.emailScreen);
                 },

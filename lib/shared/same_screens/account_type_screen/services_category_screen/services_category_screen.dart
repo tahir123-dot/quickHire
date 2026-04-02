@@ -25,7 +25,7 @@ class ServicesCategoryScreen extends StatelessWidget {
                 width: SizeConfig.blockWidth * 90,
                 child: Text(
                   'Offer your Services',
-                  style: AppTextTheme.h1.copyWith(fontSize: 30, height: 1.4),
+                  style: AppTextTheme.h1,
                   textAlign: TextAlign.start,
                 ),
               ),

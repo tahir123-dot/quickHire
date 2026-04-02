@@ -3,7 +3,6 @@ import 'package:go_router/go_router.dart';
 import 'package:mobile/export_screen/screen_exports.dart';
 import 'package:mobile/routes/provider_routes/provider_routes_constants.dart';
 
-
 class ProviderRoutes {
   static List<GoRoute> routes = [
     GoRoute(
@@ -56,10 +55,24 @@ class ProviderRoutes {
       },
     ),
     GoRoute(
+      path: ProviderRoutesConstants.selectProfessional,
+      name: 'selectProfessional',
+      pageBuilder: (context, state) {
+        return MaterialPage(child: SelectProfessional());
+      },
+    ),
+    GoRoute(
       path: ProviderRoutesConstants.providerProfileView,
       name: 'providerProfileView',
       pageBuilder: (context, state) {
         return MaterialPage(child: ProfileViewScreen());
+      },
+    ),
+    GoRoute(
+      path: ProviderRoutesConstants.addServiceScreen,
+      name: 'addServiceScreen',
+      pageBuilder: (context, state) {
+        return MaterialPage(child: AddServiceScreen());
       },
     ),
     GoRoute(
@@ -91,14 +104,11 @@ class ProviderRoutes {
       },
     ),
     GoRoute(
-      path: ProviderRoutesConstants.providerAdsplan,
-      name: 'providerAdsplan',
+      path: ProviderRoutesConstants.providerAdsPlan,
+      name: 'providerAdsPlan',
       pageBuilder: (context, state) {
         return MaterialPage(child: AdsPlanScreen());
       },
     ),
-
-
-
   ];
 }

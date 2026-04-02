@@ -4,7 +4,7 @@ import 'package:mobile/components/button/bullet_text.dart';
 import 'package:mobile/core/themes/app_button_theme.dart';
 import 'package:mobile/core/themes/app_input_theme.dart';
 import 'package:mobile/core/themes/app_text_theme.dart';
-
+import 'package:mobile/core/themes/colors.dart';
 import '../../../../core/size_config/size_config.dart';
 import '../../../../routes/user_routes/user_routes_constants.dart';
 
@@ -32,10 +32,7 @@ class _PasswordScreenState extends State<PasswordScreen> {
               SizedBox(height: SizeConfig.blockHeight * 9),
               SizedBox(
                 width: SizeConfig.blockWidth * 50,
-                child: Text(
-                  'Create Your Password',
-                  style: AppTextTheme.h1.copyWith(fontSize: 30, height: 1.4),
-                ),
+                child: Text('Create Your Password', style: AppTextTheme.h1),
               ),
               SizedBox(height: 25),
               TextFormField(
@@ -60,12 +57,12 @@ class _PasswordScreenState extends State<PasswordScreen> {
               AppButtonTheme.iconTextButton(
                 text: 'Continue',
                 icon: null,
-                iconColor: Colors.white,
+                iconColor: AppColors.whiteColor,
                 iconSize: 30,
                 gap: 30,
-                backgroundColor: Colors.black,
+                backgroundColor: AppColors.blackColor,
                 elevation: 1,
-                textColor: Colors.white,
+                textColor: AppColors.whiteColor,
                 onPressed: () {
                   context.go(UserRoutesConstants.userHome);
                 },
@@ -73,7 +70,7 @@ class _PasswordScreenState extends State<PasswordScreen> {
               SizedBox(height: 20),
               Text(
                 'Your password is encrypted and kept secure. Your password is encrypted and kept secure.',
-                style: AppTextTheme.paragraph.copyWith(height: 1.7),
+                style: AppTextTheme.paragraph,
                 textAlign: TextAlign.center,
               ),
             ],

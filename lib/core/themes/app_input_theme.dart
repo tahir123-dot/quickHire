@@ -13,15 +13,15 @@ class AppInputTheme {
       prefixIcon: Icon(icon, color: AppColors.inputIconPrimary, size: 20),
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(11),
-        borderSide: BorderSide(color: AppColors.borderPrimary),
+        borderSide: BorderSide(color: AppColors.greyColor),
       ),
       enabledBorder: OutlineInputBorder(
-        borderSide: BorderSide(color: AppColors.borderPrimary),
+        borderSide: BorderSide(color: AppColors.greyColor),
         borderRadius: BorderRadius.circular(11),
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(11),
-        borderSide: BorderSide(color: AppColors.borderPrimary, width: 1),
+        borderSide: BorderSide(color: AppColors.borderPrimary, width: 2),
       ),
       contentPadding: EdgeInsets.symmetric(vertical: 9, horizontal: 9),
     );
@@ -35,15 +35,15 @@ class AppInputTheme {
       hintStyle: TextStyle(color: AppColors.inputHintPrimary, fontSize: 14),
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(8),
-        borderSide: BorderSide(color: AppColors.borderPrimary),
+        borderSide: BorderSide(color: AppColors.greyColor),
       ),
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(8),
-        borderSide: BorderSide(color: AppColors.borderPrimary),
+        borderSide: BorderSide(color: AppColors.greyColor),
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(8),
-        borderSide: BorderSide(color: AppColors.blueColor, width: 2),
+        borderSide: BorderSide(color: AppColors.borderPrimary, width: 2),
       ),
       contentPadding: EdgeInsets.symmetric(vertical: 12, horizontal: 8),
     );
@@ -58,15 +58,15 @@ class AppInputTheme {
       hintText: hint,
       hintStyle: TextStyle(color: AppColors.inputHintPrimary, fontSize: 14),
       filled: true,
-      fillColor: AppColors.searchBarColor,
+      fillColor: AppColors.searchBarBackground,
       suffixIcon: icon,
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(25),
-        borderSide: BorderSide(color: AppColors.searchBarColor),
+        borderSide: BorderSide(color: AppColors.searchBarBackground),
       ),
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(25),
-        borderSide: BorderSide(color: AppColors.searchBarColor),
+        borderSide: BorderSide(color: AppColors.searchBarBackground),
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(25),

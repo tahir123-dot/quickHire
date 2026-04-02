@@ -1,18 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:mobile/core/themes/colors.dart';
 
 class ServiceCategory extends StatelessWidget {
   final String title;
   final IconData? icon;
   final String route;
 
-  const ServiceCategory({super.key, required this.title, this.icon, required this.route});
+  const ServiceCategory({
+    super.key,
+    required this.title,
+    this.icon,
+    required this.route,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return  InkWell(
+    return InkWell(
       borderRadius: BorderRadius.circular(12),
-      onTap: (){
+      onTap: () {
         context.push(route);
       },
       child: Container(
@@ -21,13 +27,19 @@ class ServiceCategory extends StatelessWidget {
         padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(14),
-          border: Border.all(color: Colors.black),
+          border: Border.all(color: AppColors.blackColor),
         ),
         child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [Icon(icon),SizedBox(height: 10,),Text(title,style: TextStyle(fontSize: 12,fontWeight: FontWeight.w600),)]
-
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(icon),
+            SizedBox(height: 10),
+            Text(
+              title,
+              style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
+            ),
+          ],
         ),
       ),
     );

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobile/core/size_config/size_config.dart';
+import 'package:mobile/core/themes/colors.dart';
 
 class Category extends StatelessWidget {
   final String title;
@@ -20,8 +21,8 @@ class Category extends StatelessWidget {
     required this.onTap,
     this.height = 90,
     this.width = double.infinity,
-    this.backgroundColor = Colors.white,
-    this.borderColor = Colors.grey,
+    this.backgroundColor = AppColors.whiteColor,
+    this.borderColor = AppColors.greyColor,
   });
 
   @override

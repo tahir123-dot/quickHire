@@ -34,7 +34,7 @@ class _SignupScreenState extends State<SignupScreen> {
                 width: SizeConfig.blockWidth * 50,
                 child: Text(
                   'Create an account',
-                  style: AppTextTheme.h1.copyWith(fontSize: 30, height: 1.4),
+                  style: AppTextTheme.h1,
                 ),
               ),
               SizedBox(height: 25),
@@ -70,7 +70,7 @@ class _SignupScreenState extends State<SignupScreen> {
                 children: [
                   Text(
                     'Send OTP',
-                    style: TextStyle(fontSize: 25, fontWeight: FontWeight.w900),
+                    style: AppTextTheme.otpVerifyTheme,
                   ),
                   CircleButton(
                     icon: Icons.arrow_forward,
@@ -85,10 +85,10 @@ class _SignupScreenState extends State<SignupScreen> {
                 iconSize: 40,
                 gap: 10,
                 backgroundColor: AppColors.transparentBackground,
-                overlay: Colors.grey,
+                overlay: AppColors.greyColor,
                 opacity: 1.0,
                 elevation: 0,
-                textColor: Colors.black,
+                textColor: AppColors.blackColor,
                 onPressed: () {
                   print('click on Google');
                 },
@@ -99,7 +99,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   // Left horizontal line
                   Expanded(
                     child: Divider(
-                      color: Colors.grey, // line color
+                      color: AppColors.greyColor, // line color
                       thickness: 1, // line thickness
                     ),
                   ),
@@ -110,26 +110,26 @@ class _SignupScreenState extends State<SignupScreen> {
                     child: Text(
                       'or continue with',
                       style: TextStyle(
-                        color: Colors.black,
+                        color: AppColors.blackColor,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
 
                   // Right horizontal line
-                  Expanded(child: Divider(color: Colors.grey, thickness: 1)),
+                  Expanded(child: Divider(color: AppColors.greyColor, thickness: 1)),
                 ],
               ),
               SizedBox(height: 15),
               AppButtonTheme.iconTextButton(
                 text: 'Login With Email',
                 icon: Icons.email,
-                iconColor: Colors.white,
+                iconColor: AppColors.whiteColor,
                 iconSize: 30,
                 gap: 30,
-                backgroundColor: Colors.black,
+                backgroundColor: AppColors.blackColor,
                 elevation: 1,
-                textColor: Colors.white,
+                textColor: AppColors.whiteColor,
                 onPressed: () {
                   context.push(SharedRoutesConstant.loginScreen);
                 },

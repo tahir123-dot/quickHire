@@ -18,7 +18,7 @@ class CategoryList extends StatelessWidget {
     return ElevatedButton(
       onPressed: onTap,
       style: ElevatedButton.styleFrom(
-        backgroundColor: isActive ? Colors.black : AppColors.searchBarColor,
+        backgroundColor: isActive ? AppColors.blackColor : AppColors.searchBarBackground,
         shadowColor: Colors.transparent,
 
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile/core/themes/colors.dart';
 
 class AppButtonTheme {
   static Widget iconTextButton({
@@ -6,20 +7,21 @@ class AppButtonTheme {
     required IconData? icon,
     required VoidCallback onPressed,
     Color backgroundColor = Colors.transparent,
-    Color textColor = Colors.black,
-    Color iconColor = Colors.black,
-    Color overlay = Colors.grey,
+    Color textColor = AppColors.blackColor,
+    Color iconColor = AppColors.blackColor,
+    Color overlay = AppColors.greyColor,
     double opacity = 0,
     double iconSize = 0,
     double gap = 0,
-    Color sideColor = Colors.black,
+    Color sideColor = AppColors.blackColor,
     double elevation = 0,
     double height = 50,
+    double? width = double.infinity,
     double borderRadius = 50,
   }) {
     return SizedBox(
       height: height,
-      width: double.infinity,
+      width: width,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
           backgroundColor: backgroundColor,
