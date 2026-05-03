@@ -7,10 +7,12 @@ class CircleButton extends StatelessWidget {
   final IconData icon;
   final Color backgroundColor;
   final Color iconColor;
+  final VoidCallback? onTap;
 
   const CircleButton({
     super.key,
     this.route,
+    this.onTap,
     required this.icon,
     this.backgroundColor = AppColors.circleButton,
     this.iconColor = AppColors.arrowForward,
@@ -20,7 +22,13 @@ class CircleButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        route != null ? context.go(route!) : context.pop();
+        if (onTap != null) {
+          onTap!(); // 👈 custom action
+        } else if (route != null) {
+          context.go(route!);
+        } else {
+          context.pop();
+        }
       },
       child: CircleAvatar(
         radius: 24,

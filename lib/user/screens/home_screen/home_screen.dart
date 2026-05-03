@@ -7,6 +7,7 @@ import 'package:mobile/components/top_bar_widget/top_bar_widget.dart';
 import 'package:mobile/core/size_config/size_config.dart';
 import 'package:mobile/core/themes/app_input_theme.dart';
 
+import '../../../core/themes/colors.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -16,12 +17,16 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-
   List<String> categories = ["Barber", "Electrician", "Plumber", "Doctor"];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        backgroundColor: AppColors.whiteColor,
+        title: TopBarWidget(),
+      ),
       resizeToAvoidBottomInset: true,
       body: SafeArea(
         child: ListView(
@@ -37,7 +42,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Column(
                     children: [
                       // top bar
-                      TopBarWidget(),
                       SizedBox(height: 16),
                       // search bar
                       TextFormField(
@@ -54,7 +58,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 // service category
-                CategorySection(categories: categories,),
+                CategorySection(categories: categories),
                 SizedBox(height: 16),
                 // hero section bar ads
                 HeroSection(),

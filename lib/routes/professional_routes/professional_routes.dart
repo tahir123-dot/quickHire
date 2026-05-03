@@ -6,6 +6,13 @@ import 'package:mobile/routes/professional_routes/professional_routes_constants.
 class ProfessionalRoutes {
   static List<GoRoute> routes = [
     GoRoute(
+      path: ProfessionalRoutesConstants.professionalMainScreen,
+      name: 'professionalMainScreen',
+      pageBuilder: (context, state) {
+        return MaterialPage(child: ProfessionalMainScreen());
+      },
+    ),
+    GoRoute(
       path: ProfessionalRoutesConstants.professionalHomeScreen,
       name: 'professionalHomeScreen',
       pageBuilder: (context, state) {
@@ -13,24 +20,10 @@ class ProfessionalRoutes {
       },
     ),
     GoRoute(
-      path: ProfessionalRoutesConstants.professionalBookingScreen,
-      name: 'professionalBookingScreen',
-      pageBuilder: (context, state) {
-        return MaterialPage(child: ProfessionalBookingScreen());
-      },
-    ),
-    GoRoute(
       path: ProfessionalRoutesConstants.professionalScheduleScreen,
       name: 'professionalScheduleScreen',
       pageBuilder: (context, state) {
         return MaterialPage(child: ProfessionalScheduleScreen());
-      },
-    ),
-    GoRoute(
-      path: ProfessionalRoutesConstants.professionalProfileScreen,
-      name: 'professionalProfileScreen',
-      pageBuilder: (context, state) {
-        return MaterialPage(child: ProfessionalProfileScreen());
       },
     ),
   ];

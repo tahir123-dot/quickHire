@@ -41,7 +41,7 @@ class AccountTypeScreen extends StatelessWidget {
                 borderColor: AppColors.blackColor,
                 backgroundColor: AppColors.whiteColor,
                 onTap: () {
-                  context.go(UserRoutesConstants.userHome);
+                  context.go(UserRoutesConstants.userMainScreen);
                 },
               ),
               SizedBox(height: 20),
@@ -65,7 +65,7 @@ class AccountTypeScreen extends StatelessWidget {
                 backgroundColor: AppColors.whiteColor,
                 onTap: () {
                   context.go(
-                    ProfessionalRoutesConstants.professionalHomeScreen,
+                    ProfessionalRoutesConstants.professionalMainScreen,
                   );
                 },
               ),

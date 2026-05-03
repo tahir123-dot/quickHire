@@ -26,10 +26,6 @@ class _SettingState extends State<Setting> {
       "title": "Terms & Conditions",
       "route": SharedRoutesConstant.termsConditionScreen,
     },
-    {
-      "title": "Privacy Policy",
-      "route": SharedRoutesConstant.privacyPolicyScreen,
-    },
   ];
 
   List<Map<String, String>> settingListThree = [

@@ -33,6 +33,7 @@ class _ProfileViewScreenState extends State<ProfileViewScreen> {
         title: TopBarThreeThings(
           pageName: 'My Profile',
           imagePath: "assets/icons/VerticalDot.svg",
+          isMenu: true,
         ),
       ),
       body: SafeArea(
@@ -181,7 +182,7 @@ class _ProfileViewScreenState extends State<ProfileViewScreen> {
               elevation: 1,
               textColor: AppColors.whiteColor,
               onPressed: () {
-                context.push(ProviderRoutesConstants.providerTeamList);
+                context.push(ProviderRoutesConstants.selectProfessional);
               },
             ),
 

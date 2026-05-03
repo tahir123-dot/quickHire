@@ -108,12 +108,6 @@ class SharedRoutes {
         return MaterialPage(child: NotificationScreen());
       },
     ),GoRoute(
-      path: SharedRoutesConstant.privacyPolicyScreen,
-      name: 'privacyPolicyScreen',
-      pageBuilder: (context, state) {
-        return MaterialPage(child: PrivacyPolicyScreen());
-      },
-    ),GoRoute(
       path: SharedRoutesConstant.termsConditionScreen,
       name: 'termsConditionScreen',
       pageBuilder: (context, state) {

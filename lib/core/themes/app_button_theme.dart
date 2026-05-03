@@ -5,7 +5,7 @@ class AppButtonTheme {
   static Widget iconTextButton({
     required String text,
     required IconData? icon,
-    required VoidCallback onPressed,
+    required VoidCallback? onPressed,
     Color backgroundColor = Colors.transparent,
     Color textColor = AppColors.blackColor,
     Color iconColor = AppColors.blackColor,

@@ -6,6 +6,13 @@ import 'package:mobile/routes/provider_routes/provider_routes_constants.dart';
 class ProviderRoutes {
   static List<GoRoute> routes = [
     GoRoute(
+      path: ProviderRoutesConstants.providerMainScreen,
+      name: 'providerMainScreen',
+      pageBuilder: (context, state) {
+        return MaterialPage(child: ProviderMainScreen());
+      },
+    ),
+    GoRoute(
       path: ProviderRoutesConstants.providerHome,
       name: 'providerHome',
       pageBuilder: (context, state) {
@@ -17,6 +24,13 @@ class ProviderRoutes {
       name: 'providerBooking',
       pageBuilder: (context, state) {
         return MaterialPage(child: ProviderBookingScreen());
+      },
+    ),
+    GoRoute(
+      path: ProviderRoutesConstants.providerBookingDetails,
+      name: 'providerBookingDetails',
+      pageBuilder: (context, state) {
+        return MaterialPage(child: ProviderBookingDetailScreen());
       },
     ),
     GoRoute(
@@ -80,6 +94,13 @@ class ProviderRoutes {
       name: 'providerCustomerReview',
       pageBuilder: (context, state) {
         return MaterialPage(child: CustomerReviewsScreen());
+      },
+    ),
+    GoRoute(
+      path: ProviderRoutesConstants.providerPayment,
+      name: 'providerPayment',
+      pageBuilder: (context, state) {
+        return MaterialPage(child: ProviderPayment());
       },
     ),
     GoRoute(

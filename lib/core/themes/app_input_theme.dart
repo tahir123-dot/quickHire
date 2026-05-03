@@ -3,10 +3,13 @@ import 'package:mobile/core/themes/colors.dart';
 
 class AppInputTheme {
   static InputDecoration withIcon({
+    String  labelText = "",
     required String hint,
     required IconData icon,
   }) {
     return InputDecoration(
+      label: Text(labelText),
+      floatingLabelBehavior: FloatingLabelBehavior.always,
       hintText: hint,
       hintStyle: TextStyle(color: AppColors.inputHintPrimary, fontSize: 14),
       filled: false,

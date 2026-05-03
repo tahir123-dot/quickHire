@@ -14,6 +14,5 @@ class SharedRoutesConstant {
   static const String inviteFriendScreen = "/inviteFriendScreen";
   static const String languageScreen = "/languageScreen";
   static const String notificationScreen = "/notificationScreen";
-  static const String privacyPolicyScreen = "/privacyPolicyScreen";
   static const String termsConditionScreen = "/termsConditionScreen";
 }

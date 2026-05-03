@@ -10,6 +10,10 @@ import 'package:mobile/shared/same_screens/error_screen/error_screen.dart';
 class AppRoutes {
   GoRouter router = GoRouter(
     initialLocation: SharedRoutesConstant.splashScreen,
+
+    redirect: (context, state) {
+      return RouteGuard.redirect(state.uri.path);
+    },
     routes: [
       ...SharedRoutes.routes,
       ...UserRoutes.routes,

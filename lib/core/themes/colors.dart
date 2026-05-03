@@ -14,6 +14,8 @@ class AppColors {
 
   // service card color
   static const Color darkBlueColor = Color(0xFF2845C5);
+  static const Color darkDarkBlueColor = Color(0xFF030D33);
+
 
   // Text colors
   static const Color textPrimary = Color(0xFF000000);

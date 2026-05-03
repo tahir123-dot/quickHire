@@ -19,7 +19,7 @@ class ServiceCategory extends StatelessWidget {
     return InkWell(
       borderRadius: BorderRadius.circular(12),
       onTap: () {
-        context.push(route);
+        context.go(route);
       },
       child: Container(
         width: 80,

@@ -37,32 +37,17 @@ class ServicesCategoryScreen extends StatelessWidget {
                   ServiceCategory(
                     title: 'Barber',
                     icon: Icons.content_cut,
-                    route: ProviderRoutesConstants.providerEditProfile,
+                    route: ProviderRoutesConstants.providerMainScreen,
                   ),
                   ServiceCategory(
                     title: 'Barber',
                     icon: Icons.content_cut,
-                    route: ProviderRoutesConstants.providerEditProfile,
+                    route: ProviderRoutesConstants.providerMainScreen,
                   ),
                   ServiceCategory(
                     title: 'Barber',
                     icon: Icons.content_cut,
-                    route: ProviderRoutesConstants.providerEditProfile,
-                  ),
-                  ServiceCategory(
-                    title: 'Barber',
-                    icon: Icons.content_cut,
-                    route: ProviderRoutesConstants.providerEditProfile,
-                  ),
-                  ServiceCategory(
-                    title: 'Barber',
-                    icon: Icons.content_cut,
-                    route: ProviderRoutesConstants.providerEditProfile,
-                  ),
-                  ServiceCategory(
-                    title: 'Barber',
-                    icon: Icons.content_cut,
-                    route: ProviderRoutesConstants.providerEditProfile,
+                    route: ProviderRoutesConstants.providerMainScreen,
                   ),
                 ],
               ),

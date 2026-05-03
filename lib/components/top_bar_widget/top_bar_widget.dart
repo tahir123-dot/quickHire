@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mobile/core/navigation/circle_button.dart';
 import 'package:mobile/core/themes/colors.dart';
+import 'package:mobile/routes/provider_routes/provider_routes_constants.dart';
 import '../../routes/shared_routes/shared_routes_constant.dart';
 
 // in this we have user name , avatar image, notification , setting icon
@@ -126,10 +127,13 @@ class TopBarIconWithCenterText extends StatelessWidget {
 class TopBarThreeThings extends StatelessWidget {
   final String pageName;
   final String imagePath;
+  final bool isMenu;
+
   const TopBarThreeThings({
     super.key,
     required this.pageName,
     required this.imagePath,
+    this.isMenu = false,
   });
 
   @override
@@ -142,16 +146,62 @@ class TopBarThreeThings extends StatelessWidget {
           backgroundColor: AppColors.searchBarBackground,
           iconColor: AppColors.blackColor,
         ),
+
         Text(
           pageName,
-          style: TextStyle(fontSize: 19, fontWeight: FontWeight.w400),
+          style: const TextStyle(fontSize: 19, fontWeight: FontWeight.w400),
         ),
-        InkWell(
-          child: SvgPicture.asset(imagePath),
-          onTap: () {
-            context.push(SharedRoutesConstant.notificationScreen);
-          },
-        ),
+
+        isMenu
+            ? PopupMenuButton<String>(
+                icon: SvgPicture.asset(imagePath),
+
+                // ✅ Menu ko neeche shift karna
+                offset: const Offset(0, 40),
+
+                // ✅ Smooth animation
+                elevation: 8,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+
+                onSelected: (value) {
+                  if (value == 'edit') {
+                   context.push(ProviderRoutesConstants.providerEditProfile);
+                  } else if (value == 'delete') {
+                    print('Delete clicked');
+                  }
+                },
+
+                itemBuilder: (context) => [
+                  PopupMenuItem(
+                    value: 'edit',
+                    child: Row(
+                      children: const [
+                        Icon(Icons.edit, size: 18),
+                        SizedBox(width: 10),
+                        Text('Edit'),
+                      ],
+                    ),
+                  ),
+                  PopupMenuItem(
+                    value: 'delete',
+                    child: Row(
+                      children: const [
+                        Icon(Icons.delete, size: 18),
+                        SizedBox(width: 10),
+                        Text('Delete'),
+                      ],
+                    ),
+                  ),
+                ],
+              )
+            : InkWell(
+                child: SvgPicture.asset(imagePath),
+                onTap: () {
+                  isMenu? null:context.push(ProviderRoutesConstants.providerPayment);
+                },
+              ),
       ],
     );
   }
@@ -166,7 +216,8 @@ class ProviderTopBarWidget extends StatelessWidget {
   const ProviderTopBarWidget({
     super.key,
     required this.providerName,
-    required this.location, this.icon,
+    required this.location,
+    this.icon,
   });
 
   @override
@@ -193,7 +244,7 @@ class ProviderTopBarWidget extends StatelessWidget {
                 ),
               ],
             ),
-            if(icon != null)
+            if (icon != null)
               Container(
                 width: 30,
                 height: 30,
@@ -205,17 +256,13 @@ class ProviderTopBarWidget extends StatelessWidget {
                 child: Center(
                   child: IconButton(
                     onPressed: () {},
-                    icon: Icon(
-                      icon,
-                      color: AppColors.purpleDark,
-                    ), // icon color
+                    icon: Icon(icon, color: AppColors.purpleDark), // icon color
                     iconSize: 20,
                     padding: EdgeInsets.zero,
                     constraints: BoxConstraints(),
                   ),
                 ),
               ),
-
           ],
         ),
         SizedBox(height: 20),

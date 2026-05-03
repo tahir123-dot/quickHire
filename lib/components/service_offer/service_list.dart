@@ -13,8 +13,11 @@ class ServiceList extends StatelessWidget {
       style: ElevatedButton.styleFrom(
         backgroundColor: AppColors.darkBlueColor,
         shadowColor: Colors.transparent,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
-        fixedSize: Size(SizeConfig.blockWidth*30, 10),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(50),
+          side: BorderSide(color: AppColors.darkBlueColor),
+        ),
+        fixedSize: Size(SizeConfig.blockWidth * 30, 10),
       ),
       child: Text(
         serviceName,
