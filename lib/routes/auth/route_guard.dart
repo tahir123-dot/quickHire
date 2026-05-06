@@ -8,12 +8,24 @@ class RouteGuard {
     final isLoggedIn = AuthService.isLoggedIn;
     final role = AuthService.role;
 
-    final publicRoutes = ['/login', '/signup', '/'];
+    print(
+      "RouteGuard: isLoggedIn=$isLoggedIn, role=$role, currentPath=$currentPath",
+    );
+
+    final publicRoutes = [
+      SharedRoutesConstant.loginScreen,
+      SharedRoutesConstant.signupScreen,
+      SharedRoutesConstant.splashScreen,
+      SharedRoutesConstant.otpScreen,
+      SharedRoutesConstant.emailScreen,
+      SharedRoutesConstant.passwordScreen,
+      SharedRoutesConstant.accountTypeScreen,
+    ];
 
     if (!isLoggedIn) {
       return publicRoutes.contains(currentPath)
           ? null
-          : SharedRoutesConstant.loginScreen;
+          : SharedRoutesConstant.accountTypeScreen;
     }
 
     if (isLoggedIn && publicRoutes.contains(currentPath)) {

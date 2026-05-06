@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../components/setting/list_widget.dart';
 import '../../../../components/top_bar_widget/top_bar_widget.dart';
-import '../../../../core/size_config/size_config.dart';
 import '../../../../core/themes/colors.dart';
 
 class InviteFriendsScreen extends StatefulWidget {
@@ -13,9 +13,22 @@ class InviteFriendsScreen extends StatefulWidget {
 }
 
 class _InviteFriendsScreenState extends State<InviteFriendsScreen> {
-  List<Map<String, String>> language = [
-    {"title": "Share Link"},
-  ];
+  late final List<ListItemModel> inviteList;
+
+  @override
+  void initState() {
+    super.initState();
+
+    inviteList = [
+      ListItemModel(
+        title: "Share Link",
+        onTap: () {
+          // 🔥 yahan future mein share logic lagana
+          print("Share Link clicked");
+        },
+      ),
+    ];
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,13 +38,16 @@ class _InviteFriendsScreenState extends State<InviteFriendsScreen> {
         backgroundColor: AppColors.whiteColor,
         title: const TopBarIconWithCenterText(pageName: 'Invite Friends'),
       ),
+
       body: SafeArea(
         child: SingleChildScrollView(
-          physics: BouncingScrollPhysics(),
-          padding: EdgeInsets.symmetric(
-            horizontal: SizeConfig.blockWidth * 4.0,
+          physics: const BouncingScrollPhysics(),
+          padding: EdgeInsets.symmetric(horizontal: 16.w),
+
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [ListWidget(items: inviteList)],
           ),
-          child: Column(crossAxisAlignment: CrossAxisAlignment.start,children: [ListWidget(items: language)]),
         ),
       ),
     );

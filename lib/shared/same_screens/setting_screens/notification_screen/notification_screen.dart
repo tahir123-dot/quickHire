@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mobile/components/top_bar_widget/top_bar_widget.dart';
-import 'package:mobile/core/size_config/size_config.dart';
 
 import '../../../../core/themes/colors.dart';
 
@@ -18,35 +18,49 @@ class _NotificationScreenState extends State<NotificationScreen> {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         backgroundColor: AppColors.whiteColor,
+
         title: TopBarIconWithCenterText(pageName: 'Notification'),
       ),
       body: SafeArea(
         child: ListView.separated(
           physics: BouncingScrollPhysics(),
-          padding: EdgeInsets.only(
-            top: 20,
-            left: SizeConfig.blockWidth * 4,
-            right: SizeConfig.blockWidth * 4,
-          ),
+          padding: EdgeInsets.symmetric(horizontal: 21.w, vertical: 60.h),
           itemCount: 5,
           itemBuilder: (context, index) {
-            return ListTile(
-              contentPadding: EdgeInsets.all(0),
-              leading: CircleAvatar(
-                radius: 30,
-                backgroundImage: AssetImage("assets/images/user.png"),
+            return Container(
+              decoration: BoxDecoration(
+                color: AppColors.searchBarBackground,
+                borderRadius: BorderRadius.circular(10.r),
               ),
-              title: Text('Tahir Rashid'),
-              subtitle: Text("Notification message"),
-              trailing: Text("Just Now"),
+              child: ListTile(
+                contentPadding: EdgeInsets.symmetric(
+                  horizontal: 15.w,
+                  vertical: 5.h,
+                ),
+                leading: CircleAvatar(
+                  radius: 25.r,
+                  backgroundImage: AssetImage("assets/images/user.png"),
+                ),
+                title: Text('Tahir Rashid', style: TextStyle(fontSize: 14.sp)),
+                subtitle: Text(
+                  "Notification message",
+                  style: TextStyle(
+                    fontSize: 12.sp,
+                    color: AppColors.lightgreyColor,
+                  ),
+                ),
+                trailing: Text(
+                  "Just Now",
+                  style: TextStyle(
+                    fontSize: 10.sp,
+                    color: AppColors.lightgreyColor,
+                  ),
+                ),
+              ),
             );
           },
           separatorBuilder: (context, index) {
-            return Divider(
-              height: 1,
-              thickness: 1,
-              color: AppColors.horizontalLine,
-            );
+            return SizedBox(height: 3.h);
           },
         ),
       ),

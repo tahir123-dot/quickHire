@@ -1,9 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mobile/core/themes/colors.dart';
 
+class ListItemModel {
+  final String title;
+  final String? route;
+  final VoidCallback? onTap;
+
+  ListItemModel({required this.title, this.route, this.onTap});
+}
+
 class ListWidget extends StatelessWidget {
-  final List<Map<String,String>> items;
+  final List<ListItemModel> items;
 
   const ListWidget({super.key, required this.items});
 
@@ -11,39 +20,53 @@ class ListWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: AppColors.searchBarBackground,
-        borderRadius: BorderRadius.circular(12),
+        color: AppColors.listBackground,
+        borderRadius: BorderRadius.circular(14.r),
       ),
-      padding: const EdgeInsets.symmetric(horizontal: 16,vertical: 16),
+      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
       child: ListView.separated(
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
         itemCount: items.length,
         itemBuilder: (context, index) {
           final item = items[index];
-          final title = item["title"];
-          final route = item["route"];
+
           return Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10),
+            padding: EdgeInsets.symmetric(vertical: 11.h),
             child: GestureDetector(
               onTap: () {
-                if (route != null && route.isNotEmpty) {
-                  context.push(route);
+                // 🔥 Priority: function first
+                if (item.onTap != null) {
+                  item.onTap!();
+                  return;
+                }
+
+                // 🔥 fallback: route
+                if (item.route != null && item.route!.isNotEmpty) {
+                  context.push(item.route!);
                 }
               },
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(title ?? "",),
-                  const Icon(Icons.arrow_forward_ios, size: 16),
+                  Text(
+                    item.title,
+                    style: TextStyle(
+                      fontSize: 17.sp,
+                      color: AppColors.whiteColor,
+                    ),
+                  ),
+                  Icon(
+                    Icons.arrow_forward_ios,
+                    size: 16.sp,
+                    color: AppColors.whiteColor,
+                  ),
                 ],
               ),
             ),
           );
         },
-        separatorBuilder: (context, index) {
-          return const Divider();
-        },
+        separatorBuilder: (context, index) => const Divider(),
       ),
     );
   }

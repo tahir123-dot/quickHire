@@ -6,6 +6,8 @@ abstract class IStorageService {
 
   Future<void> saveToken(String token);
   Future<String?> getToken();
+
+  Future<void> deleteToken();
 }
 
 class StorageService implements IStorageService {
@@ -34,5 +36,10 @@ class StorageService implements IStorageService {
   @override
   Future<String?> getToken() async {
     return await _storage.read(key: "token");
+  }
+
+  @override
+  Future<void> deleteToken() async {
+    await _storage.delete(key: "token");
   }
 }

@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../../components/availability_component/availability_component.dart';
-
 class ProfessionalScheduleScreen extends StatefulWidget {
   const ProfessionalScheduleScreen({super.key});
 
@@ -27,12 +25,6 @@ class _ProfessionalScheduleScreenState
               Text(
                 'Select Date & Time',
                 style: TextStyle(fontSize: 19, fontWeight: FontWeight.w600),
-              ),
-              AvailabilityComponent(
-                focusedDay: today,
-                onDaySelected: (selectedDay, focusedDay) {
-                  // yahan future me state handle kar sakte ho
-                },
               ),
             ],
           ),

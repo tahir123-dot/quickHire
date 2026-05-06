@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:mobile/core/navigation/circle_button.dart';
-import 'package:mobile/core/size_config/size_config.dart';
 import 'package:mobile/core/themes/app_button_theme.dart';
 import 'package:mobile/core/themes/app_input_theme.dart';
 import 'package:mobile/core/themes/app_text_theme.dart';
@@ -11,6 +11,7 @@ import 'package:mobile/core/themes/colors.dart';
 import 'package:mobile/routes/shared_routes/shared_routes_constant.dart';
 
 import 'package:mobile/shared/bloc/blocimpl/authbloc.dart';
+import 'package:mobile/shared/bloc/blocimpl/cubitbloc.dart';
 import 'package:mobile/shared/bloc/event/auth_event.dart';
 import 'package:mobile/shared/bloc/state/auth_state.dart';
 
@@ -27,6 +28,22 @@ class _SignupScreenState extends State<SignupScreen> {
   final nameController = TextEditingController();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+
+  String? role;
+
+  @override
+  void initState() {
+    super.initState();
+
+    // 🔥 check role AFTER first frame
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final role = context.read<RoleCubit>().state;
+
+      if (role == null) {
+        context.go(SharedRoutesConstant.accountTypeScreen);
+      }
+    });
+  }
 
   @override
   void dispose() {
@@ -70,22 +87,21 @@ class _SignupScreenState extends State<SignupScreen> {
           final isLoading = state is AuthLoading;
 
           return Scaffold(
+            appBar: AppBar(backgroundColor: Colors.white, elevation: 0),
             body: SafeArea(
               child: Form(
                 key: _formKey,
                 child: ListView(
                   physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.symmetric(
-                    horizontal: SizeConfig.blockWidth * 8.0,
-                  ),
+                  padding: EdgeInsets.symmetric(horizontal: 33.w),
                   children: [
-                    SizedBox(height: SizeConfig.blockHeight * 9),
+                    SizedBox(height: 113.h),
 
                     Text('Create an\naccount', style: AppTextTheme.h1),
 
-                    const SizedBox(height: 25),
+                    SizedBox(height: 19.h),
 
-                    // 🟢 NAME
+                    //  NAME
                     TextFormField(
                       controller: nameController,
                       decoration: AppInputTheme.withIcon(
@@ -100,7 +116,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       },
                     ),
 
-                    const SizedBox(height: 15),
+                    SizedBox(height: 19.h),
 
                     // 🟢 EMAIL
                     TextFormField(
@@ -126,7 +142,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       },
                     ),
 
-                    const SizedBox(height: 15),
+                    SizedBox(height: 19.h),
 
                     // 🟢 PASSWORD
                     TextFormField(
@@ -149,16 +165,16 @@ class _SignupScreenState extends State<SignupScreen> {
                       },
                     ),
 
-                    const SizedBox(height: 20),
+                    SizedBox(height: 19.h),
 
                     Text(
                       'We’ll send a verification code to your email so you can continue setting up your new account.',
                       style: AppTextTheme.paragraph,
                     ),
 
-                    const SizedBox(height: 15),
+                    SizedBox(height: 19.h),
 
-                    // 🟢 SEND OTP BUTTON
+                    // SEND OTP BUTTON
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -175,6 +191,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                         nameController.text,
                                         emailController.text,
                                         passwordController.text,
+                                        role!,
                                       ),
                                     );
                                   }
@@ -183,13 +200,13 @@ class _SignupScreenState extends State<SignupScreen> {
                       ],
                     ),
 
-                    const SizedBox(height: 30),
+                    SizedBox(height: 45.h),
 
                     // Google Button
                     AppButtonTheme.iconTextButton(
                       text: 'Continue With Google',
                       icon: Icons.g_mobiledata,
-                      iconSize: 40,
+                      iconSize: 40.sp,
                       gap: 10,
                       backgroundColor: AppColors.transparentBackground,
                       overlay: AppColors.greyColor,
@@ -199,27 +216,27 @@ class _SignupScreenState extends State<SignupScreen> {
                       onPressed: () {},
                     ),
 
-                    const SizedBox(height: 15),
+                    SizedBox(height: 19.h),
 
                     Row(
                       children: [
                         const Expanded(child: Divider()),
-                        const Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 8),
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 8.h),
                           child: Text('or continue with'),
                         ),
                         const Expanded(child: Divider()),
                       ],
                     ),
 
-                    const SizedBox(height: 15),
+                    SizedBox(height: 19.h),
 
                     // Login Button
                     AppButtonTheme.iconTextButton(
                       text: 'Login With Email',
                       icon: Icons.email,
                       iconColor: AppColors.whiteColor,
-                      iconSize: 30,
+                      iconSize: 30.sp,
                       gap: 30,
                       backgroundColor: AppColors.blackColor,
                       elevation: 1,
@@ -229,7 +246,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       },
                     ),
 
-                    const SizedBox(height: 10),
+                    SizedBox(height: 41.h),
                   ],
                 ),
               ),

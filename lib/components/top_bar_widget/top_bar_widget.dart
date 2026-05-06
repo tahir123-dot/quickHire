@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mobile/core/navigation/circle_button.dart';
@@ -18,16 +19,22 @@ class TopBarWidget extends StatelessWidget {
         Row(
           children: [
             CircleAvatar(
-              radius: 25,
+              radius: 25.r,
               backgroundImage: AssetImage("assets/images/user.png"),
             ),
             SizedBox(width: 10),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Morning!', style: TextStyle(fontSize: 10)),
+                Text('Morning!', style: TextStyle(fontSize: 13.sp)),
 
-                Text('Hi, Tahir', style: TextStyle(fontSize: 17)),
+                Text(
+                  'Hi, Tahir',
+                  style: TextStyle(
+                    fontSize: 19.sp,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
               ],
             ),
           ],
@@ -35,14 +42,23 @@ class TopBarWidget extends StatelessWidget {
         Row(
           children: [
             InkWell(
-              child: SvgPicture.asset("assets/icons/notification.svg"),
+              child: SvgPicture.asset(
+                "assets/icons/notification.svg",
+                width: 29.w,
+                height: 27.h,
+              ),
               onTap: () {
                 context.push(SharedRoutesConstant.notificationScreen);
               },
             ),
             SizedBox(width: 12),
             InkWell(
-              child: SvgPicture.asset("assets/icons/setting.svg"),
+              child: SvgPicture.asset(
+                "assets/icons/setting.svg",
+                width: 32.w,
+                height: 32.h,
+              ),
+
               onTap: () {
                 context.push(SharedRoutesConstant.settingScreen);
               },
@@ -167,7 +183,7 @@ class TopBarThreeThings extends StatelessWidget {
 
                 onSelected: (value) {
                   if (value == 'edit') {
-                   context.push(ProviderRoutesConstants.providerEditProfile);
+                    context.push(ProviderRoutesConstants.providerEditProfile);
                   } else if (value == 'delete') {
                     print('Delete clicked');
                   }
@@ -199,7 +215,9 @@ class TopBarThreeThings extends StatelessWidget {
             : InkWell(
                 child: SvgPicture.asset(imagePath),
                 onTap: () {
-                  isMenu? null:context.push(ProviderRoutesConstants.providerPayment);
+                  isMenu
+                      ? null
+                      : context.push(ProviderRoutesConstants.providerPayment);
                 },
               ),
       ],
@@ -230,16 +248,16 @@ class ProviderTopBarWidget extends StatelessWidget {
             Row(
               children: [
                 CircleAvatar(
-                  radius: 25,
+                  radius: 35.r,
                   backgroundImage: AssetImage("assets/images/user.png"),
                 ),
                 SizedBox(width: 10),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(providerName, style: TextStyle(fontSize: 17)),
+                    Text(providerName, style: TextStyle(fontSize: 21.sp)),
 
-                    Text(location, style: TextStyle(fontSize: 10)),
+                    Text(location, style: TextStyle(fontSize: 14.sp)),
                   ],
                 ),
               ],

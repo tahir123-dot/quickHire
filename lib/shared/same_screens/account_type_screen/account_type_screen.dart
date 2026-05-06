@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mobile/components/category/category.dart';
-import 'package:mobile/core/size_config/size_config.dart';
 import 'package:mobile/core/themes/app_text_theme.dart';
 import 'package:mobile/core/themes/colors.dart';
-import 'package:mobile/routes/professional_routes/professional_routes_constants.dart';
-import 'package:mobile/routes/user_routes/user_routes_constants.dart';
-import '../../../routes/shared_routes/shared_routes_constant.dart';
+import 'package:mobile/routes/auth/role.dart';
+import 'package:mobile/routes/shared_routes/shared_routes_constant.dart';
+import 'package:mobile/shared/bloc/blocimpl/cubitbloc.dart';
 
 class AccountTypeScreen extends StatelessWidget {
   const AccountTypeScreen({super.key});
@@ -16,23 +17,21 @@ class AccountTypeScreen extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
-          physics: BouncingScrollPhysics(),
-          padding: EdgeInsets.symmetric(
-            horizontal: SizeConfig.blockWidth * 8.0,
-          ),
+          physics: const BouncingScrollPhysics(),
+          padding: EdgeInsets.symmetric(horizontal: 33.w),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SizedBox(height: SizeConfig.blockHeight * 9),
-              SizedBox(
-                width: SizeConfig.blockWidth * 90,
-                child: Text(
-                  'How You Want to Use QuickHire',
-                  style: AppTextTheme.h1,
-                  textAlign: TextAlign.center,
-                ),
+              SizedBox(height: 146.h),
+
+              Text(
+                'How You Want to Use QuickHire',
+                style: AppTextTheme.h1,
+                textAlign: TextAlign.center,
               ),
-              SizedBox(height: 20),
+
+              SizedBox(height: 64.h),
+
+              // 🟢 USER
               Category(
                 title: "Book Local Services",
                 description:
@@ -41,10 +40,14 @@ class AccountTypeScreen extends StatelessWidget {
                 borderColor: AppColors.blackColor,
                 backgroundColor: AppColors.whiteColor,
                 onTap: () {
-                  context.go(UserRoutesConstants.userMainScreen);
+                  context.read<RoleCubit>().selectRole(Role.customer);
+                  context.go(SharedRoutesConstant.signupScreen);
                 },
               ),
-              SizedBox(height: 20),
+
+              SizedBox(height: 20.h),
+
+              // 🔵 PROVIDER
               Category(
                 title: "Provide Services",
                 description: "Earn money by offering your skills locally.",
@@ -52,10 +55,14 @@ class AccountTypeScreen extends StatelessWidget {
                 borderColor: AppColors.blackColor,
                 backgroundColor: AppColors.whiteColor,
                 onTap: () {
-                  context.go(SharedRoutesConstant.serviceCategoryScreen);
+                  context.read<RoleCubit>().selectRole(Role.serviceProvider);
+                  context.go(SharedRoutesConstant.signupScreen);
                 },
               ),
-              SizedBox(height: 20),
+
+              SizedBox(height: 20.h),
+
+              // 🟣 TEAM
               Category(
                 title: "Join as a Professional",
                 description:
@@ -64,9 +71,8 @@ class AccountTypeScreen extends StatelessWidget {
                 borderColor: AppColors.blackColor,
                 backgroundColor: AppColors.whiteColor,
                 onTap: () {
-                  context.go(
-                    ProfessionalRoutesConstants.professionalMainScreen,
-                  );
+                  context.read<RoleCubit>().selectRole(Role.member);
+                  context.go(SharedRoutesConstant.signupScreen);
                 },
               ),
             ],

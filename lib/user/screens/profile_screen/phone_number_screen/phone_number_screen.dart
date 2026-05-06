@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mobile/core/size_config/size_config.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import 'package:mobile/core/themes/app_button_theme.dart';
 import 'package:mobile/core/themes/colors.dart';
 
@@ -21,24 +22,26 @@ class _PhoneNumberScreenState extends State<PhoneNumberScreen> {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         backgroundColor: AppColors.whiteColor,
-        title: TopBarIconWithCenterText(pageName: 'Phone'),
+        title: const TopBarIconWithCenterText(pageName: 'Phone'),
       ),
       body: SafeArea(
         child: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
           padding: EdgeInsets.symmetric(
-            horizontal: SizeConfig.blockWidth * 4.0,
+            horizontal: 16.w, // was blockWidth * 4
           ),
-          physics: BouncingScrollPhysics(),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: SizeConfig.blockHeight * 9),
+              SizedBox(height: 36.h), // was blockHeight * 9
 
               SizedBox(
-                width: SizeConfig.blockWidth * 50,
+                width: 200.w, // approx 50%
                 child: Text('Phone Number', style: AppTextTheme.h1),
               ),
-              SizedBox(height: 25),
+
+              SizedBox(height: 25.h),
+
               TextFormField(
                 decoration: AppInputTheme.withIcon(
                   hint: 'Phone',
@@ -46,7 +49,8 @@ class _PhoneNumberScreenState extends State<PhoneNumberScreen> {
                 ),
               ),
 
-              SizedBox(height: 25),
+              SizedBox(height: 25.h),
+
               AppButtonTheme.iconTextButton(
                 text: 'Save',
                 icon: null,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import 'package:mobile/components/team_card/team_card.dart';
-import 'package:mobile/core/size_config/size_config.dart';
 import 'package:mobile/core/themes/app_text_theme.dart';
 
 import '../../../../../components/top_bar_widget/top_bar_widget.dart';
@@ -25,30 +26,33 @@ class _TeamListScreenState extends State<TeamListScreen> {
       body: SafeArea(
         child: SingleChildScrollView(
           scrollDirection: Axis.vertical,
-          physics: BouncingScrollPhysics(),
-          padding: EdgeInsets.all(SizeConfig.blockWidth * 4),
+          physics: const BouncingScrollPhysics(),
+          padding: EdgeInsets.symmetric(horizontal: 30.w),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: SizeConfig.blockHeight * 3),
-              SizedBox(
-                width: SizeConfig.blockWidth * 50,
-                child: Text('Team', style: AppTextTheme.h1),
-              ),
-              SizedBox(height: 15),
+              SizedBox(height: 42.h),
+
+              Text('Team', style: AppTextTheme.h1),
+              SizedBox(height: 10.h),
+
               Text(
                 "Customers can select them for bookings, but all payments and bookings stay with the shop.",
-                style: AppTextTheme.paragraph,
-                textAlign: TextAlign.start,
               ),
-              SizedBox(height: 40),
+
+              SizedBox(height: 60.h),
+
               TeamCard(actionText: "Delete"),
-              SizedBox(height: 20),
+              SizedBox(height: 28.h),
+
               TeamCard(actionText: "Delete"),
-              SizedBox(height: 20),
+              SizedBox(height: 28.h),
+
               TeamCard(actionText: "Delete"),
-              SizedBox(height: 20),
+              SizedBox(height: 28.h),
+
               TeamCard(actionText: "Delete"),
+              SizedBox(height: 20.h),
             ],
           ),
         ),

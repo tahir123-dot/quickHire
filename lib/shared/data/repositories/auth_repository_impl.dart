@@ -1,3 +1,4 @@
+import 'package:mobile/routes/auth/auth_service.dart';
 import 'package:mobile/shared/data/datasources/auth_data_sources.dart';
 import 'package:mobile/shared/data/dto/login.dart';
 import 'package:mobile/shared/data/dto/otp.dart';
@@ -18,8 +19,18 @@ class AuthRepositoryImpl implements AuthRepository {
   @override
   Future<bool> login(LoginDto dto) async {
     final VerifyOtpResponseModel response = await remote.login(dto);
-    await storage.saveToken(response.response.token);
+    final token = response.response.token;
+
+    await storage.saveToken(token);
+    await AuthService.setToken(token);
+
     return response.response.success;
+  }
+
+  // logout
+  @override
+  Future<void> deleteToken() async {
+    await storage.deleteToken();
   }
 
   // signup
@@ -34,7 +45,11 @@ class AuthRepositoryImpl implements AuthRepository {
   @override
   Future<bool> verifyOtp(OtpDto dto) async {
     final VerifyOtpResponseModel response = await remote.verifyOtp(dto);
-    await storage.saveToken(response.response.token);
+    final token = response.response.token;
+
+    await storage.saveToken(token);
+    await AuthService.setToken(token);
+
     return response.response.success;
   }
 
@@ -54,20 +69,24 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<void> updateServiceProvider(
-    String userId,
-    Map<String, dynamic> userData,
-  ) {
-    throw UnimplementedError();
+  Future<bool> createServiceProviderAccount(String userId) async {
+    final ResponseModelToken response = await remote
+        .createServiceProviderAccount(userId);
+    await storage.saveToken(response.token);
+    return response.success;
   }
 
   @override
-  Future<void> updateTeam(String teamId, Map<String, dynamic> userData) {
-    throw UnimplementedError();
+  Future<bool> createTeamAccount(String userId) async {
+    final ResponseModelToken response = await remote.createTeamAccount(userId);
+    await storage.saveToken(response.token);
+    return response.success;
   }
 
   @override
-  Future<void> updateUser(String userId, Map<String, dynamic> userData) {
-    throw UnimplementedError();
+  Future<bool> createUserAccount(String userId) async {
+    final ResponseModelToken response = await remote.createUserAccount(userId);
+    await storage.saveToken(response.token);
+    return response.success;
   }
 }

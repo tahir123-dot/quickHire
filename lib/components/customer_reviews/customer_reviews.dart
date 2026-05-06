@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mobile/core/themes/colors.dart';
 
 class CustomerReviews extends StatelessWidget {
@@ -14,13 +15,12 @@ class CustomerReviews extends StatelessWidget {
             children: [
               // Fixed Avatar
               CircleAvatar(
-                radius: 25,
+                radius: 25.r,
                 backgroundImage: AssetImage("assets/images/user.png"),
               ),
               SizedBox(width: 12),
               // Text Column
               Expanded(
-
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -31,8 +31,8 @@ class CustomerReviews extends StatelessWidget {
                         Text(
                           'Tahir',
                           style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
+                            fontWeight: FontWeight.w400,
+                            fontSize: 18.sp,
                           ),
                         ),
                         Row(
@@ -42,7 +42,7 @@ class CustomerReviews extends StatelessWidget {
                             (index) => Icon(
                               Icons.star,
                               color: AppColors.yellowRating,
-                              size: 15,
+                              size: 15.sp,
                             ),
                           ),
                         ),
@@ -52,19 +52,22 @@ class CustomerReviews extends StatelessWidget {
                     // Location
                     Text(
                       'Islamabad F6',
-                      style: TextStyle(fontSize: 13, color: Colors.grey[600]),
+                      style: TextStyle(
+                        fontSize: 13.sp,
+                        color: AppColors.lightgreyColor,
+                      ),
                     ),
                   ],
                 ),
               ),
             ],
           ),
-          SizedBox(height: 12),
+          SizedBox(height: 20.h),
           Text(
             'Lorem ipsum dolor sit amet, consectetur adipiscing elit. '
             'Pellentesque euismod, nisi vel consectetur euismod, nisl nisi consectetur nisi, '
             'eget consectetur nisl nisi eget nisl.',
-            style: TextStyle(fontSize: 13, color: Colors.grey[800]),
+            style: TextStyle(fontSize: 13.sp, color: AppColors.lightgreyColor),
           ),
           SizedBox(height: 20),
           Divider(height: 1, thickness: 1, color: AppColors.horizontalLine),

@@ -10,7 +10,8 @@ class FakeData {
       rating: 4.5,
       experience: 5.0,
       clients: 120,
-      description: "Professional barber with 5 years of experience.",
+      description:
+          "Expert in skin fades, beard shaping, and stylish haircuts. Fast service, clean setup, and top-rated results. Book your slot today for a premium grooming experience.",
       profileImage: "assets/images/user.png",
     ),
     ServicePreviewInfo(
@@ -33,7 +34,8 @@ class FakeData {
       rating: 4.5,
       experience: 5.0,
       clients: 120,
-      description: "Professional barber with 5 years of experience.",
+      description:
+          "Expert in skin fades, beard shaping, and stylish haircuts. Fast service, clean setup, and top-rated results. Book your slot today for a premium grooming experience.",
       profileImage: "assets/images/user.png",
     ),
     ServicePreviewInfo(
@@ -44,7 +46,8 @@ class FakeData {
       rating: 4.5,
       experience: 5.0,
       clients: 120,
-      description: "Professional barber with 5 years of experience.",
+      description:
+          "Expert in skin fades, beard shaping, and stylish haircuts. Fast service, clean setup, and top-rated results. Book your slot today for a premium grooming experience.",
       profileImage: "assets/images/user.png",
     ),
     ServicePreviewInfo(
@@ -55,7 +58,8 @@ class FakeData {
       rating: 4.5,
       experience: 5.0,
       clients: 120,
-      description: "Professional barber with 5 years of experience.",
+      description:
+          "Expert in skin fades, beard shaping, and stylish haircuts. Fast service, clean setup, and top-rated results. Book your slot today for a premium grooming experience.",
       profileImage: "assets/images/user.png",
     ),
   ];

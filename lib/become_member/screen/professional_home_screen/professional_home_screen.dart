@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mobile/core/themes/colors.dart';
 import '../../../components/booking/provider_booking_card.dart';
 import '../../../components/top_bar_widget/top_bar_widget.dart';
-import '../../../core/size_config/size_config.dart';
 
 class ProfessionalHomeScreen extends StatefulWidget {
   const ProfessionalHomeScreen({super.key});
@@ -23,12 +23,12 @@ class _ProfessionalHomeScreenState extends State<ProfessionalHomeScreen> {
         child: ListView(
           physics: BouncingScrollPhysics(),
           children: [
-            SizedBox(height: SizeConfig.blockHeight * 3),
+            SizedBox(height: 120.h), //SizeConfig.blockHeight * 3),
             Column(
               children: [
                 Padding(
                   padding: EdgeInsets.symmetric(
-                    horizontal: SizeConfig.blockWidth * 4.0,
+                    horizontal: 16.w, //SizeConfig.blockWidth * 4.0,
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,

@@ -16,20 +16,20 @@ abstract class AuthRepository {
   // login
   Future<bool> login(LoginDto dto);
 
+  // logout
+  Future<void> deleteToken();
+
   // forget password
   Future<void> forgetPassword(String email);
 
-  // user
-  Future<void> updateUser(String userId, Map<String, dynamic> userData);
+  // create user account
+  Future<bool> createUserAccount(String userId);
 
-  // service provider
-  Future<void> updateServiceProvider(
-    String userId,
-    Map<String, dynamic> userData,
-  );
+  // create service provider account
+  Future<bool> createServiceProviderAccount(String userId);
 
-  // team
-  Future<void> updateTeam(String teamId, Map<String, dynamic> userData);
+  // create team account
+  Future<bool> createTeamAccount(String userId);
 
   // switch role
   Future<void> switchRole(String userId, String newRole);

@@ -12,11 +12,7 @@ class ProviderMainScreen extends StatefulWidget {
 class _ProviderMainScreenState extends State<ProviderMainScreen> {
   int currentIndex = 0;
 
-  final screen = [
-    ProviderHomeScreen(),
-    ProviderBookingScreen(),
-    ProfileViewScreen(),
-  ];
+  final screen = [ProviderHomeScreen(), ProfileViewScreen()];
 
   List<IconData> iconItem = [Icons.home, Icons.book, Icons.person_rounded];
 

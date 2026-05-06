@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../core/themes/colors.dart';
 class StatBox extends StatelessWidget {
   final String value;
   final String label;
@@ -10,20 +10,17 @@ class StatBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(6.0),
-      decoration: BoxDecoration(
-        color: AppColors.transparentBackground,
-        borderRadius: BorderRadius.circular(10),
-      ),
+      padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 4.h),
+
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             value,
-            style: TextStyle(fontWeight: FontWeight.bold),
+            style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.bold),
           ),
           SizedBox(height: 4),
-          Text(label),
+          Text(label, style: TextStyle(fontSize: 12.sp)),
         ],
       ),
     );

@@ -1,10 +1,10 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mobile/core/injection/injection_container.dart';
 import 'package:mobile/core/navigation/circle_button.dart';
-import 'package:mobile/core/size_config/size_config.dart';
 import 'package:mobile/core/themes/app_input_theme.dart';
 import 'package:mobile/shared/bloc/blocimpl/authbloc.dart';
 import 'package:mobile/shared/bloc/event/auth_event.dart';
@@ -82,7 +82,8 @@ class _OtpScreenState extends State<OtpScreen> {
           ScaffoldMessenger.of(
             context,
           ).showSnackBar(SnackBar(content: Text(state.message)));
-          context.go(SharedRoutesConstant.accountTypeScreen);
+
+          context.go(SharedRoutesConstant.serviceCategoryScreen);
         }
 
         if (state is AuthError) {
@@ -92,46 +93,45 @@ class _OtpScreenState extends State<OtpScreen> {
         }
       },
       child: Scaffold(
+        appBar: AppBar(backgroundColor: Colors.white, elevation: 0),
         resizeToAvoidBottomInset: true,
         body: SafeArea(
           child: SingleChildScrollView(
             physics: BouncingScrollPhysics(),
-            padding: EdgeInsets.symmetric(
-              horizontal: SizeConfig.blockWidth * 8.0,
-            ),
+            padding: EdgeInsets.symmetric(horizontal: 33.w),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(height: SizeConfig.blockHeight * 15),
-                SizedBox(
-                  width: SizeConfig.blockWidth * 50,
-                  child: Text('Verify OTP', style: AppTextTheme.h1),
-                ),
-                SizedBox(height: 25),
+                SizedBox(height: 113.h),
+
+                Text('Verify OTP', style: AppTextTheme.h1),
+
+                SizedBox(height: 15.h),
                 Text(
                   'We sent an OTP to $email Enter it below to continue.',
                   style: AppTextTheme.paragraph,
                   textAlign: TextAlign.start,
                 ),
-                SizedBox(height: 20),
+                SizedBox(height: 25.h),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: List.generate(5, (index) {
                     return SizedBox(
-                      width: 50,
+                      width: 55.w,
+                      height: 62.h,
                       child: TextFormField(
                         controller: otpControllers[index],
                         decoration: AppInputTheme.forOTP(hint: '*'),
                         textAlign: TextAlign.center,
                         keyboardType: TextInputType.number,
                         maxLength: 1,
-                        style: TextStyle(fontSize: 18),
+                        style: TextStyle(fontSize: 20.sp),
                         // optional: onChanged etc
                       ),
                     );
                   }),
                 ),
-                SizedBox(height: 20),
+                SizedBox(height: 20.h),
 
                 // Resend OTP
                 RichText(
@@ -146,7 +146,7 @@ class _OtpScreenState extends State<OtpScreen> {
                         style: TextStyle(
                           color: AppColors.blueColor,
                           fontWeight: FontWeight.bold,
-                          fontSize: SizeConfig.blockWidth * 4.0,
+                          fontSize: 16.sp,
                         ),
                         recognizer: TapGestureRecognizer()
                           ..onTap = () {
@@ -164,7 +164,7 @@ class _OtpScreenState extends State<OtpScreen> {
                     ],
                   ),
                 ),
-                SizedBox(height: 40),
+                SizedBox(height: 369.h),
 
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -202,7 +202,7 @@ class _OtpScreenState extends State<OtpScreen> {
                     ),
                   ],
                 ),
-                SizedBox(height: 25),
+                SizedBox(height: 25.h),
               ],
             ),
           ),

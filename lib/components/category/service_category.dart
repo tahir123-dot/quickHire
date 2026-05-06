@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mobile/core/themes/colors.dart';
 
@@ -17,14 +18,14 @@ class ServiceCategory extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      borderRadius: BorderRadius.circular(12),
+      borderRadius: BorderRadius.circular(12.r),
       onTap: () {
         context.go(route);
       },
       child: Container(
-        width: 80,
-        height: 80,
-        padding: const EdgeInsets.all(10),
+        width: 160.w,
+        height: 134.h,
+        padding: EdgeInsets.symmetric(horizontal: 37.w, vertical: 18.h),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(14),
           border: Border.all(color: AppColors.blackColor),
@@ -33,11 +34,11 @@ class ServiceCategory extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(icon),
-            SizedBox(height: 10),
+            Icon(icon, size: 35.sp),
+            SizedBox(height: 18.h),
             Text(
               title,
-              style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
+              style: TextStyle(fontSize: 15.sp, fontWeight: FontWeight.w600),
             ),
           ],
         ),

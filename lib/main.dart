@@ -1,14 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import 'package:mobile/core/injection/injection_container.dart';
+import 'package:mobile/export_screen/screen_exports.dart';
+import 'package:mobile/provider/screens/edit_profile_screen/add_business_details/business_info_screen/business_banner_screen.dart';
+import 'package:mobile/provider/screens/edit_profile_screen/add_business_details/business_info_screen/business_details_screen.dart';
 import 'package:mobile/routes/app_routes.dart';
+import 'package:mobile/routes/auth/auth_service.dart';
+
 import 'package:mobile/shared/bloc/blocimpl/authbloc.dart';
+import 'package:mobile/shared/bloc/blocimpl/cubitbloc.dart';
+import 'package:mobile/utils/storage.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   await dotenv.load(fileName: "assets/.env");
+
   setup(); // GetIt init
+
+  /*final storage = getIt<IStorageService>();
+  final token = await storage.getToken();
+
+  if (token != null) {
+    await AuthService.setToken(token);
+  }*/
+
   runApp(const MyApp());
 }
 
@@ -17,12 +36,29 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => getIt<AuthBloc>(),
-      child: MaterialApp.router(
-        debugShowCheckedModeBanner: false,
-        routerConfig: AppRoutes().router,
-        theme: ThemeData(scaffoldBackgroundColor: Colors.white),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<AuthBloc>(create: (_) => getIt<AuthBloc>()),
+        BlocProvider<RoleCubit>(create: (_) => RoleCubit()),
+      ],
+
+      // 🔥 ScreenUtil wrapper added here
+      child: ScreenUtilInit(
+        designSize: const Size(402, 874),
+        minTextAdapt: true,
+        splitScreenMode: true,
+
+        builder: (context, child) {
+          return /*MaterialApp.router(
+            debugShowCheckedModeBanner: false,
+            routerConfig: AppRoutes().router,
+            theme: ThemeData(scaffoldBackgroundColor: Colors.white),
+          );*/ MaterialApp(
+            debugShowCheckedModeBanner: false,
+            theme: ThemeData(scaffoldBackgroundColor: Colors.white),
+            home: AddAvailabilityScreen(),
+          );
+        },
       ),
     );
   }

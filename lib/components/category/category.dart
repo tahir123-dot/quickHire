@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mobile/core/size_config/size_config.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mobile/core/themes/colors.dart';
 
 class Category extends StatelessWidget {
@@ -31,28 +31,28 @@ class Category extends StatelessWidget {
       onTap: onTap,
       borderRadius: BorderRadius.circular(14),
       child: Container(
-        height: SizeConfig.blockHeight * 20,
+        height: 144.h, //SizeConfig.blockHeight * 20,
         width: width,
-        padding: const EdgeInsets.all(10),
+        padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 7.h),
         decoration: BoxDecoration(
           color: backgroundColor,
-          borderRadius: BorderRadius.circular(14),
+          borderRadius: BorderRadius.circular(9.r),
           border: Border.all(color: borderColor),
         ),
         child: Row(
           children: [
             // Image
             ClipRRect(
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(10.r),
               child: Image.asset(
                 image,
-                width: 90,
-                height: 90,
+                width: 90.w,
+                height: 74.h,
                 fit: BoxFit.cover,
               ),
             ),
 
-            const SizedBox(width: 18),
+            SizedBox(width: 13.w),
 
             // Text
             Expanded(
@@ -62,21 +62,18 @@ class Category extends StatelessWidget {
                 children: [
                   Text(
                     title,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontSize: 18,
+                      fontSize: 17.sp,
                     ),
                   ),
                   const SizedBox(height: 4),
-                  Text(description, style: const TextStyle(fontSize: 13)),
+                  Text(description, style: TextStyle(fontSize: 10.sp)),
                 ],
               ),
             ),
-
-
           ],
         ),
-
       ),
     );
   }

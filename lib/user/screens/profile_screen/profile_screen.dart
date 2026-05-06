@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:mobile/routes/user_routes/user_routes_constants.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../components/setting/list_widget.dart';
-import '../../../core/size_config/size_config.dart';
+import 'package:mobile/components/setting/list_widget.dart';
+import 'package:mobile/components/top_bar_widget/top_bar_widget.dart';
 import '../../../routes/shared_routes/shared_routes_constant.dart';
+import 'package:mobile/routes/user_routes/user_routes_constants.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -13,66 +14,77 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  List<Map<String, String>> settingsListOne = [
-    {"title": "Address", "route": SharedRoutesConstant.addressScreen},
-    {"title": "Phone", "route": UserRoutesConstants.userPhone},
-    {"title": "Change Password", "route": SharedRoutesConstant.passwordScreen},
+  List<ListItemModel> settingsListOne = [
+    ListItemModel(title: "Address", route: SharedRoutesConstant.addressScreen),
+    ListItemModel(title: "Phone", route: UserRoutesConstants.userPhone),
+    ListItemModel(
+      title: "Change Password",
+      route: SharedRoutesConstant.passwordScreen,
+    ),
   ];
 
-  List<Map<String, String>> settingsListTwo = [
-    {"title": "My Payments", "route": SharedRoutesConstant.appVersionScreen},
+  List<ListItemModel> settingsListTwo = [
+    ListItemModel(
+      title: "My Payments",
+      route: SharedRoutesConstant.appVersionScreen,
+    ),
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        title: TopBarIconWithCenterText(pageName: "Profile"),
+      ),
       body: SafeArea(
-        child: SingleChildScrollView(
-          scrollDirection: Axis.vertical,
-          padding: EdgeInsets.symmetric(
-            horizontal: SizeConfig.blockWidth * 4.0,
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Center(
-                child: Column(
-                  children: [
-                    SizedBox(height: SizeConfig.blockHeight * 6),
-                    Text(
-                      "Profile",
-                      style: TextStyle(
-                        fontSize: 19,
-                        fontWeight: FontWeight.w600,
+        child: ListView(
+          padding: EdgeInsets.symmetric(horizontal: 43.w),
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Center(
+                  child: Column(
+                    children: [
+                      SizedBox(height: 71.h),
+                      CircleAvatar(
+                        radius: 80.r,
+                        backgroundImage: const AssetImage(
+                          "assets/images/user.png",
+                        ),
                       ),
-                    ),
-                    SizedBox(height: 5),
-                    CircleAvatar(
-                      radius: 40,
-                      backgroundImage: AssetImage("assets/images/user.png"),
-                    ),
-                    SizedBox(height: 5),
-                    Text(
-                      "Tahir Rashid",
-                      style: TextStyle(
-                        fontSize: 19,
-                        fontWeight: FontWeight.bold,
+                      SizedBox(height: 25.h),
+                      Text(
+                        "Tahir Rashid",
+                        style: TextStyle(
+                          fontSize: 27.sp,
+                          fontWeight: FontWeight.normal,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-              SizedBox(height: 24),
-              Text('Contact Info', style: TextStyle(fontSize: 19)),
-              SizedBox(height: 16),
-              ListWidget(items: settingsListOne),
 
-              SizedBox(height: 16),
-              Text('Activity', style: TextStyle(fontSize: 19)),
-              SizedBox(height: 16),
-              ListWidget(items: settingsListTwo),
-            ],
-          ),
+                SizedBox(height: 24.h),
+
+                Text('Contact Info', style: TextStyle(fontSize: 19.sp)),
+
+                SizedBox(height: 16.h),
+
+                ListWidget(items: settingsListOne),
+
+                SizedBox(height: 16.h),
+
+                Text('Activity', style: TextStyle(fontSize: 19.sp)),
+
+                SizedBox(height: 16.h),
+
+                ListWidget(items: settingsListTwo),
+              ],
+            ),
+          ],
         ),
       ),
     );

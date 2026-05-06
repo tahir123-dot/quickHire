@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mobile/components/top_bar_widget/top_bar_widget.dart';
 import 'package:mobile/core/themes/app_button_theme.dart';
 import 'package:mobile/core/themes/app_input_theme.dart';
 
-import '../../../core/size_config/size_config.dart';
 import '../../../core/themes/colors.dart';
 
 class AddressScreen extends StatefulWidget {
@@ -26,14 +26,12 @@ class _AddressScreenState extends State<AddressScreen> {
       body: SafeArea(
         child: ListView(
           children: [
-            SizedBox(height: 25),
+            SizedBox(height: 25.h),
             Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: SizeConfig.blockWidth * 8.0,
-              ),
+              padding: EdgeInsets.symmetric(horizontal: 33.w),
               child: Column(
                 children: [
-                  SizedBox(height: 45),
+                  SizedBox(height: 45.h),
                   TextFormField(
                     decoration: AppInputTheme.searchBar(
                       hint: 'Search Location',
@@ -45,22 +43,22 @@ class _AddressScreenState extends State<AddressScreen> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 20),
+                  SizedBox(height: 20.h),
                   Container(
                     width: MediaQuery.of(context).size.width * 0.92,
                     height: MediaQuery.of(context).size.height * 0.35,
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(12.r),
                     ),
                     child: ClipRRect(
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(12.r),
                       child: Image.asset(
                         "assets/images/hero.png",
                         fit: BoxFit.cover,
                       ),
                     ),
                   ),
-                  SizedBox(height: 25),
+                  SizedBox(height: 25.h),
                   AppButtonTheme.iconTextButton(
                     text: 'Choose Current Location',
                     icon: Icons.location_on_outlined,
@@ -69,7 +67,7 @@ class _AddressScreenState extends State<AddressScreen> {
                     sideColor: AppColors.purpleLight,
                     onPressed: () => print('Location Choose'),
                   ),
-                  SizedBox(height: 15),
+                  SizedBox(height: 15.h),
                   AppButtonTheme.iconTextButton(
                     text: 'Save Address',
                     backgroundColor: AppColors.blackColor,
@@ -77,7 +75,7 @@ class _AddressScreenState extends State<AddressScreen> {
                     icon: null,
                     onPressed: () => print('Address Saved'),
                   ),
-                  SizedBox(height: 10),
+                  SizedBox(height: 10.h),
                 ],
               ),
             ),

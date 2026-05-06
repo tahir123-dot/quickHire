@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
-import 'package:mobile/components/service_offer/service_list.dart';
 import 'package:mobile/core/themes/colors.dart';
 import 'package:mobile/routes/provider_routes/provider_routes_constants.dart';
-import '../../core/size_config/size_config.dart';
 import 'fake_data.dart';
 
 class ServicePreview extends StatefulWidget {
@@ -14,15 +13,6 @@ class ServicePreview extends StatefulWidget {
 }
 
 class _ServicePreviewState extends State<ServicePreview> {
-  final services = [
-    'Haircut',
-    'Shave',
-    'Massage',
-    'Facial',
-    'Facial',
-    'Facial',
-  ];
-
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
@@ -35,18 +25,22 @@ class _ServicePreviewState extends State<ServicePreview> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             InkWell(
-              onTap: (){
+              onTap: () {
                 context.push(ProviderRoutesConstants.providerProfileView);
               },
               child: Column(
                 children: [
                   ListTile(
                     leading: CircleAvatar(
+                      radius: 25.r,
                       backgroundImage: AssetImage(provider.profileImage),
                     ),
                     title: Row(
                       children: [
-                        Text(provider.providerName),
+                        Text(
+                          provider.providerName,
+                          style: TextStyle(fontSize: 17.sp),
+                        ),
                         SizedBox(width: 5),
                         Icon(
                           Icons.verified,
@@ -55,75 +49,78 @@ class _ServicePreviewState extends State<ServicePreview> {
                         ),
                       ],
                     ),
-                    subtitle: Text(provider.location),
+
+                    subtitle: Text(
+                      provider.location,
+                      style: TextStyle(
+                        fontSize: 13.sp,
+                        color: AppColors.lightgreyColor,
+                      ),
+                    ),
                     trailing: ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppColors.blackColor,
                         shadowColor: Colors.transparent,
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(50),
+                          borderRadius: BorderRadius.circular(50.r),
                         ),
-                        fixedSize: Size(90, 10),
+                        fixedSize: Size(106.w, 47.h),
                       ),
                       onPressed: () {
-                        context.push(ProviderRoutesConstants.providerProfileView);
+                        context.push(
+                          ProviderRoutesConstants.providerProfileView,
+                        );
                       },
-                      child: Text('Book', style: TextStyle(color: AppColors.whiteColor)),
+                      child: Text(
+                        'Book',
+                        style: TextStyle(
+                          fontSize: 14.sp,
+                          color: AppColors.whiteColor,
+                        ),
+                      ),
                     ),
                   ),
-                  SizedBox(height: 6),
+                  SizedBox(height: 10.h),
 
                   Padding(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: SizeConfig.blockWidth * 4.0,
-                    ),
+                    padding: EdgeInsets.symmetric(horizontal: 20.w),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         /// Category
                         Text(
                           provider.categoryName,
-                          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                        ),
-
-                        SizedBox(height: 8),
-
-                        /// Services (wrap + rounded)
-                        SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                          child: Row(
-                            children: List.generate(
-                              services.length,
-                                  (index) => Padding(
-                                padding: const EdgeInsets.only(right: 6),
-                                child: ServiceList(serviceName: services[index]),
-                              ),
-                            ),
+                          style: TextStyle(
+                            fontSize: 16.sp,
+                            fontWeight: FontWeight.w500,
                           ),
                         ),
 
-                        SizedBox(height: 15),
-
+                        SizedBox(height: 12.h),
                         Container(
                           height: 1,
                           width: double.infinity,
                           color: AppColors.horizontalLine,
                         ),
 
-                        SizedBox(height: 15),
+                        SizedBox(height: 14.h),
 
                         /// 3 Columns Info
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+
                           children: [
                             Row(
                               children: [
                                 Icon(
                                   Icons.star,
-                                  size: 15,
+                                  size: 15.sp,
                                   color: AppColors.darkBlueColor,
                                 ),
-                                Text("${provider.rating} (876) "),
+                                Text(
+                                  "${provider.rating} (876) ",
+                                  style: TextStyle(fontSize: 14.sp),
+                                ),
                               ],
                             ),
                             Container(
@@ -133,7 +130,10 @@ class _ServicePreviewState extends State<ServicePreview> {
                             ),
                             Row(
                               children: [
-                                Text("${provider.experience} Years Experience"),
+                                Text(
+                                  "${provider.experience} Years Experience",
+                                  style: TextStyle(fontSize: 14.sp),
+                                ),
                               ],
                             ),
                             Container(
@@ -141,27 +141,40 @@ class _ServicePreviewState extends State<ServicePreview> {
                               width: 1,
                               color: AppColors.horizontalLine,
                             ),
-                            Row(children: [Text("${provider.clients}+ Clients")]),
+                            Row(
+                              children: [
+                                Text(
+                                  "${provider.clients}+ Clients",
+                                  style: TextStyle(fontSize: 14.sp),
+                                ),
+                              ],
+                            ),
                           ],
                         ),
 
-                        SizedBox(height: 15),
+                        SizedBox(height: 28.h),
 
                         /// Description
                         Container(
                           width: double.infinity,
-                          padding: EdgeInsets.all(10),
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 10.w,
+                            vertical: 10.h,
+                          ),
                           decoration: BoxDecoration(
                             color: AppColors.paragraphBackground,
-                            borderRadius: BorderRadius.circular(8),
+                            borderRadius: BorderRadius.circular(7.r),
                           ),
                           child: Text(
                             provider.description,
-                            style: TextStyle(color: AppColors.blackColor),
+                            style: TextStyle(
+                              color: AppColors.lightgreyColor,
+                              fontSize: 13.sp,
+                            ),
                           ),
                         ),
 
-                        SizedBox(height: 25),
+                        SizedBox(height: 25.h),
                       ],
                     ),
                   ),
@@ -174,7 +187,7 @@ class _ServicePreviewState extends State<ServicePreview> {
               width: double.infinity,
               color: AppColors.horizontalLine,
             ),
-            SizedBox(height: 25),
+            SizedBox(height: 16.h),
           ],
         );
       },

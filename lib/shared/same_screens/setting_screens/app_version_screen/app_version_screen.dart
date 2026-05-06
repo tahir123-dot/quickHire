@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../components/setting/list_widget.dart';
 import '../../../../components/top_bar_widget/top_bar_widget.dart';
-import '../../../../core/size_config/size_config.dart';
 import '../../../../core/themes/colors.dart';
 
 class AppVersionScreen extends StatefulWidget {
@@ -13,9 +13,14 @@ class AppVersionScreen extends StatefulWidget {
 }
 
 class _AppVersionScreenState extends State<AppVersionScreen> {
-  List<Map<String, String>> language = [
-    {"title": "Version 1.0.0"},
-  ];
+  late final List<ListItemModel> versionList;
+
+  @override
+  void initState() {
+    super.initState();
+
+    versionList = [ListItemModel(title: "Version 1.0.0")];
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,13 +30,21 @@ class _AppVersionScreenState extends State<AppVersionScreen> {
         backgroundColor: AppColors.whiteColor,
         title: const TopBarIconWithCenterText(pageName: 'App Version'),
       ),
+
       body: SafeArea(
         child: SingleChildScrollView(
-          physics: BouncingScrollPhysics(),
-          padding: EdgeInsets.symmetric(
-            horizontal: SizeConfig.blockWidth * 4.0,
+          physics: const BouncingScrollPhysics(),
+          padding: EdgeInsets.symmetric(horizontal: 43.w),
+
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(height: 43.h),
+              Text('Latest Version', style: TextStyle(fontSize: 19.sp)),
+              SizedBox(height: 16.h),
+              ListWidget(items: versionList),
+            ],
           ),
-          child: Column(crossAxisAlignment:CrossAxisAlignment.start,children: [ListWidget(items: language)]),
         ),
       ),
     );

@@ -4,13 +4,16 @@ class AuthInitial extends AuthState {}
 
 class AuthLoading extends AuthState {}
 
-// ================= SIGNUP =================
+// ================= Login =================
 class LoginSuccess extends AuthState {
   final String message;
   LoginSuccess({required this.message});
 }
 
-
+class LogoutSuccess extends AuthState {
+  final String message;
+  LogoutSuccess({required this.message});
+}
 
 // ================= SIGNUP =================
 class SignupSuccess extends AuthState {
@@ -36,4 +39,25 @@ class AuthError extends AuthState {
   final String message;
 
   AuthError(this.message);
+}
+
+// user account creation success
+class UserAccountCreationSuccess extends AuthState {
+  final String message;
+
+  UserAccountCreationSuccess({required this.message});
+}
+
+// service provider account creation success
+class ServiceProviderAccountCreationSuccess extends AuthState {
+  final String message;
+
+  ServiceProviderAccountCreationSuccess({required this.message});
+}
+
+// team account creation success
+class TeamAccountCreationSuccess extends AuthState {
+  final String message;
+
+  TeamAccountCreationSuccess({required this.message});
 }

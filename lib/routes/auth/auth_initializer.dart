@@ -1,4 +1,4 @@
-import 'package:mobile/routes/auth/auth_service.dart';
+/*import 'package:mobile/routes/auth/auth_service.dart';
 import 'package:mobile/utils/storage.dart';
 
 class AuthInitializer {
@@ -6,3 +6,4 @@ class AuthInitializer {
     await AuthService.init(storage);
   }
 }
+*/

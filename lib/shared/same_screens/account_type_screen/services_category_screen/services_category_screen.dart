@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mobile/components/category/service_category.dart';
-import '../../../../core/size_config/size_config.dart';
 import '../../../../core/themes/app_text_theme.dart';
 import '../../../../routes/provider_routes/provider_routes_constants.dart';
 
@@ -13,26 +13,23 @@ class ServicesCategoryScreen extends StatelessWidget {
       body: SafeArea(
         child: SingleChildScrollView(
           physics: BouncingScrollPhysics(),
-          padding: EdgeInsets.symmetric(
-            horizontal: SizeConfig.blockWidth * 8.0,
-          ),
+          padding: EdgeInsets.symmetric(horizontal: 33.w),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: SizeConfig.blockHeight * 9),
-              SizedBox(
-                width: SizeConfig.blockWidth * 90,
-                child: Text(
-                  'Offer your Services',
-                  style: AppTextTheme.h1,
-                  textAlign: TextAlign.start,
-                ),
+              SizedBox(height: 93.h),
+
+              Text(
+                'Choose a category that represents your business',
+                style: AppTextTheme.h1,
+                textAlign: TextAlign.start,
               ),
-              SizedBox(height: 20),
+
+              SizedBox(height: 35.h),
               Wrap(
-                spacing: 15,
-                runSpacing: 12,
+                spacing: 10.w,
+                runSpacing: 12.h,
                 children: [
                   ServiceCategory(
                     title: 'Barber',

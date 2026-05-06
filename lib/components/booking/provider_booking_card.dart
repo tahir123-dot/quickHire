@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mobile/routes/provider_routes/provider_routes_constants.dart';
 import '../../core/themes/colors.dart';
@@ -34,128 +35,73 @@ class ProviderBookingCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // ✅ User info + Cancel button
+                  //User info + Cancel button
                   ListTile(
                     contentPadding: EdgeInsets.all(0),
                     leading: CircleAvatar(
-                      radius: 30,
+                      radius: 30.r,
                       backgroundImage: AssetImage("assets/images/user.png"),
                     ),
                     title: Row(
                       children: [
-                        Text("Tahir Rashid"),
+                        Text("Tahir Rashid", style: TextStyle(fontSize: 17.sp)),
                         SizedBox(width: 5),
                         Icon(
                           Icons.verified,
                           color: AppColors.darkBlueColor,
-                          size: 15,
+                          size: 15.sp,
                         ),
                       ],
                     ),
-                    subtitle: Text("Islamabad F6"),
+                    subtitle: Text(
+                      "Islamabad F6",
+                      style: TextStyle(fontSize: 13.sp),
+                    ),
                     trailing: ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppColors.blackColor,
                         shadowColor: Colors.transparent,
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(50),
+                          borderRadius: BorderRadius.circular(50.r),
                         ),
-                        fixedSize: Size(100, 10),
+                        fixedSize: Size(106.w, 47.h),
                       ),
                       onPressed: () {
-                        print('booking cancel');
+                        print("Cancel Booking");
                       },
                       child: Text(
                         'Cancel',
-                        style: TextStyle(color: AppColors.whiteColor),
+                        style: TextStyle(
+                          fontSize: 14.sp,
+                          color: AppColors.whiteColor,
+                        ),
                       ),
                     ),
                   ),
                   SizedBox(height: 6),
 
-                  // user earning and total bookings counts
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Container(
-                          padding: EdgeInsets.all(6.0),
-                          decoration: BoxDecoration(
-                            color: AppColors.transparentBackground,
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                '400k',
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              ),
-                              SizedBox(height: 4),
-                              Text('Total Earning'),
-                            ],
-                          ),
-                        ),
-                      ),
-                      SizedBox(width: 10),
-                      Expanded(
-                        child: Container(
-                          padding: EdgeInsets.all(6.0),
-                          decoration: BoxDecoration(
-                            color: AppColors.transparentBackground,
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                '400k',
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              ),
-                              SizedBox(height: 4),
-                              Text('Total Earning'),
-                            ],
-                          ),
-                        ),
-                      ),
-                      SizedBox(width: 10),
-                      Expanded(
-                        child: Container(
-                          padding: EdgeInsets.all(6.0),
-                          decoration: BoxDecoration(
-                            color: AppColors.transparentBackground,
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                '400k',
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              ),
-                              SizedBox(height: 4),
-                              Text('Total Earning'),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 6),
+                  // Date and Time info
 
-                  // ✅ Date and Time info
+                  // date and time
                   Row(
                     children: [
-                      const Icon(Icons.calendar_month, size: 16),
-                      const SizedBox(width: 4),
-                      Text(date),
+                      Icon(Icons.calendar_month, size: 20.sp),
+                      SizedBox(width: 4.w),
+                      Text(
+                        'Tuesday, 16 December',
+                        style: TextStyle(fontSize: 16.sp),
+                      ),
                     ],
                   ),
-                  const SizedBox(height: 4),
+                  SizedBox(height: 8.h),
                   Row(
                     children: [
-                      const Icon(Icons.watch_later_outlined, size: 16),
-                      const SizedBox(width: 4),
-                      Text("$time ($duration)"),
+                      Icon(Icons.watch_later_outlined, size: 20.sp),
+                      SizedBox(width: 4.w),
+                      Text(
+                        "9:30-10:05 am (35 mins duration)",
+                        style: TextStyle(fontSize: 16.sp),
+                      ),
                     ],
                   ),
 
@@ -165,7 +111,10 @@ class ProviderBookingCard extends StatelessWidget {
 
                   Text(
                     "Pkr 300",
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                      fontSize: 13.sp,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ],
               ),

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mobile/components/button/bullet_text.dart';
 import 'package:mobile/core/themes/app_button_theme.dart';
 import 'package:mobile/core/themes/app_input_theme.dart';
 import 'package:mobile/core/themes/app_text_theme.dart';
 import 'package:mobile/core/themes/colors.dart';
-import '../../../../core/size_config/size_config.dart';
 import '../../../../routes/user_routes/user_routes_constants.dart';
 
 class PasswordScreen extends StatefulWidget {
@@ -23,37 +23,33 @@ class _PasswordScreenState extends State<PasswordScreen> {
       body: SafeArea(
         child: SingleChildScrollView(
           physics: BouncingScrollPhysics(),
-          padding: EdgeInsets.symmetric(
-            horizontal: SizeConfig.blockWidth * 8.0,
-          ),
+          padding: EdgeInsets.symmetric(horizontal: 33.w),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: SizeConfig.blockHeight * 9),
-              SizedBox(
-                width: SizeConfig.blockWidth * 50,
-                child: Text('Create Your Password', style: AppTextTheme.h1),
-              ),
-              SizedBox(height: 25),
+              SizedBox(height: 113.h),
+              Text('Create Your\n Password', style: AppTextTheme.h1),
+
+              SizedBox(height: 25.h),
               TextFormField(
                 decoration: AppInputTheme.withIcon(
                   hint: 'Password',
                   icon: Icons.lock,
                 ),
               ),
-              SizedBox(height: 15),
+              SizedBox(height: 19.h),
               TextFormField(
                 decoration: AppInputTheme.withIcon(
                   hint: 'Confirm Password',
                   icon: Icons.lock,
                 ),
               ),
-              SizedBox(height: 30),
+              SizedBox(height: 45.h),
               BulletText(text: 'At least 8 characters'),
               BulletText(text: 'One uppercase letter'),
               BulletText(text: 'One number'),
               BulletText(text: 'One symbol'),
-              SizedBox(height: 20),
+              SizedBox(height: 53.h),
               AppButtonTheme.iconTextButton(
                 text: 'Continue',
                 icon: null,
@@ -67,11 +63,13 @@ class _PasswordScreenState extends State<PasswordScreen> {
                   context.go(UserRoutesConstants.userMainScreen);
                 },
               ),
-              SizedBox(height: 20),
-              Text(
-                'Your password is encrypted and kept secure. Your password is encrypted and kept secure.',
-                style: AppTextTheme.paragraph,
-                textAlign: TextAlign.center,
+              SizedBox(height: 30.h),
+              Center(
+                child: Text(
+                  'Your password is encrypted\n and kept secure.',
+                  style: AppTextTheme.paragraph,
+                  textAlign: TextAlign.center,
+                ),
               ),
             ],
           ),

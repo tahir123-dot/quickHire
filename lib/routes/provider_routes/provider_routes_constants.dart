@@ -4,7 +4,6 @@ class ProviderRoutesConstants {
   static const String providerAddCampaign = "/providerAddCampaign";
   static const String providerAdsPlan = "/providerAdsPlan";
   static const String providerHome = "/providerHome";
-  static const String providerBooking = "/providerBooking";
   static const String providerBookingDetails = "/providerBookingDetails";
   static const String providerProfile = "/providerProfile";
   static const String addServiceScreen = "/addServiceScreen";

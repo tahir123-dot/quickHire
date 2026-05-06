@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mobile/core/themes/colors.dart';
 
 class CategoryList extends StatelessWidget {
@@ -18,10 +19,15 @@ class CategoryList extends StatelessWidget {
     return ElevatedButton(
       onPressed: onTap,
       style: ElevatedButton.styleFrom(
-        backgroundColor: isActive ? AppColors.blackColor : AppColors.searchBarBackground,
+        minimumSize: Size(96.w, 37.h),
+        backgroundColor: isActive
+            ? AppColors.lightgreyColor
+            : AppColors.searchBarBackground,
         shadowColor: Colors.transparent,
 
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(50.r),
+        ),
       ),
       child: Text(
         categoryName,

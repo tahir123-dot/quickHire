@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import 'package:mobile/core/themes/app_button_theme.dart';
 import 'package:mobile/core/themes/app_input_theme.dart';
 import 'package:mobile/routes/provider_routes/provider_routes_constants.dart';
 
 import '../../../../components/top_bar_widget/top_bar_widget.dart';
-import '../../../../core/size_config/size_config.dart';
 import '../../../../core/themes/app_text_theme.dart';
 import '../../../../core/themes/colors.dart';
 
@@ -27,44 +28,50 @@ class _AddTeamMemberScreenState extends State<AddTeamMemberScreen> {
       ),
       body: SafeArea(
         child: SingleChildScrollView(
-          physics: BouncingScrollPhysics(),
-          padding: EdgeInsets.symmetric(
-            horizontal: SizeConfig.blockWidth * 8.0,
-          ),
+          physics: const BouncingScrollPhysics(),
+          padding: EdgeInsets.symmetric(horizontal: 30.w),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: SizeConfig.blockHeight * 9),
+              SizedBox(height: 42.h),
 
-              SizedBox(
-                width: SizeConfig.blockWidth * 50,
-                child: Text('Team Members', style: AppTextTheme.h1),
-              ),
-              SizedBox(height: 15),
+              Text('Team Members', style: AppTextTheme.h1),
+
+              SizedBox(height: 15.h),
+
               Text(
                 "They work under your shop and bookings will be managed by the shop.",
-                style: AppTextTheme.paragraph,
-                textAlign: TextAlign.start,
               ),
-              SizedBox(height: 24),
-              CircleAvatar(
-                radius: 50,
-                backgroundImage: AssetImage("assets/images/user.png"),
-              ),
-              SizedBox(height: 24),
-              Text('Name'),
+
+              SizedBox(height: 24.h),
+
+              Text('Name', style: TextStyle(fontSize: 14.sp)),
+              SizedBox(height: 6.h),
               TextFormField(
                 decoration: AppInputTheme.withIcon(
-                  hint: 'Full Name',
-                  icon: Icons.person_rounded,
+                  hint: 'Enter Email',
+                  icon: Icons.email,
                 ),
               ),
-              SizedBox(height: 25),
+
+              SizedBox(height: 350.h),
+
               AppButtonTheme.iconTextButton(
-                text: 'Add',
+                text: 'Send Invite',
                 icon: null,
                 backgroundColor: AppColors.blackColor,
                 textColor: AppColors.whiteColor,
+                onPressed: () {
+                  print('move to next selectProfessional Screen');
+                  context.push(ProviderRoutesConstants.selectProfessional);
+                },
+              ),
+              SizedBox(height: 35.h),
+              AppButtonTheme.iconTextButton(
+                text: 'View Team ',
+                icon: null,
+                backgroundColor: AppColors.whiteColor,
+                textColor: AppColors.blackColor,
                 onPressed: () {
                   print('move to next selectProfessional Screen');
                   context.push(ProviderRoutesConstants.selectProfessional);

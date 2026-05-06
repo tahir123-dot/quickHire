@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mobile/components/setting/list_widget.dart';
 
 import '../../../../components/top_bar_widget/top_bar_widget.dart';
-import '../../../../core/size_config/size_config.dart';
 import '../../../../core/themes/colors.dart';
 
 class LanguageScreen extends StatefulWidget {
@@ -13,10 +13,17 @@ class LanguageScreen extends StatefulWidget {
 }
 
 class _LanguageScreenState extends State<LanguageScreen> {
-  List<Map<String, String>> language = [
-    {"title": "English"},
-    {"title": "Urdu"},
-  ];
+  late final List<ListItemModel> languageList;
+
+  @override
+  void initState() {
+    super.initState();
+
+    languageList = [
+      ListItemModel(title: "English"),
+      ListItemModel(title: "Urdu"),
+    ];
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,13 +33,21 @@ class _LanguageScreenState extends State<LanguageScreen> {
         backgroundColor: AppColors.whiteColor,
         title: const TopBarIconWithCenterText(pageName: 'Language'),
       ),
+
       body: SafeArea(
         child: SingleChildScrollView(
-          physics: BouncingScrollPhysics(),
-          padding: EdgeInsets.symmetric(
-            horizontal: SizeConfig.blockWidth * 4.0,
+          physics: const BouncingScrollPhysics(),
+          padding: EdgeInsets.symmetric(horizontal: 43.w),
+
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(height: 43.h),
+              Text('Select App Language', style: TextStyle(fontSize: 19.sp)),
+              SizedBox(height: 16.h),
+              ListWidget(items: languageList),
+            ],
           ),
-          child: Column(crossAxisAlignment: CrossAxisAlignment.start,children: [ListWidget(items: language)]),
         ),
       ),
     );

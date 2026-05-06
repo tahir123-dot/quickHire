@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import '../themes/colors.dart';
 
@@ -31,7 +32,7 @@ class CircleButton extends StatelessWidget {
         }
       },
       child: CircleAvatar(
-        radius: 24,
+        radius: 29.r,
         backgroundColor: backgroundColor,
         child: Icon(icon, color: iconColor),
       ),

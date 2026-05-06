@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mobile/components/category/filter_category/category_list.dart';
-import '../../../core/size_config/size_config.dart';
 
 class CategorySection extends StatefulWidget {
   final List<String> categories;
-  const CategorySection({super.key,required this.categories});
+  const CategorySection({super.key, required this.categories});
 
   @override
   State<CategorySection> createState() => _CategorySectionState();
@@ -13,14 +13,14 @@ class CategorySection extends StatefulWidget {
 class _CategorySectionState extends State<CategorySection> {
   int activeIndex = 0;
 
-
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 37,
+      height: 45.h,
+
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
-        padding: EdgeInsets.symmetric(horizontal: SizeConfig.blockWidth * 6,),
+        padding: EdgeInsets.symmetric(horizontal: 20.w),
         itemCount: widget.categories.length,
         itemBuilder: (context, index) {
           return CategoryList(
@@ -34,7 +34,7 @@ class _CategorySectionState extends State<CategorySection> {
           );
         },
         separatorBuilder: (context, index) {
-          return SizedBox(width: 10);
+          return SizedBox(width: 10.w);
         },
       ),
     );

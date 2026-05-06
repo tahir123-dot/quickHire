@@ -4,8 +4,8 @@ class ApiEndPoints {
   static const verifyOTP = "/auth/verify-otp";
   static const resendOTP = "/auth/resend-otp";
   static const forgetPassword = "/auth/forget-password";
-  static const user = "/user";
-  static const serviceProivder = "/service-provider";
-  static const team = "/team";
+  static const userCreate = "/user-create";
+  static const serviceProivderCreate = "/service-provider-create";
+  static const teamCreate = "/team-create";
   static const switchRole = "/auth/switch-role";
 }

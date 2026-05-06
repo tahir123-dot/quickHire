@@ -1,17 +1,14 @@
 import 'package:jwt_decoder/jwt_decoder.dart';
-import 'package:mobile/utils/storage.dart';
 
 class AuthService {
   static Map<String, dynamic>? _user;
 
-  static Future<void> init(IStorageService storage) async {
-    final token = await storage.getToken();
+  static Future<void> setToken(String token) async {
+    _user = JwtDecoder.decode(token);
+  }
 
-    if (token != null && !JwtDecoder.isExpired(token)) {
-      _user = JwtDecoder.decode(token);
-    } else {
-      _user = null;
-    }
+  static void clear() {
+    _user = null;
   }
 
   static bool get isLoggedIn => _user != null;

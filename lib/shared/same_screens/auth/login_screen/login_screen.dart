@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mobile/core/navigation/circle_button.dart';
-import 'package:mobile/core/size_config/size_config.dart';
 import 'package:mobile/core/themes/app_input_theme.dart';
 import 'package:mobile/core/themes/app_text_theme.dart';
-import 'package:mobile/routes/user_routes/user_routes_constants.dart';
 import 'package:mobile/shared/bloc/blocimpl/authbloc.dart';
 import 'package:mobile/shared/bloc/event/auth_event.dart';
 import 'package:mobile/shared/bloc/state/auth_state.dart';
@@ -49,7 +48,7 @@ class _LoginScreenState extends State<LoginScreen> {
           ScaffoldMessenger.of(
             context,
           ).showSnackBar(SnackBar(content: Text(state.message)));
-          context.go(UserRoutesConstants.userMainScreen);
+          context.go(SharedRoutesConstant.splashScreen);
         }
 
         if (state is AuthError) {
@@ -61,31 +60,29 @@ class _LoginScreenState extends State<LoginScreen> {
       },
       child: Scaffold(
         resizeToAvoidBottomInset: true,
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          elevation: 0,
+          leadingWidth: 70.w, // 👈 important
+          leading: Padding(
+            padding: EdgeInsets.only(left: 16.w),
+            child: CircleButton(
+              icon: Icons.arrow_back,
+              route: SharedRoutesConstant.signupScreen,
+            ),
+          ),
+        ),
         body: SafeArea(
           child: SingleChildScrollView(
             physics: const BouncingScrollPhysics(),
-            padding: EdgeInsets.symmetric(
-              horizontal: SizeConfig.blockWidth * 8.0,
-            ),
+            padding: EdgeInsets.symmetric(horizontal: 33.w),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                CircleButton(
-                  icon: Icons.arrow_back,
-                  route: SharedRoutesConstant.signupScreen,
-                ),
+                SizedBox(height: 113.h),
+                Text('Login in to your\n account', style: AppTextTheme.h1),
 
-                SizedBox(height: SizeConfig.blockHeight * 9),
-
-                SizedBox(
-                  width: SizeConfig.blockWidth * 65,
-                  child: Text(
-                    'Login in to your account',
-                    style: AppTextTheme.h1,
-                  ),
-                ),
-
-                const SizedBox(height: 25),
+                SizedBox(height: 25.h),
 
                 Form(
                   key: _formKey,
@@ -114,7 +111,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         },
                       ),
 
-                      const SizedBox(height: 15),
+                      SizedBox(height: 19.h),
 
                       TextFormField(
                         controller: passwordController,
@@ -145,12 +142,12 @@ class _LoginScreenState extends State<LoginScreen> {
                     ' Forgot Password',
                     style: TextStyle(
                       color: AppColors.blueColor,
-                      fontSize: SizeConfig.blockWidth * 4.0,
+                      fontSize: 15.sp, //SizeConfig.blockWidth * 4.0,
                     ),
                   ),
                 ),
 
-                const SizedBox(height: 50),
+                SizedBox(height: 55.h),
 
                 BlocBuilder<AuthBloc, AuthState>(
                   builder: (context, state) {
@@ -181,7 +178,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   },
                 ),
 
-                const SizedBox(height: 15),
+                SizedBox(height: 19.h),
 
                 Row(
                   children: [
@@ -204,7 +201,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ],
                 ),
 
-                const SizedBox(height: 15),
+                SizedBox(height: 19.h),
 
                 AppButtonTheme.iconTextButton(
                   text: 'Continue With Google',
@@ -221,7 +218,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   },
                 ),
 
-                const SizedBox(height: 10),
+                SizedBox(height: 10.h),
               ],
             ),
           ),

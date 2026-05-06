@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:mobile/components/setting/list_widget.dart';
 import 'package:mobile/components/top_bar_widget/top_bar_widget.dart';
+import 'package:mobile/core/themes/colors.dart';
 import 'package:mobile/routes/shared_routes/shared_routes_constant.dart';
-import '../../../../core/size_config/size_config.dart';
+import 'package:mobile/shared/bloc/blocimpl/authbloc.dart';
+import 'package:mobile/shared/bloc/event/auth_event.dart';
+import 'package:mobile/shared/bloc/state/auth_state.dart';
 
 class Setting extends StatefulWidget {
   const Setting({super.key});
@@ -12,72 +18,101 @@ class Setting extends StatefulWidget {
 }
 
 class _SettingState extends State<Setting> {
-  List<Map<String, String>> settingsListOne = [
-    {
-      "title": "Notifications",
-      "route": SharedRoutesConstant.notificationScreen,
-    },
-    {"title": "Language", "route": SharedRoutesConstant.languageScreen},
-    {"title": "App Version", "route": SharedRoutesConstant.appVersionScreen},
+  final List<ListItemModel> settingsListOne = [
+    ListItemModel(
+      title: "Notifications",
+      route: SharedRoutesConstant.notificationScreen,
+    ),
+    ListItemModel(
+      title: "Language",
+      route: SharedRoutesConstant.languageScreen,
+    ),
+    ListItemModel(
+      title: "App Version",
+      route: SharedRoutesConstant.appVersionScreen,
+    ),
   ];
 
-  List<Map<String, String>> settingListTwo = [
-    {
-      "title": "Terms & Conditions",
-      "route": SharedRoutesConstant.termsConditionScreen,
-    },
+  final List<ListItemModel> settingListTwo = [
+    ListItemModel(
+      title: "Terms & Conditions",
+      route: SharedRoutesConstant.termsConditionScreen,
+    ),
   ];
 
-  List<Map<String, String>> settingListThree = [
-    {
-      "title": "Invite friends",
-      "route": SharedRoutesConstant.inviteFriendScreen,
-    },
-    {"title": "Switch account", "route": ""},
-    {"title": "Logout", "route": ""},
+  final List<ListItemModel> settingListThree = [
+    ListItemModel(
+      title: "Invite friends",
+      route: SharedRoutesConstant.inviteFriendScreen,
+    ),
+    ListItemModel(
+      title: "Switch account",
+      onTap: () {
+        print("Switch account clicked");
+      },
+    ),
+    ListItemModel(title: "Logout", onTap: null),
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: AppColors.whiteColor,
+        title: TopBarIconWithCenterText(pageName: 'Setting'),
+      ),
       body: SafeArea(
-        child: SingleChildScrollView(
-          physics: BouncingScrollPhysics(),
-          padding: EdgeInsets.symmetric(
-            horizontal: SizeConfig.blockWidth * 4.0,
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+        child: BlocListener<AuthBloc, dynamic>(
+          listener: (context, state) {
+            if (state is LogoutSuccess) {
+              ScaffoldMessenger.of(context).hideCurrentSnackBar();
+              ScaffoldMessenger.of(
+                context,
+              ).showSnackBar(SnackBar(content: Text(state.message)));
+              context.go(SharedRoutesConstant.signupScreen);
+            }
+          },
+          child: ListView(
+            physics: const BouncingScrollPhysics(),
+            padding: EdgeInsets.symmetric(horizontal: 43.w),
             children: [
-              TopBarIconWithCenterText(pageName: 'Setting'),
-              SizedBox(height: 16),
-              Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: SizeConfig.blockWidth * 1.0,
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text('App Preferences', style: TextStyle(fontSize: 19)),
-                    SizedBox(height: 16),
-                    ListWidget(items: settingsListOne),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(height: 43.h),
 
-                    SizedBox(height: 16),
-                    //
-                    Text('Legal', style: TextStyle(fontSize: 19)),
-                    SizedBox(height: 16),
+                  Text('App Preferences', style: TextStyle(fontSize: 19.sp)),
+                  SizedBox(height: 16.h),
+                  ListWidget(items: settingsListOne),
 
-                    ListWidget(items: settingListTwo),
-                    SizedBox(height: 16),
-                    //
-                    Text('Account Control', style: TextStyle(fontSize: 19)),
-                    SizedBox(height: 16),
-                    ListWidget(items: settingListThree),
-                  ],
-                ),
+                  SizedBox(height: 18.h),
+
+                  Text('Legal', style: TextStyle(fontSize: 19.sp)),
+                  SizedBox(height: 16.h),
+                  ListWidget(items: settingListTwo),
+
+                  SizedBox(height: 18.h),
+
+                  Text('Account Control', style: TextStyle(fontSize: 19.sp)),
+                  SizedBox(height: 16.h),
+
+                  // 🔥 Logout yahan handle karo (context safe)
+                  ListWidget(
+                    items: settingListThree.map((item) {
+                      if (item.title == "Logout") {
+                        return ListItemModel(
+                          title: "Logout",
+                          onTap: () {
+                            print("Logout clicked");
+                            context.read<AuthBloc>().add(LogoutEvent());
+                          },
+                        );
+                      }
+                      return item;
+                    }).toList(),
+                  ),
+                ],
               ),
-
-              //
             ],
           ),
         ),

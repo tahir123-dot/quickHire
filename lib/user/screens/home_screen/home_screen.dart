@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:mobile/components/input_box/hero_section.dart';
 import 'package:mobile/components/category/filter_category/category_section.dart';
 import 'package:mobile/components/service_offer/service_preview.dart';
 import 'package:mobile/components/top_bar_widget/top_bar_widget.dart';
-import 'package:mobile/core/size_config/size_config.dart';
 import 'package:mobile/core/themes/app_input_theme.dart';
 
 import '../../../core/themes/colors.dart';
@@ -34,35 +33,36 @@ class _HomeScreenState extends State<HomeScreen> {
           children: [
             Column(
               children: [
-                SizedBox(height: SizeConfig.blockHeight * 3),
+                //SizedBox(height: 13.h),
                 Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: SizeConfig.blockWidth * 4.0,
-                  ),
+                  padding: EdgeInsets.symmetric(horizontal: 16.w),
                   child: Column(
                     children: [
                       // top bar
-                      SizedBox(height: 16),
+                      SizedBox(height: 13.h),
                       // search bar
                       TextFormField(
                         decoration: AppInputTheme.searchBar(
                           hint: 'Search services ',
                           icon: Padding(
-                            padding: const EdgeInsets.all(12),
-                            child: SvgPicture.asset("assets/icons/search.svg"),
+                            padding: EdgeInsets.all(12.h),
+                            child: SvgPicture.asset(
+                              "assets/icons/search.svg",
+                              width: 24.w,
+                              height: 24.h,
+                            ),
                           ),
                         ),
                       ),
-                      SizedBox(height: 16),
+                      SizedBox(height: 28.h),
                     ],
                   ),
                 ),
                 // service category
                 CategorySection(categories: categories),
-                SizedBox(height: 16),
+                SizedBox(height: 28.h),
                 // hero section bar ads
-                HeroSection(),
-                SizedBox(height: 16),
+                // HeroSection(), we use this component in future for ads and promotions
 
                 // service Provider cards
                 ServicePreview(),

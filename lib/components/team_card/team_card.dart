@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mobile/core/size_config/size_config.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mobile/core/themes/colors.dart';
 
 class TeamCard extends StatefulWidget {
@@ -21,28 +21,22 @@ class _TeamCardState extends State<TeamCard> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(5),
+      padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 18.h),
       decoration: BoxDecoration(
         color: isSelect
             ? AppColors.searchBarBackground
             : AppColors.transparentBackground,
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(12.r),
         border: Border.all(color: AppColors.searchBarBackground, width: 1),
       ),
       child: ListTile(
         contentPadding: EdgeInsets.zero,
         leading: CircleAvatar(
-          radius: 25,
+          radius: 25.r,
           backgroundImage: AssetImage("assets/images/user.png"),
         ),
-        title: Text(
-          'Tahir Rashid',
-          style: TextStyle(fontSize: SizeConfig.blockWidth * 4),
-        ),
-        subtitle: Text(
-          "Islamabad F6",
-          style: TextStyle(fontSize: SizeConfig.blockWidth * 3),
-        ),
+        title: Text('Tahir Rashid', style: TextStyle(fontSize: 12.sp)),
+        subtitle: Text("Islamabad F6", style: TextStyle(fontSize: 11.sp)),
         trailing: OutlinedButton(
           onPressed: () {
             setState(() {
@@ -54,19 +48,19 @@ class _TeamCardState extends State<TeamCard> {
             });
           },
           style: OutlinedButton.styleFrom(
-            side: BorderSide(color: AppColors.blackColor),
+            side: BorderSide(color: AppColors.lightgreyColor),
             backgroundColor: isSelect
                 ? AppColors.blackColor
                 : AppColors.transparentBackground,
-            padding: EdgeInsets.symmetric(horizontal: 6, vertical: 4),
+            padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 4.h),
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(14),
+              borderRadius: BorderRadius.circular(20.r),
             ),
           ),
           child: Text(
             widget.actionText,
             style: TextStyle(
-              fontSize: SizeConfig.blockWidth * 3,
+              fontSize: 12.sp, //SizeConfig.blockWidth * 3,
               color: isSelect ? AppColors.whiteColor : AppColors.blackColor,
             ),
           ),

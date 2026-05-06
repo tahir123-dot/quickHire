@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../core/themes/colors.dart';
-import '../service_offer/service_list.dart';
 
 class BookingCard extends StatelessWidget {
   final String date;
@@ -40,7 +40,7 @@ class BookingCard extends StatelessWidget {
       child: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.all(15.0),
+            padding: EdgeInsets.all(15.0.sp),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -48,11 +48,12 @@ class BookingCard extends StatelessWidget {
                 ListTile(
                   contentPadding: EdgeInsets.all(0),
                   leading: CircleAvatar(
+                    radius: 25.r,
                     backgroundImage: AssetImage("assets/images/user.png"),
                   ),
                   title: Row(
                     children: [
-                      Text("Tahir Rashid"),
+                      Text("Tahir Rashid", style: TextStyle(fontSize: 17.sp)),
                       SizedBox(width: 5),
                       Icon(
                         Icons.verified,
@@ -61,76 +62,85 @@ class BookingCard extends StatelessWidget {
                       ),
                     ],
                   ),
-                  subtitle: Text("Islamabad F6"),
+                  subtitle: Text(
+                    "Islamabad F6",
+                    style: TextStyle(
+                      fontSize: 13.sp,
+                      color: AppColors.lightgreyColor,
+                    ),
+                  ),
                   trailing: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppColors.blackColor,
                       shadowColor: Colors.transparent,
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(50),
+                        borderRadius: BorderRadius.circular(50.r),
                       ),
-                      fixedSize: Size(100, 10),
+                      fixedSize: Size(106.w, 47.h),
                     ),
                     onPressed: () {
                       print('booking cancel');
                     },
                     child: Text(
                       'Cancel',
-                      style: TextStyle(color: AppColors.whiteColor),
+                      style: TextStyle(
+                        fontSize: 14.sp,
+                        color: AppColors.whiteColor,
+                      ),
                     ),
                   ),
                 ),
-                SizedBox(height: 6),
+                SizedBox(height: 10.h),
 
                 // ✅ Date and Time info
                 Row(
                   children: [
-                    const Icon(Icons.calendar_month, size: 16),
+                    Icon(Icons.calendar_month, size: 16.sp),
                     const SizedBox(width: 4),
-                    Text(date),
+                    Text(
+                      date,
+                      style: TextStyle(
+                        fontSize: 14.sp,
+                        color: AppColors.lightgreyColor,
+                      ),
+                    ),
                   ],
                 ),
-                const SizedBox(height: 4),
+                SizedBox(height: 4.h),
                 Row(
                   children: [
-                    const Icon(Icons.watch_later_outlined, size: 16),
+                    Icon(Icons.watch_later_outlined, size: 16.sp),
                     const SizedBox(width: 4),
-                    Text("$time ($duration)"),
+                    Text(
+                      "$time ($duration)",
+                      style: TextStyle(
+                        fontSize: 14.sp,
+                        color: AppColors.lightgreyColor,
+                      ),
+                    ),
                   ],
                 ),
-                const SizedBox(height: 6),
-                const Divider(height: 1, color: AppColors.horizontalLine),
-                const SizedBox(height: 3),
-              ],
-            ),
-          ),
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            padding: EdgeInsets.symmetric(horizontal: 15),
-            child: Row(
-              children: List.generate(
-                services.length,
-                (index) => Padding(
-                  padding: const EdgeInsets.only(right: 6),
-                  child: ServiceList(serviceName: services[index]),
+                SizedBox(height: 15.h),
+                Text(
+                  "Pkr 300",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16.sp,
+                  ),
                 ),
-              ),
+                SizedBox(height: 15.h),
+                const Divider(height: 1, color: AppColors.horizontalLine),
+                SizedBox(height: 3.h),
+              ],
             ),
           ),
 
           Padding(
-            padding: const EdgeInsets.all(15.0),
+            padding: EdgeInsets.all(15.0.sp),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(height: 6),
-                Text("Pkr 300", style: TextStyle(fontWeight: FontWeight.bold)),
-
-                const SizedBox(height: 12),
-                const Divider(height: 1, color: AppColors.horizontalLine),
-
-                const SizedBox(height: 12),
-                // ✅ Rating / Experience / Clients
+                // Rating / Experience / Clients
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -162,7 +172,7 @@ class BookingCard extends StatelessWidget {
               ],
             ),
           ),
-          SizedBox(height: 12,)
+          SizedBox(height: 12),
         ],
       ),
     );

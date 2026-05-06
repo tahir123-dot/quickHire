@@ -11,16 +11,17 @@ class AppColors {
   static const Color transparentBackground = Color(0x00f8f8f8);
   static const Color paragraphBackground = Color(0xFFF9F9F9);
   static const Color toggleColor = Color(0xff7c61ff);
+  static const Color listBackground = Color(0xff2845c5);
 
   // service card color
   static const Color darkBlueColor = Color(0xFF2845C5);
   static const Color darkDarkBlueColor = Color(0xFF030D33);
 
-
   // Text colors
   static const Color textPrimary = Color(0xFF000000);
   static const Color textSecondary = Color(0xFF6B7280);
   static const Color blueColor = Color(0xff467ed7);
+  static const Color lightgreyColor = Color(0xFF4F4F4F);
 
   // color
   static const Color blackColor = Color(0xFF000000);

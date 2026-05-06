@@ -1,17 +1,14 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
-import 'package:mobile/core/injection/injection_container.dart';
-
-import 'package:mobile/core/size_config/size_config.dart';
 import 'package:mobile/core/themes/app_text_theme.dart';
-import 'package:mobile/routes/auth/auth_initializer.dart';
+
 import 'package:mobile/routes/auth/auth_service.dart';
 import 'package:mobile/routes/auth/route_helper.dart';
 
 import 'package:mobile/routes/shared_routes/shared_routes_constant.dart';
-import 'package:mobile/utils/storage.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -40,13 +37,8 @@ class _SplashScreenState extends State<SplashScreen> {
 
     if (!mounted) return;
 
-    final storage = getIt<IStorageService>();
-    await AuthInitializer.init(storage);
-
-    if (!mounted) return;
-
     if (!AuthService.isLoggedIn) {
-      context.go(SharedRoutesConstant.signupScreen);
+      context.go(SharedRoutesConstant.accountTypeScreen);
       return;
     }
 
@@ -61,8 +53,6 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    SizeConfig.init(context);
-
     return Scaffold(
       appBar: AppBar(backgroundColor: const Color(0xFFEBF7FE), elevation: 0),
       body: SafeArea(
@@ -72,12 +62,10 @@ class _SplashScreenState extends State<SplashScreen> {
             children: [
               Image.asset('assets/images/quickhire.webp', fit: BoxFit.contain),
 
-              const SizedBox(height: 50),
+              SizedBox(height: 50.h),
 
               Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: SizeConfig.blockWidth * 6.0,
-                ),
+                padding: EdgeInsets.symmetric(horizontal: 36.w),
                 child: Text(
                   'QuickHire helps you find and book verified electricians, plumbers, barbers, and more all in one place.',
                   style: AppTextTheme.paragraph,

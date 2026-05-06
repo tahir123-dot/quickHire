@@ -20,13 +20,6 @@ class ProviderRoutes {
       },
     ),
     GoRoute(
-      path: ProviderRoutesConstants.providerBooking,
-      name: 'providerBooking',
-      pageBuilder: (context, state) {
-        return MaterialPage(child: ProviderBookingScreen());
-      },
-    ),
-    GoRoute(
       path: ProviderRoutesConstants.providerBookingDetails,
       name: 'providerBookingDetails',
       pageBuilder: (context, state) {

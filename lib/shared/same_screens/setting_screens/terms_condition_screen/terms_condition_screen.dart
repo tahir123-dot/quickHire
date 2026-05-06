@@ -14,9 +14,7 @@ class TermsConditionScreen extends StatelessWidget {
         backgroundColor: AppColors.whiteColor,
         title: TopBarIconWithCenterText(pageName: 'Terms and Conditions'),
       ),
-      body: Center(
-        child: Text('Terms Conditions screen'),
-      ),
+      body: Center(child: Text('Terms Conditions screen')),
     );
   }
 }

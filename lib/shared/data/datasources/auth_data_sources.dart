@@ -15,7 +15,7 @@ class AuthDataSources {
   Future<VerifyOtpResponseModel> login(LoginDto dto) async {
     try {
       final response = await dio.post(ApiEndPoints.login, data: dto.toJson());
-
+      print("Login response: ${response.data}");
       return VerifyOtpResponseModel.fromJson(response.data);
     } on DioException catch (e) {
       throw Exception("Login failed: ${e.message}");
@@ -59,6 +59,51 @@ class AuthDataSources {
       await dio.post(ApiEndPoints.resendOTP, data: {"email": email});
     } on DioException catch (e) {
       throw Exception("Resend OTP failed: ${e.message}");
+    } catch (e) {
+      throw Exception("Unexpected error: $e");
+    }
+  }
+
+  // create user account
+  Future<ResponseModelToken> createUserAccount(String userId) async {
+    try {
+      final response = await dio.post(
+        ApiEndPoints.userCreate,
+        data: {"userId": userId},
+      );
+      return ResponseModelToken.fromJson(response.data);
+    } on DioException catch (e) {
+      throw Exception("Create user account failed: ${e.message}");
+    } catch (e) {
+      throw Exception("Unexpected error: $e");
+    }
+  }
+
+  // create service provider account
+  Future<ResponseModelToken> createServiceProviderAccount(String userId) async {
+    try {
+      final response = await dio.post(
+        ApiEndPoints.serviceProivderCreate,
+        data: {"userId": userId},
+      );
+      return ResponseModelToken.fromJson(response.data);
+    } on DioException catch (e) {
+      throw Exception("Create service provider account failed: ${e.message}");
+    } catch (e) {
+      throw Exception("Unexpected error: $e");
+    }
+  }
+
+  // create team account
+  Future<ResponseModelToken> createTeamAccount(String userId) async {
+    try {
+      final response = await dio.post(
+        ApiEndPoints.teamCreate,
+        data: {"userId": userId},
+      );
+      return ResponseModelToken.fromJson(response.data);
+    } on DioException catch (e) {
+      throw Exception("Create team account failed: ${e.message}");
     } catch (e) {
       throw Exception("Unexpected error: $e");
     }

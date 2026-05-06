@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:mobile/components/top_bar_widget/top_bar_widget.dart';
 import 'package:mobile/routes/user_routes/user_routes_constants.dart';
 
-import '../../../core/size_config/size_config.dart';
 import '../../../core/themes/app_button_theme.dart';
 import '../../../core/themes/colors.dart';
 
@@ -17,96 +18,188 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('User Booking detail screen')),
+      resizeToAvoidBottomInset: true,
+      appBar: AppBar(
+        backgroundColor: AppColors.whiteColor,
+        elevation: 0,
+        title: TopBarIconWithCenterText(pageName: 'Booking Details'),
+      ),
       body: SafeArea(
-        child: Column(
+        child: ListView(
+          padding: EdgeInsets.symmetric(horizontal: 43.w),
           children: [
-            // ✅ Scrollable content
-            Expanded(
-              child: SingleChildScrollView(
-                physics: BouncingScrollPhysics(),
-                padding: EdgeInsets.symmetric(
-                  horizontal: SizeConfig.blockWidth * 7.0,
-                  vertical: SizeConfig.blockHeight * 2,
+            Column(
+              children: [
+                SizedBox(height: 47.h),
+
+                // provider info
+                ListTile(
+                  contentPadding: EdgeInsets.zero,
+                  leading: CircleAvatar(
+                    radius: 30.r,
+                    backgroundImage: AssetImage("assets/images/user.png"),
+                  ),
+                  title: Row(
+                    children: [
+                      Text(
+                        "Tahir Rashid",
+                        style: TextStyle(
+                          fontSize: 18.sp,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      SizedBox(width: 5),
+                      Icon(
+                        Icons.verified,
+                        color: AppColors.darkBlueColor,
+                        size: 15.sp,
+                      ),
+                    ],
+                  ),
+                  subtitle: Text(
+                    "Islamabad F6",
+                    style: TextStyle(fontSize: 13.sp),
+                  ),
                 ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+
+                SizedBox(height: 23.h),
+
+                // date and time
+                Row(
                   children: [
-                    SizedBox(height: SizeConfig.blockHeight * 2),
-
-                    ListTile(
-                      contentPadding: EdgeInsets.all(0),
-                      leading: CircleAvatar(
-                        radius: 30,
-                        backgroundImage: AssetImage("assets/images/user.png"),
-                      ),
-                      title: Row(
-                        children: [
-                          Text("Tahir Rashid"),
-                          SizedBox(width: 5),
-                          Icon(
-                            Icons.verified,
-                            color: AppColors.darkBlueColor,
-                            size: 15,
-                          ),
-                        ],
-                      ),
-                      subtitle: Text("Islamabad F6"),
+                    Icon(Icons.calendar_month, size: 20.sp),
+                    SizedBox(width: 4.w),
+                    Text(
+                      'Tuesday, 16 December',
+                      style: TextStyle(fontSize: 16.sp),
                     ),
-
-                    SizedBox(height: SizeConfig.blockHeight * 4),
-
-                    Row(
-                      children: [
-                        const Icon(Icons.calendar_month, size: 16),
-                        const SizedBox(width: 4),
-                        Text('date'),
-                      ],
-                    ),
-
-                    const SizedBox(height: 4),
-
-                    Row(
-                      children: [
-                        const Icon(Icons.watch_later_outlined, size: 16),
-                        const SizedBox(width: 4),
-                        Text("time and duration"),
-                      ],
-                    ),
-
-                    const SizedBox(height: 14),
-
-                    Container(
-                      width: double.infinity,
-                      padding: EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                        shape: BoxShape.rectangle,
-                        borderRadius: BorderRadius.circular(10),
-                        border: Border.all(color: AppColors.horizontalLine),
-                      ),
-                      child: Column(
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [Text('Service Name'), Text('pkr 300')],
-                          ),
-                          SizedBox(height: 5),
-                          Row(children: [Text('5 mint with Elize')]),
-                        ],
-                      ),
-                    ),
-
-                    const SizedBox(height: 14),
                   ],
                 ),
-              ),
-            ),
+                SizedBox(height: 8.h),
+                Row(
+                  children: [
+                    Icon(Icons.watch_later_outlined, size: 20.sp),
+                    SizedBox(width: 4.w),
+                    Text(
+                      "9:30-10:05 am (35 mins duration)",
+                      style: TextStyle(fontSize: 16.sp),
+                    ),
+                  ],
+                ),
 
-            // ✅ Divider + Bottom Button
-            Divider(height: 1, thickness: 1, color: AppColors.horizontalLine),
-            Padding(
-              padding: EdgeInsets.all(16),
-              child: AppButtonTheme.iconTextButton(
+                SizedBox(height: 85.h),
+                // service take info
+                Container(
+                  width: double.infinity,
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 10.w,
+                    vertical: 14.h,
+                  ),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.rectangle,
+                    borderRadius: BorderRadius.circular(8.r),
+                    border: Border.all(color: AppColors.horizontalLine),
+                  ),
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Add on Dazzle Dry Polish',
+                            style: TextStyle(
+                              fontSize: 14.sp,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                          Text('pkr 300', style: TextStyle(fontSize: 14.sp)),
+                        ],
+                      ),
+                      SizedBox(height: 6.h),
+                      Row(
+                        children: [
+                          Text(
+                            '5 mint with Elize',
+                            style: TextStyle(
+                              fontSize: 14.sp,
+                              color: AppColors.lightgreyColor,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+
+                SizedBox(height: 6.h),
+
+                Container(
+                  width: double.infinity,
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 10.w,
+                    vertical: 14.h,
+                  ),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.rectangle,
+                    borderRadius: BorderRadius.circular(8.r),
+                    border: Border.all(color: AppColors.horizontalLine),
+                  ),
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Add on Dazzle Dry Polish',
+                            style: TextStyle(
+                              fontSize: 14.sp,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                          Text('pkr 300', style: TextStyle(fontSize: 14.sp)),
+                        ],
+                      ),
+                      SizedBox(height: 6.h),
+                      Row(
+                        children: [
+                          Text(
+                            '5 mint with Elize',
+                            style: TextStyle(
+                              fontSize: 14.sp,
+                              color: AppColors.lightgreyColor,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+      bottomNavigationBar: SafeArea(
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 16.h),
+          child: Column(
+            mainAxisSize: MainAxisSize.min, // 🔥 IMPORTANT
+            children: [
+              Divider(thickness: 1, height: 1, color: AppColors.horizontalLine),
+
+              SizedBox(height: 16.h),
+
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text("Total", style: TextStyle(fontSize: 18.sp)),
+                  Text("from 23.9", style: TextStyle(fontSize: 18.sp)),
+                ],
+              ),
+
+              SizedBox(height: 16.h),
+
+              AppButtonTheme.iconTextButton(
                 text: 'Confirm',
                 icon: null,
                 backgroundColor: AppColors.blackColor,
@@ -115,8 +208,8 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
                   context.push(UserRoutesConstants.userPayment);
                 },
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

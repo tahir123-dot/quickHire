@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mobile/core/size_config/size_config.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mobile/core/themes/colors.dart';
 
 class ServiceList extends StatelessWidget {
@@ -17,7 +17,7 @@ class ServiceList extends StatelessWidget {
           borderRadius: BorderRadius.circular(50),
           side: BorderSide(color: AppColors.darkBlueColor),
         ),
-        fixedSize: Size(SizeConfig.blockWidth * 30, 10),
+        fixedSize: Size(120.w, 10.h), //SizeConfig.blockWidth * 30, 10),
       ),
       child: Text(
         serviceName,

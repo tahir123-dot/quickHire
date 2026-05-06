@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mobile/routes/auth/auth_service.dart';
 import 'package:mobile/shared/bloc/event/auth_event.dart';
 import 'package:mobile/shared/bloc/state/auth_state.dart';
 import 'package:mobile/shared/data/dto/login.dart';
@@ -14,6 +15,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<OtpVerificationEvent>(_otpVerificationEvent);
     on<ResendOtpEvent>(_resendOtpEvent);
     on<LoginEvent>(_loginEvent);
+    on<LogoutEvent>(_logoutEvent);
+    on<CreateUserAccountEvent>(_createUserAccountEvent);
+    on<CreateServiceProviderAccountEvent>(_createServiceProviderAccountEvent);
+    on<CreateTeamAccountEvent>(_createTeamAccountEvent);
   }
 
   // Event handler for LoginEvent
@@ -42,9 +47,25 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           name: event.name,
           email: event.email,
           password: event.password,
+          role: event.role,
         ),
       );
       emit(SignupSuccess(message: "Signup successful"));
+    } catch (e) {
+      emit(AuthError(e.toString()));
+    }
+  }
+
+  // Event handler for LogoutEvent
+  Future<void> _logoutEvent(LogoutEvent event, Emitter<AuthState> emit) async {
+    emit(AuthLoading());
+    try {
+      await authRepository.deleteToken();
+
+      // 🔥 IMPORTANT FIX
+      AuthService.clear();
+
+      emit(LogoutSuccess(message: "Logout successful"));
     } catch (e) {
       emit(AuthError(e.toString()));
     }
@@ -79,6 +100,74 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     try {
       await authRepository.resendOtp(event.email);
       emit(ResendOtpSuccess(message: "OTP resent successfully"));
+    } catch (e) {
+      emit(AuthError(e.toString()));
+    }
+  }
+
+  // Event handler for CreateUserAccountEvent
+  Future<void> _createUserAccountEvent(
+    CreateUserAccountEvent event,
+    Emitter<AuthState> emit,
+  ) async {
+    emit(AuthLoading());
+    try {
+      final isCreated = await authRepository.createUserAccount(event.userId);
+      if (isCreated) {
+        emit(
+          UserAccountCreationSuccess(
+            message: "User account created successfully",
+          ),
+        );
+      } else {
+        emit(AuthError("User account creation failed"));
+      }
+    } catch (e) {
+      emit(AuthError(e.toString()));
+    }
+  }
+
+  // Event handler for CreateServiceProviderAccountEvent
+  Future<void> _createServiceProviderAccountEvent(
+    CreateServiceProviderAccountEvent event,
+    Emitter<AuthState> emit,
+  ) async {
+    emit(AuthLoading());
+    try {
+      final isCreated = await authRepository.createServiceProviderAccount(
+        event.userId,
+      );
+      if (isCreated) {
+        emit(
+          ServiceProviderAccountCreationSuccess(
+            message: "Service provider account created successfully",
+          ),
+        );
+      } else {
+        emit(AuthError("Service provider account creation failed"));
+      }
+    } catch (e) {
+      emit(AuthError(e.toString()));
+    }
+  }
+
+  // Event handler for CreateTeamAccountEvent
+  Future<void> _createTeamAccountEvent(
+    CreateTeamAccountEvent event,
+    Emitter<AuthState> emit,
+  ) async {
+    emit(AuthLoading());
+    try {
+      final isCreated = await authRepository.createTeamAccount(event.userId);
+      if (isCreated) {
+        emit(
+          TeamAccountCreationSuccess(
+            message: "Team account created successfully",
+          ),
+        );
+      } else {
+        emit(AuthError("Team account creation failed"));
+      }
     } catch (e) {
       emit(AuthError(e.toString()));
     }
