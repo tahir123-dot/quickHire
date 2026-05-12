@@ -83,7 +83,7 @@ class _OtpScreenState extends State<OtpScreen> {
             context,
           ).showSnackBar(SnackBar(content: Text(state.message)));
 
-          context.go(ProviderRoutesConstants.serviceCategoryScreen);
+          context.go(ProviderRoutesConstants.providerServiceCategoryScreen);
         }
 
         if (state is AuthError) {

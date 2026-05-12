@@ -1,5 +1,6 @@
 class ProviderRoutesConstants {
-  static const String serviceCategoryScreen = "/serviceCategoryScreen";
+  static const String providerServiceCategoryScreen =
+      "/providerServiceCategoryScreen";
   static const String providerMainScreen = "/providerMainScreen";
   static const String providerAccountOverView = "/providerAccountOverView";
   static const String providerAddCampaign = "/providerAddCampaign";
@@ -18,4 +19,26 @@ class ProviderRoutesConstants {
   static const String providerPayment = "/providerPayment";
   static const String providerCustomerReview = "/providerCustomerReview";
   static const String providerBoost = "/providerBoost";
+
+  static const List<String> all = [
+    providerServiceCategoryScreen,
+    providerMainScreen,
+    providerAccountOverView,
+    providerAddCampaign,
+    providerAdsPlan,
+    providerHome,
+    providerBookingDetails,
+    providerProfile,
+    addServiceScreen,
+    providerCategory,
+    providerEditProfile,
+    providerAddAvailability,
+    providerAddTeam,
+    providerTeamList,
+    selectProfessional,
+    providerProfileView,
+    providerPayment,
+    providerCustomerReview,
+    providerBoost,
+  ];
 }

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mobile/components/category/service_category.dart';
-import '../../../../core/themes/app_text_theme.dart';
-import '../../../../routes/provider_routes/provider_routes_constants.dart';
+import '../../../core/themes/app_text_theme.dart';
+import '../../../routes/provider_routes/provider_routes_constants.dart';
 
 class ServicesCategoryScreen extends StatelessWidget {
   const ServicesCategoryScreen({super.key});

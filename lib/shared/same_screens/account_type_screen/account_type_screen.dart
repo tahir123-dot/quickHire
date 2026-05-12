@@ -5,7 +5,6 @@ import 'package:mobile/components/category/category.dart';
 import 'package:mobile/core/themes/app_text_theme.dart';
 import 'package:mobile/core/themes/colors.dart';
 import 'package:mobile/routes/shared_routes/public_routes_constants.dart';
-import 'package:mobile/routes/shared_routes/shared_routes_constant.dart';
 
 class AccountTypeScreen extends StatelessWidget {
   const AccountTypeScreen({super.key});

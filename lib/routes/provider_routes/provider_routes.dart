@@ -6,8 +6,8 @@ import 'package:mobile/routes/provider_routes/provider_routes_constants.dart';
 class ProviderRoutes {
   static List<GoRoute> routes = [
     GoRoute(
-      path: ProviderRoutesConstants.serviceCategoryScreen,
-      name: 'serviceCategoryScreen',
+      path: ProviderRoutesConstants.providerServiceCategoryScreen,
+      name: 'providerServiceCategoryScreen',
       pageBuilder: (context, state) {
         return MaterialPage(child: ServicesCategoryScreen());
       },

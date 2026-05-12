@@ -6,66 +6,10 @@ import 'package:mobile/routes/shared_routes/shared_routes_constant.dart';
 class SharedRoutes {
   static List<GoRoute> routes = [
     GoRoute(
-      path: SharedRoutesConstant.splashScreen,
-      name: '/',
-      pageBuilder: (context, state) {
-        return MaterialPage(child: SplashScreen());
-      },
-    ),
-    GoRoute(
       path: SharedRoutesConstant.addressScreen,
       name: 'addressScreen',
       pageBuilder: (context, state) {
         return MaterialPage(child: AddressScreen());
-      },
-    ),
-    GoRoute(
-      path: SharedRoutesConstant.accountTypeScreen,
-      name: 'accountTypeScreen',
-      pageBuilder: (context, state) {
-        return MaterialPage(child: AccountTypeScreen());
-      },
-    ),
-    GoRoute(
-      path: SharedRoutesConstant.emailScreen,
-      name: 'emailScreen',
-      pageBuilder: (context, state) {
-        return MaterialPage(child: EmailScreen());
-      },
-    ),
-    GoRoute(
-      path: SharedRoutesConstant.loginScreen,
-      name: 'loginScreen',
-      pageBuilder: (context, state) {
-        return MaterialPage(child: LoginScreen());
-      },
-    ),
-    GoRoute(
-      path: SharedRoutesConstant.otpScreen,
-      name: 'otpScreen',
-      pageBuilder: (context, state) {
-        return MaterialPage(child: OtpScreen());
-      },
-    ),
-    GoRoute(
-      path: SharedRoutesConstant.passwordScreen,
-      name: 'passwordScreen',
-      pageBuilder: (context, state) {
-        return MaterialPage(child: PasswordScreen());
-      },
-    ),
-    GoRoute(
-      path: SharedRoutesConstant.signupScreen,
-      name: 'signupScreen',
-      pageBuilder: (context, state) {
-        return MaterialPage(child: SignupScreen());
-      },
-    ),
-    GoRoute(
-      path: SharedRoutesConstant.errorScreen,
-      name: 'errorScreen',
-      pageBuilder: (context, state) {
-        return MaterialPage(child: ErrorScreen());
       },
     ),
     GoRoute(
