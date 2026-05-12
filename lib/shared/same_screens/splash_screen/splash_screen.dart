@@ -5,9 +5,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mobile/core/themes/app_text_theme.dart';
 
-import 'package:mobile/routes/auth/auth_service.dart';
-import 'package:mobile/routes/auth/route_helper.dart';
-
 import 'package:mobile/routes/shared_routes/shared_routes_constant.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -37,12 +34,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
     if (!mounted) return;
 
-    if (!AuthService.isLoggedIn) {
-      context.go(SharedRoutesConstant.accountTypeScreen);
-      return;
-    }
-
-    context.go(getHomeRoute(AuthService.role!));
+    context.go(SharedRoutesConstant.accountTypeScreen);
   }
 
   @override

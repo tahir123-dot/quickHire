@@ -3,7 +3,6 @@ import 'package:go_router/go_router.dart';
 import 'package:mobile/export_screen/screen_exports.dart';
 import 'package:mobile/routes/shared_routes/shared_routes_constant.dart';
 
-
 class SharedRoutes {
   static List<GoRoute> routes = [
     GoRoute(
@@ -62,7 +61,8 @@ class SharedRoutes {
       pageBuilder: (context, state) {
         return MaterialPage(child: PasswordScreen());
       },
-    ),GoRoute(
+    ),
+    GoRoute(
       path: SharedRoutesConstant.signupScreen,
       name: 'signupScreen',
       pageBuilder: (context, state) {
@@ -89,39 +89,34 @@ class SharedRoutes {
       pageBuilder: (context, state) {
         return MaterialPage(child: AppVersionScreen());
       },
-    ),GoRoute(
+    ),
+    GoRoute(
       path: SharedRoutesConstant.inviteFriendScreen,
       name: 'inviteFriendScreen',
       pageBuilder: (context, state) {
         return MaterialPage(child: InviteFriendsScreen());
       },
-    ),GoRoute(
+    ),
+    GoRoute(
       path: SharedRoutesConstant.languageScreen,
       name: 'languageScreen',
       pageBuilder: (context, state) {
         return MaterialPage(child: LanguageScreen());
       },
-    ),GoRoute(
+    ),
+    GoRoute(
       path: SharedRoutesConstant.notificationScreen,
       name: 'notificationScreen',
       pageBuilder: (context, state) {
         return MaterialPage(child: NotificationScreen());
       },
-    ),GoRoute(
+    ),
+    GoRoute(
       path: SharedRoutesConstant.termsConditionScreen,
       name: 'termsConditionScreen',
       pageBuilder: (context, state) {
         return MaterialPage(child: TermsConditionScreen());
       },
     ),
-
-
-
-
-
-
-
-
-
   ];
 }

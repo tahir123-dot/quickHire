@@ -1,5 +1,9 @@
 abstract class AuthEvent {}
 
+// CheckAuth event
+
+class CheckAuthEvent extends AuthEvent {}
+
 // login event
 class LoginEvent extends AuthEvent {
   final String email;
@@ -32,10 +36,6 @@ class ResendOtpEvent extends AuthEvent {
 
   ResendOtpEvent(this.email);
 }
-
-// lgout event
-
-class LogoutEvent extends AuthEvent {}
 
 //
 class CreateUserAccountEvent extends AuthEvent {

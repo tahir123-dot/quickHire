@@ -11,7 +11,6 @@ import 'package:mobile/core/themes/colors.dart';
 import 'package:mobile/routes/shared_routes/shared_routes_constant.dart';
 
 import 'package:mobile/shared/bloc/blocimpl/authbloc.dart';
-import 'package:mobile/shared/bloc/blocimpl/cubitbloc.dart';
 import 'package:mobile/shared/bloc/event/auth_event.dart';
 import 'package:mobile/shared/bloc/state/auth_state.dart';
 
@@ -35,14 +34,14 @@ class _SignupScreenState extends State<SignupScreen> {
   void initState() {
     super.initState();
 
-    // 🔥 check role AFTER first frame
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+    // 🔥 check role AFTER first frame check role here if role is then move next
+    /*WidgetsBinding.instance.addPostFrameCallback((_) {
       final role = context.read<RoleCubit>().state;
 
       if (role == null) {
         context.go(SharedRoutesConstant.accountTypeScreen);
       }
-    });
+    });*/
   }
 
   @override
@@ -87,7 +86,6 @@ class _SignupScreenState extends State<SignupScreen> {
           final isLoading = state is AuthLoading;
 
           return Scaffold(
-            appBar: AppBar(backgroundColor: Colors.white, elevation: 0),
             body: SafeArea(
               child: Form(
                 key: _formKey,

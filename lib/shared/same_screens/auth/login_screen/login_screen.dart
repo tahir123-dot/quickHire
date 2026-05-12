@@ -43,11 +43,11 @@ class _LoginScreenState extends State<LoginScreen> {
           ).showSnackBar(const SnackBar(content: Text("Logging in...")));
         }
 
-        if (state is LoginSuccess) {
+        if (state is Authenticated) {
           ScaffoldMessenger.of(context).hideCurrentSnackBar();
           ScaffoldMessenger.of(
             context,
-          ).showSnackBar(SnackBar(content: Text(state.message)));
+          ).showSnackBar(SnackBar(content: Text("Login successful")));
           context.go(SharedRoutesConstant.splashScreen);
         }
 

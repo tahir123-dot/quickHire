@@ -43,5 +43,7 @@ void setup() {
   // =========================
   // 5. BLOCS
   // =========================
-  getIt.registerFactory<AuthBloc>(() => AuthBloc(getIt<AuthRepository>()));
+  getIt.registerFactory<AuthBloc>(
+    () => AuthBloc(getIt<AuthRepository>(), getIt<IStorageService>()),
+  );
 }

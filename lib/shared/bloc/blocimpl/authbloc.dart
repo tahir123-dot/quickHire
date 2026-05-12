@@ -1,46 +1,70 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mobile/routes/auth/auth_service.dart';
 import 'package:mobile/shared/bloc/event/auth_event.dart';
 import 'package:mobile/shared/bloc/state/auth_state.dart';
 import 'package:mobile/shared/data/dto/login.dart';
 import 'package:mobile/shared/data/dto/otp.dart';
 import 'package:mobile/shared/data/dto/signup.dart';
 import 'package:mobile/shared/data/repositories/auth_repository.dart';
+import 'package:mobile/utils/storage.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final AuthRepository authRepository;
+  final IStorageService storage;
 
-  AuthBloc(this.authRepository) : super(AuthInitial()) {
+  AuthBloc(this.authRepository, this.storage) : super(AuthInitial()) {
+    on<CheckAuthEvent>(_checkAuthEvent);
+
+    on<LoginEvent>(_loginEvent);
     on<SignupEvent>(_signpEvent);
+
     on<OtpVerificationEvent>(_otpVerificationEvent);
     on<ResendOtpEvent>(_resendOtpEvent);
-    on<LoginEvent>(_loginEvent);
-    on<LogoutEvent>(_logoutEvent);
+
     on<CreateUserAccountEvent>(_createUserAccountEvent);
     on<CreateServiceProviderAccountEvent>(_createServiceProviderAccountEvent);
     on<CreateTeamAccountEvent>(_createTeamAccountEvent);
   }
 
-  // Event handler for LoginEvent
+  // ================= AUTH CHECK =================
+  Future<void> _checkAuthEvent(
+    CheckAuthEvent event,
+    Emitter<AuthState> emit,
+  ) async {
+    final token = await storage.getToken();
+    final role = await storage.getUserRole();
+
+    if (token != null && role != null) {
+      emit(Authenticated(token: token, role: role));
+    } else {
+      emit(Unauthenticated());
+    }
+  }
+
+  // ================= LOGIN =================
   Future<void> _loginEvent(LoginEvent event, Emitter<AuthState> emit) async {
     emit(AuthLoading());
+
     try {
-      final isLoggedIn = await authRepository.login(
+      final response = await authRepository.login(
         LoginDto(email: event.email, password: event.password),
       );
-      if (isLoggedIn) {
-        emit(LoginSuccess(message: "Login successful"));
-      } else {
-        emit(AuthError("Login failed"));
-      }
+
+      final token = response.response.token;
+
+      await storage.saveToken(token);
+
+      final role = await storage.getUserRole();
+
+      emit(Authenticated(token: token, role: role ?? ""));
     } catch (e) {
       emit(AuthError(e.toString()));
     }
   }
 
-  // Event handler for SignupEvent
+  // ================= SIGNUP =================
   Future<void> _signpEvent(SignupEvent event, Emitter<AuthState> emit) async {
     emit(AuthLoading());
+
     try {
       await authRepository.signup(
         SignupDto(
@@ -50,53 +74,44 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           role: event.role,
         ),
       );
+
       emit(SignupSuccess(message: "Signup successful"));
     } catch (e) {
       emit(AuthError(e.toString()));
     }
   }
 
-  // Event handler for LogoutEvent
-  Future<void> _logoutEvent(LogoutEvent event, Emitter<AuthState> emit) async {
-    emit(AuthLoading());
-    try {
-      await authRepository.deleteToken();
-
-      // 🔥 IMPORTANT FIX
-      AuthService.clear();
-
-      emit(LogoutSuccess(message: "Logout successful"));
-    } catch (e) {
-      emit(AuthError(e.toString()));
-    }
-  }
-
-  // Event handler for OtpVerificationEvent
+  // ================= OTP VERIFY =================
   Future<void> _otpVerificationEvent(
     OtpVerificationEvent event,
     Emitter<AuthState> emit,
   ) async {
     emit(AuthLoading());
+
     try {
-      final isVerified = await authRepository.verifyOtp(
+      final response = await authRepository.verifyOtp(
         OtpDto(email: event.email, otp: event.otp),
       );
-      if (isVerified) {
-        emit(OtpVerifySuccess(message: "OTP verification successful"));
-      } else {
-        emit(AuthError("OTP verification failed"));
-      }
+
+      final token = response.response.token;
+
+      await storage.saveToken(token);
+
+      final role = await storage.getUserRole();
+
+      emit(Authenticated(token: token, role: role ?? ""));
     } catch (e) {
       emit(AuthError(e.toString()));
     }
   }
 
-  // Event handler for ResendOtpEvent
+  // ================= RESEND OTP =================
   Future<void> _resendOtpEvent(
     ResendOtpEvent event,
     Emitter<AuthState> emit,
   ) async {
     emit(AuthLoading());
+
     try {
       await authRepository.resendOtp(event.email);
       emit(ResendOtpSuccess(message: "OTP resent successfully"));
@@ -105,14 +120,16 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     }
   }
 
-  // Event handler for CreateUserAccountEvent
+  // ================= USER ACCOUNT =================
   Future<void> _createUserAccountEvent(
     CreateUserAccountEvent event,
     Emitter<AuthState> emit,
   ) async {
     emit(AuthLoading());
+
     try {
       final isCreated = await authRepository.createUserAccount(event.userId);
+
       if (isCreated) {
         emit(
           UserAccountCreationSuccess(
@@ -127,16 +144,18 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     }
   }
 
-  // Event handler for CreateServiceProviderAccountEvent
+  // ================= SERVICE PROVIDER ACCOUNT =================
   Future<void> _createServiceProviderAccountEvent(
     CreateServiceProviderAccountEvent event,
     Emitter<AuthState> emit,
   ) async {
     emit(AuthLoading());
+
     try {
       final isCreated = await authRepository.createServiceProviderAccount(
         event.userId,
       );
+
       if (isCreated) {
         emit(
           ServiceProviderAccountCreationSuccess(
@@ -151,14 +170,16 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     }
   }
 
-  // Event handler for CreateTeamAccountEvent
+  // ================= TEAM ACCOUNT =================
   Future<void> _createTeamAccountEvent(
     CreateTeamAccountEvent event,
     Emitter<AuthState> emit,
   ) async {
     emit(AuthLoading());
+
     try {
       final isCreated = await authRepository.createTeamAccount(event.userId);
+
       if (isCreated) {
         emit(
           TeamAccountCreationSuccess(

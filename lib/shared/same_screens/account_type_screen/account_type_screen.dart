@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mobile/components/category/category.dart';
 import 'package:mobile/core/themes/app_text_theme.dart';
 import 'package:mobile/core/themes/colors.dart';
-import 'package:mobile/routes/auth/role.dart';
 import 'package:mobile/routes/shared_routes/shared_routes_constant.dart';
-import 'package:mobile/shared/bloc/blocimpl/cubitbloc.dart';
 
 class AccountTypeScreen extends StatelessWidget {
   const AccountTypeScreen({super.key});
@@ -40,7 +37,6 @@ class AccountTypeScreen extends StatelessWidget {
                 borderColor: AppColors.blackColor,
                 backgroundColor: AppColors.whiteColor,
                 onTap: () {
-                  context.read<RoleCubit>().selectRole(Role.customer);
                   context.go(SharedRoutesConstant.signupScreen);
                 },
               ),
@@ -55,7 +51,6 @@ class AccountTypeScreen extends StatelessWidget {
                 borderColor: AppColors.blackColor,
                 backgroundColor: AppColors.whiteColor,
                 onTap: () {
-                  context.read<RoleCubit>().selectRole(Role.serviceProvider);
                   context.go(SharedRoutesConstant.signupScreen);
                 },
               ),
@@ -71,7 +66,6 @@ class AccountTypeScreen extends StatelessWidget {
                 borderColor: AppColors.blackColor,
                 backgroundColor: AppColors.whiteColor,
                 onTap: () {
-                  context.read<RoleCubit>().selectRole(Role.member);
                   context.go(SharedRoutesConstant.signupScreen);
                 },
               ),

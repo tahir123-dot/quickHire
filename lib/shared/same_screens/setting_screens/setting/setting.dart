@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:go_router/go_router.dart';
 import 'package:mobile/components/setting/list_widget.dart';
 import 'package:mobile/components/top_bar_widget/top_bar_widget.dart';
 import 'package:mobile/core/themes/colors.dart';
 import 'package:mobile/routes/shared_routes/shared_routes_constant.dart';
 import 'package:mobile/shared/bloc/blocimpl/authbloc.dart';
 import 'package:mobile/shared/bloc/event/auth_event.dart';
-import 'package:mobile/shared/bloc/state/auth_state.dart';
 
 class Setting extends StatefulWidget {
   const Setting({super.key});
@@ -63,15 +61,7 @@ class _SettingState extends State<Setting> {
       ),
       body: SafeArea(
         child: BlocListener<AuthBloc, dynamic>(
-          listener: (context, state) {
-            if (state is LogoutSuccess) {
-              ScaffoldMessenger.of(context).hideCurrentSnackBar();
-              ScaffoldMessenger.of(
-                context,
-              ).showSnackBar(SnackBar(content: Text(state.message)));
-              context.go(SharedRoutesConstant.signupScreen);
-            }
-          },
+          listener: (context, state) {},
           child: ListView(
             physics: const BouncingScrollPhysics(),
             padding: EdgeInsets.symmetric(horizontal: 43.w),

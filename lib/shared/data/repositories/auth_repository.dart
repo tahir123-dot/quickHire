@@ -2,19 +2,20 @@ import 'package:mobile/shared/data/dto/login.dart';
 import 'package:mobile/shared/data/dto/otp.dart';
 import 'package:mobile/shared/data/dto/signup.dart';
 import 'package:mobile/shared/data/entity/entity.dart';
+import 'package:mobile/shared/data/model/otp_model.dart';
 
 abstract class AuthRepository {
   // signup
   Future<User> signup(SignupDto dto);
 
   // verify otp
-  Future<bool> verifyOtp(OtpDto dto);
+  Future<VerifyOtpResponseModel> verifyOtp(OtpDto dto);
 
   // resend otp
   Future<void> resendOtp(String email);
 
   // login
-  Future<bool> login(LoginDto dto);
+  Future<VerifyOtpResponseModel> login(LoginDto dto);
 
   // logout
   Future<void> deleteToken();

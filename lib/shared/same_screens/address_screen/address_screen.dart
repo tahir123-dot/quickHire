@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:mobile/components/top_bar_widget/top_bar_widget.dart';
 import 'package:mobile/core/themes/app_button_theme.dart';
-import 'package:mobile/core/themes/app_input_theme.dart';
 
 import '../../../core/themes/colors.dart';
 
@@ -31,22 +29,9 @@ class _AddressScreenState extends State<AddressScreen> {
               padding: EdgeInsets.symmetric(horizontal: 33.w),
               child: Column(
                 children: [
-                  SizedBox(height: 45.h),
-                  TextFormField(
-                    decoration: AppInputTheme.searchBar(
-                      hint: 'Search Location',
-                      icon: Padding(
-                        padding: const EdgeInsets.all(15),
-                        child: SvgPicture.asset(
-                          "assets/icons/locationIcon.svg",
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 20.h),
                   Container(
-                    width: MediaQuery.of(context).size.width * 0.92,
-                    height: MediaQuery.of(context).size.height * 0.35,
+                    width: double.infinity,
+                    height: 540.h,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(12.r),
                     ),
@@ -70,8 +55,9 @@ class _AddressScreenState extends State<AddressScreen> {
                   SizedBox(height: 15.h),
                   AppButtonTheme.iconTextButton(
                     text: 'Save Address',
-                    backgroundColor: AppColors.blackColor,
+                    backgroundColor: AppColors.listBackground,
                     textColor: AppColors.whiteColor,
+                    sideColor: AppColors.listBackground,
                     icon: null,
                     onPressed: () => print('Address Saved'),
                   ),

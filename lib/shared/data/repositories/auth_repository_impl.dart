@@ -1,4 +1,3 @@
-import 'package:mobile/routes/auth/auth_service.dart';
 import 'package:mobile/shared/data/datasources/auth_data_sources.dart';
 import 'package:mobile/shared/data/dto/login.dart';
 import 'package:mobile/shared/data/dto/otp.dart';
@@ -17,14 +16,8 @@ class AuthRepositoryImpl implements AuthRepository {
 
   // login
   @override
-  Future<bool> login(LoginDto dto) async {
-    final VerifyOtpResponseModel response = await remote.login(dto);
-    final token = response.response.token;
-
-    await storage.saveToken(token);
-    await AuthService.setToken(token);
-
-    return response.response.success;
+  Future<VerifyOtpResponseModel> login(LoginDto dto) async {
+    return await remote.login(dto);
   }
 
   // logout
@@ -43,14 +36,8 @@ class AuthRepositoryImpl implements AuthRepository {
 
   // verify otp
   @override
-  Future<bool> verifyOtp(OtpDto dto) async {
-    final VerifyOtpResponseModel response = await remote.verifyOtp(dto);
-    final token = response.response.token;
-
-    await storage.saveToken(token);
-    await AuthService.setToken(token);
-
-    return response.response.success;
+  Future<VerifyOtpResponseModel> verifyOtp(OtpDto dto) async {
+    return await remote.verifyOtp(dto);
   }
 
   @override
