@@ -5,12 +5,12 @@ import 'package:go_router/go_router.dart';
 import 'package:mobile/core/navigation/circle_button.dart';
 import 'package:mobile/core/themes/app_input_theme.dart';
 import 'package:mobile/core/themes/app_text_theme.dart';
+import 'package:mobile/routes/shared_routes/public_routes_constants.dart';
 import 'package:mobile/shared/bloc/blocimpl/authbloc.dart';
 import 'package:mobile/shared/bloc/event/auth_event.dart';
 import 'package:mobile/shared/bloc/state/auth_state.dart';
 import '../../../../core/themes/app_button_theme.dart';
 import '../../../../core/themes/colors.dart';
-import '../../../../routes/shared_routes/shared_routes_constant.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -48,7 +48,7 @@ class _LoginScreenState extends State<LoginScreen> {
           ScaffoldMessenger.of(
             context,
           ).showSnackBar(SnackBar(content: Text("Login successful")));
-          context.go(SharedRoutesConstant.splashScreen);
+          context.go(PublicRoutesConstants.splashScreen);
         }
 
         if (state is AuthError) {
@@ -68,7 +68,7 @@ class _LoginScreenState extends State<LoginScreen> {
             padding: EdgeInsets.only(left: 16.w),
             child: CircleButton(
               icon: Icons.arrow_back,
-              route: SharedRoutesConstant.signupScreen,
+              route: PublicRoutesConstants.signupScreen,
             ),
           ),
         ),
@@ -136,7 +136,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
                 TextButton(
                   onPressed: () {
-                    context.go(SharedRoutesConstant.emailScreen);
+                    context.go(PublicRoutesConstants.emailScreen);
                   },
                   child: Text(
                     ' Forgot Password',

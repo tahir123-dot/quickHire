@@ -27,14 +27,6 @@ class SharedRoutes {
       },
     ),
     GoRoute(
-      path: SharedRoutesConstant.serviceCategoryScreen,
-      name: 'serviceCategoryScreen',
-      pageBuilder: (context, state) {
-        return MaterialPage(child: ServicesCategoryScreen());
-      },
-    ),
-
-    GoRoute(
       path: SharedRoutesConstant.emailScreen,
       name: 'emailScreen',
       pageBuilder: (context, state) {

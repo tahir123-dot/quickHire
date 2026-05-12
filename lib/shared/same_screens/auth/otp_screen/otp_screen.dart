@@ -6,13 +6,13 @@ import 'package:go_router/go_router.dart';
 import 'package:mobile/core/injection/injection_container.dart';
 import 'package:mobile/core/navigation/circle_button.dart';
 import 'package:mobile/core/themes/app_input_theme.dart';
+import 'package:mobile/routes/provider_routes/provider_routes_constants.dart';
 import 'package:mobile/shared/bloc/blocimpl/authbloc.dart';
 import 'package:mobile/shared/bloc/event/auth_event.dart';
 import 'package:mobile/shared/bloc/state/auth_state.dart';
 import 'package:mobile/utils/storage.dart';
 import '../../../../core/themes/app_text_theme.dart';
 import '../../../../core/themes/colors.dart';
-import '../../../../routes/shared_routes/shared_routes_constant.dart';
 
 class OtpScreen extends StatefulWidget {
   const OtpScreen({super.key});
@@ -83,7 +83,7 @@ class _OtpScreenState extends State<OtpScreen> {
             context,
           ).showSnackBar(SnackBar(content: Text(state.message)));
 
-          context.go(SharedRoutesConstant.serviceCategoryScreen);
+          context.go(ProviderRoutesConstants.serviceCategoryScreen);
         }
 
         if (state is AuthError) {

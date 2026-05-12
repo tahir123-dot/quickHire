@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:mobile/components/category/category.dart';
 import 'package:mobile/core/themes/app_text_theme.dart';
 import 'package:mobile/core/themes/colors.dart';
+import 'package:mobile/routes/shared_routes/public_routes_constants.dart';
 import 'package:mobile/routes/shared_routes/shared_routes_constant.dart';
 
 class AccountTypeScreen extends StatelessWidget {
@@ -37,7 +38,7 @@ class AccountTypeScreen extends StatelessWidget {
                 borderColor: AppColors.blackColor,
                 backgroundColor: AppColors.whiteColor,
                 onTap: () {
-                  context.go(SharedRoutesConstant.signupScreen);
+                  context.go(PublicRoutesConstants.signupScreen);
                 },
               ),
 
@@ -51,7 +52,7 @@ class AccountTypeScreen extends StatelessWidget {
                 borderColor: AppColors.blackColor,
                 backgroundColor: AppColors.whiteColor,
                 onTap: () {
-                  context.go(SharedRoutesConstant.signupScreen);
+                  context.go(PublicRoutesConstants.signupScreen);
                 },
               ),
 
@@ -66,7 +67,7 @@ class AccountTypeScreen extends StatelessWidget {
                 borderColor: AppColors.blackColor,
                 backgroundColor: AppColors.whiteColor,
                 onTap: () {
-                  context.go(SharedRoutesConstant.signupScreen);
+                  context.go(PublicRoutesConstants.signupScreen);
                 },
               ),
             ],

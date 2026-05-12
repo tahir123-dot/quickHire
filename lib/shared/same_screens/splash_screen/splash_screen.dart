@@ -4,8 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mobile/core/themes/app_text_theme.dart';
-
-import 'package:mobile/routes/shared_routes/shared_routes_constant.dart';
+import 'package:mobile/routes/shared_routes/public_routes_constants.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -34,7 +33,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
     if (!mounted) return;
 
-    context.go(SharedRoutesConstant.accountTypeScreen);
+    context.go(PublicRoutesConstants.accountTypeScreen);
   }
 
   @override

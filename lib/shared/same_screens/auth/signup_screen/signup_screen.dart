@@ -8,8 +8,7 @@ import 'package:mobile/core/themes/app_button_theme.dart';
 import 'package:mobile/core/themes/app_input_theme.dart';
 import 'package:mobile/core/themes/app_text_theme.dart';
 import 'package:mobile/core/themes/colors.dart';
-import 'package:mobile/routes/shared_routes/shared_routes_constant.dart';
-
+import 'package:mobile/routes/shared_routes/public_routes_constants.dart';
 import 'package:mobile/shared/bloc/blocimpl/authbloc.dart';
 import 'package:mobile/shared/bloc/event/auth_event.dart';
 import 'package:mobile/shared/bloc/state/auth_state.dart';
@@ -70,7 +69,7 @@ class _SignupScreenState extends State<SignupScreen> {
             context,
           ).showSnackBar(SnackBar(content: Text(state.message)));
 
-          context.go(SharedRoutesConstant.otpScreen);
+          context.go(PublicRoutesConstants.otpScreen);
         }
 
         // Error
@@ -240,7 +239,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       elevation: 1,
                       textColor: AppColors.whiteColor,
                       onPressed: () {
-                        context.push(SharedRoutesConstant.loginScreen);
+                        context.push(PublicRoutesConstants.loginScreen);
                       },
                     ),
 

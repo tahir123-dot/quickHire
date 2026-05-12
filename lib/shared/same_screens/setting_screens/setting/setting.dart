@@ -94,7 +94,7 @@ class _SettingState extends State<Setting> {
                           title: "Logout",
                           onTap: () {
                             print("Logout clicked");
-                            context.read<AuthBloc>().add(LogoutEvent());
+                            //context.read<AuthBloc>().add(LogoutEvent());
                           },
                         );
                       }

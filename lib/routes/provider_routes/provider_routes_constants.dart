@@ -1,4 +1,5 @@
 class ProviderRoutesConstants {
+  static const String serviceCategoryScreen = "/serviceCategoryScreen";
   static const String providerMainScreen = "/providerMainScreen";
   static const String providerAccountOverView = "/providerAccountOverView";
   static const String providerAddCampaign = "/providerAddCampaign";

@@ -1,3 +1,6 @@
+// select category secreen
+export 'services_category_screen/services_category_screen.dart';
+
 // main screen
 export 'provider_main_screen.dart';
 

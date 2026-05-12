@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import 'package:mobile/components/setting/list_widget.dart';
 import 'package:mobile/components/top_bar_widget/top_bar_widget.dart';
+import 'package:mobile/routes/shared_routes/public_routes_constants.dart';
 import '../../../routes/shared_routes/shared_routes_constant.dart';
 import 'package:mobile/routes/user_routes/user_routes_constants.dart';
 
@@ -19,7 +19,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     ListItemModel(title: "Phone", route: UserRoutesConstants.userPhone),
     ListItemModel(
       title: "Change Password",
-      route: SharedRoutesConstant.passwordScreen,
+      route: PublicRoutesConstants.passwordScreen,
     ),
   ];
 

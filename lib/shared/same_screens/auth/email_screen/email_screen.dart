@@ -4,9 +4,9 @@ import 'package:go_router/go_router.dart';
 import 'package:mobile/core/navigation/circle_button.dart';
 import 'package:mobile/core/themes/app_input_theme.dart';
 import 'package:mobile/core/themes/colors.dart';
+import 'package:mobile/routes/shared_routes/public_routes_constants.dart';
 import '../../../../core/themes/app_button_theme.dart';
 import '../../../../core/themes/app_text_theme.dart';
-import '../../../../routes/shared_routes/shared_routes_constant.dart';
 
 class EmailScreen extends StatefulWidget {
   const EmailScreen({super.key});
@@ -28,7 +28,7 @@ class _EmailScreenState extends State<EmailScreen> {
           padding: EdgeInsets.only(left: 16.w),
           child: CircleButton(
             icon: Icons.arrow_back,
-            route: SharedRoutesConstant.loginScreen,
+            route: PublicRoutesConstants.loginScreen,
           ),
         ),
       ),
@@ -69,7 +69,7 @@ class _EmailScreenState extends State<EmailScreen> {
                 textColor: AppColors.whiteColor,
                 onPressed: () {
                   context.push(
-                    SharedRoutesConstant.passwordScreen,
+                    PublicRoutesConstants.passwordScreen,
                   ); // in this we also check first email to sent otp and then go to otp screen then password screen
                 },
               ),
