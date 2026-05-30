@@ -1,39 +1,76 @@
 import 'package:flutter/material.dart';
-
 import '../themes/colors.dart';
 
 class BottomNavigation extends StatelessWidget {
   final List<IconData> icons;
+  final int currentIndex;
   final Function(int) onTap;
+  final List<String>? labels; // optional
 
-  const BottomNavigation({super.key, required this.icons, required this.onTap});
+  const BottomNavigation({
+    super.key,
+    required this.icons,
+    required this.onTap,
+    required this.currentIndex,
+    this.labels,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-        width: double.infinity,
-        height: 60,
-        decoration: BoxDecoration(
-          color: AppColors.whiteColor,
-          borderRadius: BorderRadius.circular(0),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black26,
-              blurRadius: 25,
-              spreadRadius: 1,
-              offset: Offset(0, -2), // 🔥 negative Y = shadow upar
+      height: labels != null ? 68 : 60, // label ho to thoda bada
+      decoration: BoxDecoration(
+        color: AppColors.transparentBackground,
+        borderRadius: BorderRadius.circular(0),
+        border: Border.all(color: AppColors.searchBarBackground, width: 1),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: List.generate(icons.length, (index) {
+          final isActive = index == currentIndex;
+
+          return GestureDetector(
+            onTap: () => onTap(index),
+            child: AnimatedContainer(
+              duration: const Duration(milliseconds: 250),
+              padding: const EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                color: isActive
+                    ? AppColors.transparentBackground
+                    : Colors.transparent,
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(
+                    icons[index],
+                    size: isActive ? 26 : 24,
+                    color: isActive
+                        ? AppColors.listBackground
+                        : AppColors.textSecondary,
+                  ),
+                  if (labels != null) ...[
+                    const SizedBox(height: 3),
+                    Text(
+                      labels![index],
+                      style: TextStyle(
+                        fontSize: 11,
+                        fontWeight: isActive
+                            ? FontWeight.w500
+                            : FontWeight.w400,
+                        color: isActive
+                            ? AppColors.listBackground
+                            : AppColors.textSecondary,
+                      ),
+                    ),
+                  ],
+                ],
+              ),
             ),
-          ],
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: List.generate(icons.length, (index) {
-            return IconButton(
-              onPressed: () => onTap(index),
-              icon: Icon(icons[index]),
-            );
-          }),
-        ),
-      );
+          );
+        }),
+      ),
+    );
   }
 }

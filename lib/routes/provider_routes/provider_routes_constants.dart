@@ -1,44 +1,46 @@
 class ProviderRoutesConstants {
-  static const String providerServiceCategoryScreen =
-      "/providerServiceCategoryScreen";
-  static const String providerMainScreen = "/providerMainScreen";
-  static const String providerAccountOverView = "/providerAccountOverView";
+  static const String provider = "/provider";
+
+  static const String serviceCategoryScreen = "/provider/serviceCategoryScreen";
+
+  // for check stats
+  static const String dashboard = "dashboard";
+
+  // list of bookings today
+  static const String booking = "booking";
+
+  // for subscriptoin plan
+  static const String boost = "boost";
+
+  // for profile edit
+  static const String editProfile = "editProfile";
+
+  // this route use to add business details
+  static const String businessDetails = "/provider/editProfile/businessDetails";
+
+  // this routes use to add cover picture
+  static const String banner = "/provider/editProfile/banner";
+
+  // this routes use to add payment method
+  static const String payment = "/provider/editProfile/payment";
+
+  // this route use to see customer reveiws
+  static const String customerReview = "/provider/editProfile/customerReview";
+
+  // this routes ue to addd team
+  static const String addTeam = "/provider/editProfile/addTeam";
+  // this route use to list team
+  static const String teamList = "/provider/editProfile/addTeam/teamList";
+
+  // this routes use to add service
+  static const String addServiceScreen =
+      "/provider/editProfile/addServiceScreen";
+
+  // this routes use to add shedule
+  static const String addAvailability = "/provider/editProfile/addAvailability";
+
   static const String providerAddCampaign = "/providerAddCampaign";
   static const String providerAdsPlan = "/providerAdsPlan";
-  static const String providerHome = "/providerHome";
-  static const String providerBookingDetails = "/providerBookingDetails";
   static const String providerProfile = "/providerProfile";
-  static const String addServiceScreen = "/addServiceScreen";
   static const String providerCategory = "/providerCategory";
-  static const String providerEditProfile = "/providerEditProfile";
-  static const String providerAddAvailability = "/providerAddAvailability";
-  static const String providerAddTeam = "/providerAddTeam";
-  static const String providerTeamList = "/providerTeamList";
-  static const String selectProfessional = "/selectProfessional";
-  static const String providerProfileView = "/providerProfileView";
-  static const String providerPayment = "/providerPayment";
-  static const String providerCustomerReview = "/providerCustomerReview";
-  static const String providerBoost = "/providerBoost";
-
-  static const List<String> all = [
-    providerServiceCategoryScreen,
-    providerMainScreen,
-    providerAccountOverView,
-    providerAddCampaign,
-    providerAdsPlan,
-    providerHome,
-    providerBookingDetails,
-    providerProfile,
-    addServiceScreen,
-    providerCategory,
-    providerEditProfile,
-    providerAddAvailability,
-    providerAddTeam,
-    providerTeamList,
-    selectProfessional,
-    providerProfileView,
-    providerPayment,
-    providerCustomerReview,
-    providerBoost,
-  ];
 }

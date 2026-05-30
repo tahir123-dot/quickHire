@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mobile/components/customer_reviews/customer_reviews.dart';
-import '../../../components/category/filter_category/category_section.dart';
-import '../../../components/service_card/service_card.dart';
-import '../../../components/top_bar_widget/top_bar_widget.dart';
-import '../../../core/themes/app_button_theme.dart';
-import '../../../core/themes/colors.dart';
-import '../../../routes/provider_routes/provider_routes_constants.dart';
+import 'package:mobile/routes/user_routes/user_routes_constants.dart';
+import '../../../../components/category/filter_category/category_section.dart';
+import '../../../../components/service_card/service_card.dart';
+import '../../../../components/top_bar_widget/top_bar_widget.dart';
+import '../../../../core/themes/app_button_theme.dart';
+import '../../../../core/themes/colors.dart';
+import '../../../../routes/provider_routes/provider_routes_constants.dart';
 
 class ProfileViewScreen extends StatefulWidget {
   const ProfileViewScreen({super.key});
@@ -36,7 +37,7 @@ class _ProfileViewScreenState extends State<ProfileViewScreen> {
             pinned: false,
             floating: false,
             snap: false,
-
+            automaticallyImplyLeading: false,
             expandedHeight: 286.h,
 
             flexibleSpace: FlexibleSpaceBar(
@@ -144,9 +145,7 @@ class _ProfileViewScreenState extends State<ProfileViewScreen> {
                       ),
                       TextButton(
                         onPressed: () {
-                          context.push(
-                            ProviderRoutesConstants.providerCustomerReview,
-                          );
+                          context.push(ProviderRoutesConstants.customerReview);
                         },
                         child: Text(
                           "View all",
@@ -166,7 +165,7 @@ class _ProfileViewScreenState extends State<ProfileViewScreen> {
                     backgroundColor: AppColors.blackColor,
                     textColor: AppColors.whiteColor,
                     onPressed: () {
-                      context.push(ProviderRoutesConstants.selectProfessional);
+                      context.push(UserRoutesConstants.teamSelect);
                     },
                   ),
 

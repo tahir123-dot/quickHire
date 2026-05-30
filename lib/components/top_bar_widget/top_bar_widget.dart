@@ -183,7 +183,7 @@ class TopBarThreeThings extends StatelessWidget {
 
                 onSelected: (value) {
                   if (value == 'edit') {
-                    context.push(ProviderRoutesConstants.providerEditProfile);
+                    context.push(ProviderRoutesConstants.editProfile);
                   } else if (value == 'delete') {
                     print('Delete clicked');
                   }
@@ -215,9 +215,7 @@ class TopBarThreeThings extends StatelessWidget {
             : InkWell(
                 child: SvgPicture.asset(imagePath),
                 onTap: () {
-                  isMenu
-                      ? null
-                      : context.push(ProviderRoutesConstants.providerPayment);
+                  isMenu ? null : context.push(ProviderRoutesConstants.payment);
                 },
               ),
       ],

@@ -4,35 +4,98 @@ import 'package:mobile/export_screen/screen_exports.dart';
 import 'package:mobile/routes/provider_routes/provider_routes_constants.dart';
 
 class ProviderRoutes {
-  static List<GoRoute> routes = [
+  static List<RouteBase> routes = [
     GoRoute(
-      path: ProviderRoutesConstants.providerServiceCategoryScreen,
-      name: 'providerServiceCategoryScreen',
-      pageBuilder: (context, state) {
-        return MaterialPage(child: ServicesCategoryScreen());
-      },
+      path: '/provider',
+      builder: (context, state) => const SizedBox(),
+
+      routes: [
+        StatefulShellRoute.indexedStack(
+          builder: (context, state, navigationShell) {
+            return ProviderMainScreen(navigationShell: navigationShell);
+          },
+          branches: [
+            StatefulShellBranch(
+              routes: [
+                GoRoute(
+                  path: ProviderRoutesConstants.dashboard, // "booking"
+                  builder: (context, state) => DashboardScreen(),
+                ),
+              ],
+            ),
+
+            StatefulShellBranch(
+              routes: [
+                GoRoute(
+                  path: ProviderRoutesConstants.booking,
+                  builder: (context, state) => ProviderBookingScreen(),
+                ),
+              ],
+            ),
+
+            StatefulShellBranch(
+              routes: [
+                GoRoute(
+                  path: ProviderRoutesConstants.boost, // "chat"
+                  builder: (context, state) => BoostProfileScreen(),
+                ),
+              ],
+            ),
+            StatefulShellBranch(
+              routes: [
+                GoRoute(
+                  path: ProviderRoutesConstants.editProfile, // "chat"
+                  builder: (context, state) => EditProfileScreen(),
+                ),
+              ],
+            ),
+          ],
+        ),
+
+        GoRoute(
+          path: 'editProfile/businessDetails',
+          builder: (context, state) => BusinessDetailsScreen(),
+        ),
+
+        GoRoute(
+          path: 'editProfile/banner',
+          builder: (context, state) => BusinessBannerScreen(),
+        ),
+
+        GoRoute(
+          path: 'serviceCategoryScreen', // "chat"
+          builder: (context, state) => ServicesCategoryScreen(),
+        ),
+
+        GoRoute(
+          path: 'editProfile/payment',
+          builder: (context, state) => ProviderPayment(),
+        ),
+        GoRoute(
+          path: 'editProfile/customerReview',
+          builder: (context, state) => CustomerReviewsScreen(),
+        ),
+        GoRoute(
+          path: 'editProfile/addTeam',
+          builder: (context, state) => AddTeamMemberScreen(),
+          routes: [
+            GoRoute(
+              path: 'teamList',
+              builder: (context, state) => TeamListScreen(),
+            ),
+          ],
+        ),
+        GoRoute(
+          path: 'editProfile/addServiceScreen', // "chat"
+          builder: (context, state) => AddServiceScreen(),
+        ),
+        GoRoute(
+          path: 'editProfile/addAvailability', // "chat"
+          builder: (context, state) => AddAvailabilityScreen(),
+        ),
+      ],
     ),
-    GoRoute(
-      path: ProviderRoutesConstants.providerMainScreen,
-      name: 'providerMainScreen',
-      pageBuilder: (context, state) {
-        return MaterialPage(child: ProviderMainScreen());
-      },
-    ),
-    GoRoute(
-      path: ProviderRoutesConstants.providerHome,
-      name: 'providerHome',
-      pageBuilder: (context, state) {
-        return MaterialPage(child: ProviderHomeScreen());
-      },
-    ),
-    GoRoute(
-      path: ProviderRoutesConstants.providerBookingDetails,
-      name: 'providerBookingDetails',
-      pageBuilder: (context, state) {
-        return MaterialPage(child: ProviderBookingDetailScreen());
-      },
-    ),
+
     GoRoute(
       path: ProviderRoutesConstants.providerCategory,
       name: 'providerCategory',
@@ -40,83 +103,7 @@ class ProviderRoutes {
         return MaterialPage(child: CategoryInfoScreen());
       },
     ),
-    GoRoute(
-      path: ProviderRoutesConstants.providerEditProfile,
-      name: 'providerEditProfile',
-      pageBuilder: (context, state) {
-        return MaterialPage(child: EditProfileScreen());
-      },
-    ),
-    GoRoute(
-      path: ProviderRoutesConstants.providerAddAvailability,
-      name: 'providerAddAvailability',
-      pageBuilder: (context, state) {
-        return MaterialPage(child: AddAvailabilityScreen());
-      },
-    ),
-    GoRoute(
-      path: ProviderRoutesConstants.providerAddTeam,
-      name: 'providerAddTeam',
-      pageBuilder: (context, state) {
-        return MaterialPage(child: AddTeamMemberScreen());
-      },
-    ),
-    GoRoute(
-      path: ProviderRoutesConstants.providerTeamList,
-      name: 'providerTeamList',
-      pageBuilder: (context, state) {
-        return MaterialPage(child: TeamListScreen());
-      },
-    ),
-    GoRoute(
-      path: ProviderRoutesConstants.selectProfessional,
-      name: 'selectProfessional',
-      pageBuilder: (context, state) {
-        return MaterialPage(child: SelectProfessional());
-      },
-    ),
-    GoRoute(
-      path: ProviderRoutesConstants.providerProfileView,
-      name: 'providerProfileView',
-      pageBuilder: (context, state) {
-        return MaterialPage(child: ProfileViewScreen());
-      },
-    ),
-    GoRoute(
-      path: ProviderRoutesConstants.addServiceScreen,
-      name: 'addServiceScreen',
-      pageBuilder: (context, state) {
-        return MaterialPage(child: AddServiceScreen());
-      },
-    ),
-    GoRoute(
-      path: ProviderRoutesConstants.providerCustomerReview,
-      name: 'providerCustomerReview',
-      pageBuilder: (context, state) {
-        return MaterialPage(child: CustomerReviewsScreen());
-      },
-    ),
-    GoRoute(
-      path: ProviderRoutesConstants.providerPayment,
-      name: 'providerPayment',
-      pageBuilder: (context, state) {
-        return MaterialPage(child: ProviderPayment());
-      },
-    ),
-    GoRoute(
-      path: ProviderRoutesConstants.providerBoost,
-      name: 'providerBoost',
-      pageBuilder: (context, state) {
-        return MaterialPage(child: BoostProfileScreen());
-      },
-    ),
-    GoRoute(
-      path: ProviderRoutesConstants.providerAccountOverView,
-      name: 'providerAccountOverView',
-      pageBuilder: (context, state) {
-        return MaterialPage(child: AccountOverviewScreen());
-      },
-    ),
+
     GoRoute(
       path: ProviderRoutesConstants.providerAddCampaign,
       name: 'providerAddCampaign',

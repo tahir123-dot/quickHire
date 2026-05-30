@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mobile/routes/auth/role_enum.dart';
 import 'package:mobile/shared/bloc/event/auth_event.dart';
 import 'package:mobile/shared/bloc/state/auth_state.dart';
 import 'package:mobile/shared/data/dto/login.dart';
@@ -31,9 +32,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     Emitter<AuthState> emit,
   ) async {
     final token = await storage.getToken();
-    final role = await storage.getUserRole();
+    final roleString = await storage.getUserRole();
 
-    if (token != null && role != null) {
+    if (token != null && roleString != null) {
+      final role = UserRoleHelper.fromString(roleString);
       emit(Authenticated(token: token, role: role));
     } else {
       emit(Unauthenticated());
@@ -53,9 +55,16 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
       await storage.saveToken(token);
 
-      final role = await storage.getUserRole();
+      final roleString = await storage.getUserRole();
 
-      emit(Authenticated(token: token, role: role ?? ""));
+      if (roleString == null) {
+        emit(AuthError("Role not found in token"));
+        return;
+      }
+
+      final role = UserRoleHelper.fromString(roleString);
+
+      emit(Authenticated(token: token, role: role));
     } catch (e) {
       emit(AuthError(e.toString()));
     }
@@ -97,9 +106,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
       await storage.saveToken(token);
 
-      final role = await storage.getUserRole();
+      final roleString = await storage.getUserRole();
 
-      emit(Authenticated(token: token, role: role ?? ""));
+      final role = UserRoleHelper.fromString(roleString!);
+
+      emit(Authenticated(token: token, role: role));
     } catch (e) {
       emit(AuthError(e.toString()));
     }

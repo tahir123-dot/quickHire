@@ -18,7 +18,7 @@ class _ProfessionalMainScreenState extends State<ProfessionalMainScreen> {
     ProfileScreen(),
   ];
 
-  void onTap(int index){
+  void onTap(int index) {
     setState(() {
       currentIndex = index;
     });
@@ -27,15 +27,18 @@ class _ProfessionalMainScreenState extends State<ProfessionalMainScreen> {
   List<IconData> iconItem = [
     Icons.home,
     Icons.eighteen_mp_outlined,
-    Icons.person_rounded
+    Icons.person_rounded,
   ];
-
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: screen[currentIndex],
-      bottomNavigationBar: BottomNavigation(icons: iconItem, onTap: onTap),
+      bottomNavigationBar: BottomNavigation(
+        icons: iconItem,
+        currentIndex: currentIndex,
+        onTap: onTap,
+      ),
     );
   }
 }

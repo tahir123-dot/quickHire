@@ -1,32 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:mobile/core/navigation/bottom_navigation.dart';
-import 'package:mobile/export_screen/screen_exports.dart';
 
-class ProviderMainScreen extends StatefulWidget {
-  const ProviderMainScreen({super.key});
-
-  @override
-  State<ProviderMainScreen> createState() => _ProviderMainScreenState();
-}
-
-class _ProviderMainScreenState extends State<ProviderMainScreen> {
-  int currentIndex = 0;
-
-  final screen = [ProviderHomeScreen(), ProfileViewScreen()];
-
-  List<IconData> iconItem = [Icons.home, Icons.book, Icons.person_rounded];
-
-  void onTap(int index) {
-    setState(() {
-      currentIndex = index;
-    });
-  }
+class ProviderMainScreen extends StatelessWidget {
+  final StatefulNavigationShell navigationShell;
+  const ProviderMainScreen({super.key, required this.navigationShell});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: screen[currentIndex],
-      bottomNavigationBar: BottomNavigation(icons: iconItem, onTap: onTap),
+      body: navigationShell,
+      bottomNavigationBar: BottomNavigation(
+        currentIndex: navigationShell.currentIndex,
+        onTap: (index) {
+          navigationShell.goBranch(index);
+        },
+        icons: const [
+          Icons.dashboard_outlined,
+          Icons.calendar_today_outlined, // Booking
+          Icons.campaign_outlined,
+          Icons.account_circle_outlined, // Profile
+        ],
+        labels: const [
+          // labels chahiye to pass karo
+          'Dashboard',
+          'Bookings',
+          'Ads',
+          'Profile',
+        ],
+      ),
     );
   }
 }

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mobile/core/themes/colors.dart';
-import 'package:mobile/routes/provider_routes/provider_routes_constants.dart';
+import 'package:mobile/routes/user_routes/user_routes_constants.dart';
 import 'fake_data.dart';
 
 class ServicePreview extends StatefulWidget {
@@ -26,7 +26,7 @@ class _ServicePreviewState extends State<ServicePreview> {
           children: [
             InkWell(
               onTap: () {
-                context.push(ProviderRoutesConstants.providerProfileView);
+                context.push(UserRoutesConstants.providerProfile);
               },
               child: Column(
                 children: [
@@ -59,7 +59,7 @@ class _ServicePreviewState extends State<ServicePreview> {
                     ),
                     trailing: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColors.blackColor,
+                        backgroundColor: AppColors.listBackground,
                         shadowColor: Colors.transparent,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(50.r),
@@ -67,9 +67,7 @@ class _ServicePreviewState extends State<ServicePreview> {
                         fixedSize: Size(106.w, 47.h),
                       ),
                       onPressed: () {
-                        context.push(
-                          ProviderRoutesConstants.providerProfileView,
-                        );
+                        context.push(UserRoutesConstants.providerProfile);
                       },
                       child: Text(
                         'Book',

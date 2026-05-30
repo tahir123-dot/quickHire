@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:go_router/go_router.dart';
-import 'package:mobile/routes/provider_routes/provider_routes_constants.dart';
 import '../../core/themes/colors.dart';
 
 class ProviderBookingCard extends StatelessWidget {
@@ -20,7 +18,7 @@ class ProviderBookingCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        context.push(ProviderRoutesConstants.providerBookingDetails);
+        print("no routes ");
       },
       child: Card(
         elevation: 0,

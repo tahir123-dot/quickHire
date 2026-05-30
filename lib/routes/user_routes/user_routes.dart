@@ -4,76 +4,114 @@ import 'package:mobile/export_screen/screen_exports.dart';
 import 'package:mobile/routes/user_routes/user_routes_constants.dart';
 
 class UserRoutes {
-  static List<GoRoute> routes = [
+  static final List<RouteBase> routes = [
     GoRoute(
-      path: UserRoutesConstants.userMainScreen,
-      name: 'userMainScreen',
-      pageBuilder: (context, state) {
-        return MaterialPage(child: UserMainScreen());
+      path: '/customer',
+      redirect: (context, state) {
+        if (state.fullPath == '/customer' || state.fullPath == '/customer/') {
+          return '/customer/home';
+        }
+        return null;
       },
-    ),
-    GoRoute(
-      path: UserRoutesConstants.userHome,
-      name: 'userHome',
-      pageBuilder: (context, state) {
-        return MaterialPage(child: HomeScreen());
-      },
-    ),
-    GoRoute(
-      path: UserRoutesConstants.userBooking,
-      name: 'userBooking',
-      pageBuilder: (context, state) {
-        return MaterialPage(child: BookingScreen());
-      },
-    ),
-    GoRoute(
-      path: UserRoutesConstants.userBookingDetail,
-      name: 'userBookingDetail',
-      pageBuilder: (context, state) {
-        return MaterialPage(child: BookingDetailScreen());
-      },
-    ),
-    GoRoute(
-      path: UserRoutesConstants.userChat,
-      name: 'userChat',
-      pageBuilder: (context, state) {
-        return MaterialPage(child: ChatScreen());
-      },
-    ),
-    GoRoute(
-      path: UserRoutesConstants.userProfile,
-      name: 'userProfile',
-      pageBuilder: (context, state) {
-        return MaterialPage(child: ProfileScreen());
-      },
-    ),
-    GoRoute(
-      path: UserRoutesConstants.userPhone,
-      name: 'userPhone',
-      pageBuilder: (context, state) {
-        return MaterialPage(child: PhoneNumberScreen());
-      },
-    ),
-    GoRoute(
-      path: UserRoutesConstants.userServiceProvider,
-      name: 'userServiceProvider',
-      pageBuilder: (context, state) {
-        return MaterialPage(child: ProfileViewScreen());
-      },
-    ),
-    GoRoute(
-      path: UserRoutesConstants.userCalenderScreen,
-      name: 'userCalenderScreen',
-      pageBuilder: (context, state) {
-        return MaterialPage(child: UserCalenderScreen());
-      },
-    ),
-    GoRoute(
-      path: UserRoutesConstants.userPayment,
-      name: 'userPayment',
-      pageBuilder: (context, state) {
-        return MaterialPage(child: UserPayment());
-      },
+
+      routes: [
+        // SHELL — only wraps the 4 bottom nav screens
+        StatefulShellRoute.indexedStack(
+          builder: (context, state, navigationShell) {
+            return UserMainScreen(navigationShell: navigationShell);
+          },
+          branches: [
+            StatefulShellBranch(
+              routes: [
+                GoRoute(
+                  path: UserRoutesConstants.home, // "home"
+                  builder: (context, state) => HomeScreen(),
+                ),
+              ],
+            ),
+
+            StatefulShellBranch(
+              routes: [
+                GoRoute(
+                  path: UserRoutesConstants.booking, // "booking"
+                  builder: (context, state) => BookingScreen(),
+                ),
+              ],
+            ),
+
+            StatefulShellBranch(
+              routes: [
+                GoRoute(
+                  path: UserRoutesConstants.chat, // "chat"
+                  builder: (context, state) => ChatScreen(),
+                ),
+              ],
+            ),
+
+            StatefulShellBranch(
+              routes: [
+                GoRoute(
+                  path: UserRoutesConstants.profile, // "profile"
+                  builder: (context, state) => ProfileScreen(),
+                ),
+              ],
+            ),
+          ],
+        ),
+
+        // ✅ OUTSIDE SHELL — no bottom nav bar on these screens
+        // RULE: these are children of '/customer', so use RELATIVE paths only.
+        // GoRouter will build the full path as: parent + "/" + child
+        // So "profile/phone" becomes "/customer/profile/phone" automatically.
+        GoRoute(
+          path: 'profile/phone', // ✅ relative — NOT '/customer/profile/phone'
+          builder: (context, state) => PhoneNumberScreen(),
+        ),
+
+        GoRoute(
+          path:
+              'profile/payment', // ✅ relative — NOT '/customer/profile/payment'
+          builder: (context, state) => UserPayment(),
+        ),
+
+        GoRoute(
+          path: 'home/service-provider', // ✅ relative
+          builder: (context, state) => ProfileViewScreen(),
+        ),
+
+        GoRoute(
+          path: 'booking/booking-detail', // ✅ relative
+          builder: (context, state) => BookingDetailScreen(),
+        ),
+
+        // booking flow
+
+        // profile open of provider
+        GoRoute(
+          path: 'providerProfile',
+          builder: (context, state) => ProfileViewScreen(),
+        ),
+
+        // select professional
+        GoRoute(
+          path: 'teamSelect',
+          builder: (context, state) => SelectProfessional(),
+        ),
+
+        // select date and time
+        GoRoute(
+          path: 'calendar',
+          builder: (context, state) => UserCalenderScreen(),
+        ),
+
+        // see booking Preview
+        GoRoute(
+          path: 'bookingPreview',
+          builder: (context, state) => BookingDetailScreen(),
+        ),
+
+        // booking flow end because confirmed
+      ],
     ),
   ];
 }

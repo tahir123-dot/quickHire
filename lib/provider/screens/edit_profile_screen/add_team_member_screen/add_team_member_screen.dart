@@ -62,8 +62,7 @@ class _AddTeamMemberScreenState extends State<AddTeamMemberScreen> {
                 backgroundColor: AppColors.blackColor,
                 textColor: AppColors.whiteColor,
                 onPressed: () {
-                  print('move to next selectProfessional Screen');
-                  context.push(ProviderRoutesConstants.selectProfessional);
+                  print('Invite send successfully');
                 },
               ),
               SizedBox(height: 35.h),
@@ -74,7 +73,7 @@ class _AddTeamMemberScreenState extends State<AddTeamMemberScreen> {
                 textColor: AppColors.blackColor,
                 onPressed: () {
                   print('move to next selectProfessional Screen');
-                  context.push(ProviderRoutesConstants.selectProfessional);
+                  context.push(ProviderRoutesConstants.teamList);
                 },
               ),
             ],

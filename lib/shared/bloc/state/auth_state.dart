@@ -1,3 +1,5 @@
+import 'package:mobile/routes/auth/role_enum.dart';
+
 abstract class AuthState {}
 
 /// ================= INITIAL =================
@@ -12,7 +14,7 @@ class AuthLoading extends AuthState {}
 
 class Authenticated extends AuthState {
   final String token;
-  final String role;
+  final UserRole role;
 
   Authenticated({required this.token, required this.role});
 }

@@ -9,6 +9,7 @@ import 'package:mobile/routes/shared_routes/public_routes_constants.dart';
 import 'package:mobile/shared/bloc/blocimpl/authbloc.dart';
 import 'package:mobile/shared/bloc/event/auth_event.dart';
 import 'package:mobile/shared/bloc/state/auth_state.dart';
+import 'package:mobile/utils/home.route.dart';
 import '../../../../core/themes/app_button_theme.dart';
 import '../../../../core/themes/colors.dart';
 
@@ -48,7 +49,7 @@ class _LoginScreenState extends State<LoginScreen> {
           ScaffoldMessenger.of(
             context,
           ).showSnackBar(SnackBar(content: Text("Login successful")));
-          context.go(PublicRoutesConstants.splashScreen);
+          context.go(getHomeRoute(state.role));
         }
 
         if (state is AuthError) {
@@ -63,7 +64,7 @@ class _LoginScreenState extends State<LoginScreen> {
         appBar: AppBar(
           backgroundColor: Colors.white,
           elevation: 0,
-          leadingWidth: 70.w, // 👈 important
+          leadingWidth: 70.w,
           leading: Padding(
             padding: EdgeInsets.only(left: 16.w),
             child: CircleButton(

@@ -1,42 +1,41 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:go_router/go_router.dart';
 import 'package:mobile/core/navigation/bottom_navigation.dart';
-import 'package:mobile/export_screen/screen_exports.dart';
 
-class UserMainScreen extends StatefulWidget {
-  const UserMainScreen({super.key});
+class UserMainScreen extends StatelessWidget {
+  final StatefulNavigationShell navigationShell;
 
-  @override
-  State<UserMainScreen> createState() => _UserMainScreenState();
-}
-
-class _UserMainScreenState extends State<UserMainScreen> {
-  int currentIndex = 0;
-
-  final screen = [
-    HomeScreen(),
-    BookingScreen(),
-    ChatScreen(),
-    ProfileScreen(),
-  ];
-
-  List<IconData> iconItem = [
-    Icons.home,
-    Icons.book,
-    Icons.chat,
-    Icons.person_rounded
-  ];
-
-  void onTap(int index){
-    setState(() {
-      currentIndex = index;
-    });
-  }
+  const UserMainScreen({super.key, required this.navigationShell});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: screen[currentIndex],
-      bottomNavigationBar: BottomNavigation(icons: iconItem, onTap: onTap),
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, result) {
+        if (navigationShell.currentIndex != 0) {
+          // Chat, Booking, Profile pe hai — Home pe bhejo
+          navigationShell.goBranch(0, initialLocation: true);
+        } else {
+          // Pehle se Home pe hai — app band karo
+          SystemNavigator.pop();
+        }
+      },
+      child: Scaffold(
+        body: navigationShell,
+        bottomNavigationBar: BottomNavigation(
+          currentIndex: navigationShell.currentIndex,
+          onTap: (index) {
+            navigationShell.goBranch(index);
+          },
+          icons: const [
+            Icons.home_outlined,
+            Icons.calendar_month_outlined,
+            Icons.chat_outlined,
+            Icons.person_outline,
+          ],
+        ),
+      ),
     );
   }
 }

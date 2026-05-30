@@ -60,7 +60,7 @@ class _PasswordScreenState extends State<PasswordScreen> {
                 elevation: 1,
                 textColor: AppColors.whiteColor,
                 onPressed: () {
-                  context.go(UserRoutesConstants.userMainScreen);
+                  //context.go(UserRoutesConstants.userMainScreen);
                 },
               ),
               SizedBox(height: 30.h),

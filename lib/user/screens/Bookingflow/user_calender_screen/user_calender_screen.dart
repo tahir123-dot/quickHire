@@ -6,7 +6,7 @@ import 'package:mobile/components/top_bar_widget/top_bar_widget.dart';
 import 'package:mobile/core/themes/app_button_theme.dart';
 import 'package:mobile/routes/user_routes/user_routes_constants.dart';
 
-import '../../../core/themes/colors.dart';
+import '../../../../core/themes/colors.dart';
 
 class UserCalenderScreen extends StatefulWidget {
   const UserCalenderScreen({super.key});
@@ -48,7 +48,7 @@ class _UserCalenderScreenState extends State<UserCalenderScreen> {
                 backgroundColor: AppColors.blueColor,
                 textColor: AppColors.whiteColor,
                 onPressed: () {
-                  context.push(UserRoutesConstants.userBookingDetail);
+                  context.push(UserRoutesConstants.bookingDetail);
                 },
               ),
 

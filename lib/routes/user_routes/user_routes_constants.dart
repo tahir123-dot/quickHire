@@ -1,25 +1,22 @@
 class UserRoutesConstants {
-  static const String userMainScreen = "/userMainScreen";
-  static const String userHome = "/userHome";
-  static const String userBooking = "/userBooking";
-  static const String userBookingDetail = "/userBookingDetail";
-  static const String userChat = "/userChat";
-  static const String userProfile = "/userProfile";
-  static const String userPayment = "/userPayment";
-  static const String userPhone = "/userPhone";
-  static const String userServiceProvider = "/userServiceProvider";
-  static const String userCalenderScreen = "/userCalenderScreen";
+  static const customer = "/customer";
+  static const String mainScreen = "main";
 
-  static const List<String> all = [
-    userMainScreen,
-    userHome,
-    userBooking,
-    userBookingDetail,
-    userChat,
-    userProfile,
-    userPayment,
-    userPhone,
-    userServiceProvider,
-    userCalenderScreen,
-  ];
+  static const home = "home";
+  static const booking = "booking";
+  static const bookingDetail = "/customer/booking/booking-detail";
+  static const chat = "chat";
+  static const profile = "profile";
+
+  static const phone = "/customer/profile/phone";
+  static const payment = "/customer/profile/payment";
+  static const serviceProvider = "/customer/home/service-provider";
+
+  // booking flow
+  static const String providerProfile = "/customer/providerProfile";
+  static const String teamSelect = "/customer/teamSelect";
+  static const String calender = "/customer/calendar";
+  static const String bookingPreview = "/customer/bookingPreview";
+
+  // then use payment screen for taking payment ot the users
 }

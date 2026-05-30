@@ -21,6 +21,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
       resizeToAvoidBottomInset: true,
       appBar: AppBar(
         backgroundColor: AppColors.whiteColor,
+        automaticallyImplyLeading: false,
         elevation: 0,
         title: TopBarIconWithCenterText(pageName: 'Booking Details'),
       ),
@@ -205,7 +206,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
                 backgroundColor: AppColors.blackColor,
                 textColor: AppColors.whiteColor,
                 onPressed: () {
-                  context.push(UserRoutesConstants.userPayment);
+                  context.push(UserRoutesConstants.payment);
                 },
               ),
             ],

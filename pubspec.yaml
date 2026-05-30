@@ -45,6 +45,8 @@ dependencies:
   flutter_secure_storage: ^10.0.0
   jwt_decoder: ^2.0.1
   flutter_screenutil: ^5.9.3
+  image_picker: ^1.2.2
+  fl_chart: ^1.2.0
 
 dev_dependencies:
   flutter_test:

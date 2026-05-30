@@ -8,9 +8,12 @@ import 'package:mobile/routes/shared_routes/public_routes.dart';
 import 'package:mobile/routes/shared_routes/public_routes_constants.dart';
 import 'package:mobile/routes/shared_routes/shared_routes.dart';
 import 'package:mobile/routes/user_routes/user_routes.dart';
+import 'package:mobile/routes/user_routes/user_routes_constants.dart';
 import 'package:mobile/shared/bloc/blocimpl/authbloc.dart';
 import 'package:mobile/shared/bloc/state/auth_state.dart';
+
 import 'package:mobile/shared/same_screens/error_screen/error_screen.dart';
+import 'package:mobile/utils/home.route.dart';
 
 class AppRoutes {
   final AuthBloc authBloc;
@@ -18,39 +21,54 @@ class AppRoutes {
   AppRoutes({required this.authBloc});
 
   late final GoRouter router = GoRouter(
-    initialLocation: PublicRoutesConstants.splashScreen,
-
-    refreshListenable: GoRouterRefreshStream(authBloc.stream),
-
+    initialLocation:
+        '/provider/dashboard', //PublicRoutesConstants.splashScreen,
+    // refreshListenable: GoRouterRefreshStream(authBloc.stream),
     redirect: (context, state) {
-      final authState = authBloc.state;
+      final path = state.matchedLocation;
 
-      final isPublicRoute = PublicRoutesConstants.publicPaths.contains(
-        state.matchedLocation,
+      debugPrint("📍 Current Route: $path");
+
+      return null;
+      /*final authState = authBloc.state;
+      final currentPath = state.matchedLocation;
+
+      final isPublicPath = PublicRoutesConstants.publicPaths.contains(
+        currentPath,
       );
 
-      // Not logged in
-      if (authState is Unauthenticated) {
-        return isPublicRoute ? null : PublicRoutesConstants.loginScreen;
+      if (authState is AuthLoading || authState is AuthInitial) {
+        return PublicRoutesConstants.splashScreen;
       }
 
-      //  Logged in
+      if (authState is Unauthenticated || authState is AuthError) {
+        if (isPublicPath) return null;
+
+        return PublicRoutesConstants.loginScreen;
+      }
+
       if (authState is Authenticated) {
         final role = authState.role;
-        final allowedRoutes = rolePermissions[role] ?? [];
 
-        final currentRoute = state.matchedLocation;
+        if (isPublicPath) {
+          return getHomeRoute(role);
+        }
 
-        final isAllowed = allowedRoutes.any(
-          (path) => currentRoute.startsWith(path),
+        final allowedPrefixes = rolePermissions[role] ?? [];
+        final isAllowed = allowedPrefixes.any(
+          (prefix) =>
+              currentPath.startsWith('/$prefix') ||
+              currentPath.startsWith(prefix),
         );
 
         if (!isAllowed) {
-          return "/errorScreen";
+          // Wrong role for this route — send them to their home
+          return getHomeRoute(role);
         }
       }
 
       return null;
+      */
     },
 
     routes: [

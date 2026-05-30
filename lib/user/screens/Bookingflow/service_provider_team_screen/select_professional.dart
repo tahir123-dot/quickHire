@@ -6,9 +6,9 @@ import 'package:mobile/core/themes/app_button_theme.dart';
 import 'package:mobile/core/themes/app_text_theme.dart';
 import 'package:mobile/routes/user_routes/user_routes_constants.dart';
 
-import '../../../../../components/team_card/team_card.dart';
-import '../../../../../components/top_bar_widget/top_bar_widget.dart';
-import '../../../../../core/themes/colors.dart';
+import '../../../../components/team_card/team_card.dart';
+import '../../../../components/top_bar_widget/top_bar_widget.dart';
+import '../../../../core/themes/colors.dart';
 
 // this side use by user
 
@@ -60,7 +60,7 @@ class SelectProfessional extends StatelessWidget {
                 backgroundColor: AppColors.blackColor,
                 textColor: AppColors.whiteColor,
                 onPressed: () {
-                  context.push(UserRoutesConstants.userCalenderScreen);
+                  context.push(UserRoutesConstants.calender);
                 },
               ),
 

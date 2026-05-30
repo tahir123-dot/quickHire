@@ -6,6 +6,7 @@ import 'package:mobile/components/top_bar_widget/top_bar_widget.dart';
 
 import 'package:mobile/core/themes/app_text_theme.dart';
 import 'package:mobile/core/themes/colors.dart';
+import 'package:mobile/routes/provider_routes/provider_routes_constants.dart';
 
 import 'package:mobile/routes/shared_routes/shared_routes_constant.dart';
 
@@ -20,35 +21,27 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   final List<ListItemModel> businessInfoList = [
     ListItemModel(
       title: "Business details",
-      route: SharedRoutesConstant.notificationScreen,
+      route: ProviderRoutesConstants.businessDetails,
     ),
+    ListItemModel(title: "Banner", route: ProviderRoutesConstants.banner),
+    ListItemModel(title: "Payment", route: ProviderRoutesConstants.payment),
     ListItemModel(
-      title: "Cover Image",
-      route: SharedRoutesConstant.notificationScreen,
-    ),
-    ListItemModel(
-      title: "Payment",
-      route: SharedRoutesConstant.notificationScreen,
+      title: "Reviews",
+      route: ProviderRoutesConstants.customerReview,
     ),
   ];
 
   final List<ListItemModel> businessSetupList = [
-    ListItemModel(
-      title: "Team",
-      route: SharedRoutesConstant.notificationScreen,
-    ),
+    ListItemModel(title: "Team", route: ProviderRoutesConstants.addTeam),
     ListItemModel(
       title: "Services",
-      route: SharedRoutesConstant.notificationScreen,
+      route: ProviderRoutesConstants.addServiceScreen,
     ),
     ListItemModel(
       title: "Schedule",
-      route: SharedRoutesConstant.notificationScreen,
+      route: ProviderRoutesConstants.addAvailability,
     ),
-    ListItemModel(
-      title: "Location",
-      route: SharedRoutesConstant.notificationScreen,
-    ),
+    ListItemModel(title: "Location", route: SharedRoutesConstant.addressScreen),
   ];
 
   @override
@@ -58,14 +51,14 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       appBar: AppBar(
         backgroundColor: AppColors.whiteColor,
         surfaceTintColor: Colors.transparent,
-        elevation: 3, // 👈 yahan se shadow ayega
-        shadowColor: Colors.black.withOpacity(0.2), //
-        title: TopBarIconWithCenterText(pageName: 'Account Setup'),
+        elevation: 2, // 👈 yahan se shadow ayega
+        shadowColor: AppColors.searchBarBackground,
+        title: Text("Account"),
       ),
       body: SafeArea(
         child: Scrollbar(
           thumbVisibility: true,
-          thickness: 5,
+          thickness: 2,
           radius: Radius.circular(8),
 
           trackVisibility: true, //

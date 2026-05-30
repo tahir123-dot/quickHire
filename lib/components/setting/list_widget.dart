@@ -20,7 +20,7 @@ class ListWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: AppColors.listBackground,
+        color: AppColors.searchBarBackground,
         borderRadius: BorderRadius.circular(14.r),
       ),
       padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
@@ -53,13 +53,13 @@ class ListWidget extends StatelessWidget {
                     item.title,
                     style: TextStyle(
                       fontSize: 17.sp,
-                      color: AppColors.whiteColor,
+                      color: AppColors.blackColor,
                     ),
                   ),
                   Icon(
                     Icons.arrow_forward_ios,
                     size: 16.sp,
-                    color: AppColors.whiteColor,
+                    color: AppColors.blackColor,
                   ),
                 ],
               ),

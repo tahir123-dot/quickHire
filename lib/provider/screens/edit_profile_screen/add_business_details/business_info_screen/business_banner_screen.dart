@@ -1,9 +1,13 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:mobile/components/top_bar_widget/top_bar_widget.dart';
 import 'package:mobile/core/themes/app_button_theme.dart';
 import 'package:mobile/core/themes/app_text_theme.dart';
 import 'package:mobile/core/themes/colors.dart';
+import 'package:mobile/utils/image.upload.dart';
 
 class BusinessBannerScreen extends StatefulWidget {
   const BusinessBannerScreen({super.key});
@@ -13,6 +17,23 @@ class BusinessBannerScreen extends StatefulWidget {
 }
 
 class _BusinessBannerScreenState extends State<BusinessBannerScreen> {
+  File? bannerImage;
+
+  Future<void> pickBannerImage() async {
+    final image = await ImagePickerService.pickImage(
+      source: ImageSource.gallery,
+      imageQuality: 80,
+      maxHeight: 1200,
+      maxWidth: 500,
+    );
+
+    if (image != null) {
+      setState(() {
+        bannerImage = image;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,17 +57,23 @@ class _BusinessBannerScreenState extends State<BusinessBannerScreen> {
             SizedBox(height: 50.h),
 
             GestureDetector(
-              onTap: () {
-                // TODO: open gallery
-              },
+              onTap: pickBannerImage,
               child: Container(
                 width: 131.w,
                 height: 246.h,
                 decoration: BoxDecoration(
                   shape: BoxShape.rectangle,
                   color: AppColors.searchBarBackground,
+
                   border: Border.all(color: Colors.grey.shade400),
                   borderRadius: BorderRadius.circular(5.r),
+                  image: bannerImage != null
+                      ? DecorationImage(
+                          image: FileImage(bannerImage!),
+                          fit: BoxFit.cover,
+                          alignment: Alignment.center,
+                        )
+                      : null,
                 ),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mobile/components/category/filter_category/category_section.dart';
+import 'package:mobile/components/input_box/hero_section.dart';
 import 'package:mobile/components/service_offer/service_preview.dart';
 import 'package:mobile/components/top_bar_widget/top_bar_widget.dart';
 import 'package:mobile/core/themes/app_input_theme.dart';
@@ -62,8 +63,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 CategorySection(categories: categories),
                 SizedBox(height: 28.h),
                 // hero section bar ads
-                // HeroSection(), we use this component in future for ads and promotions
-
+                HeroSection(), //we use this component in future for ads and promotions
+                SizedBox(height: 28.h),
                 // service Provider cards
                 ServicePreview(),
               ],

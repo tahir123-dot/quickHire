@@ -21,7 +21,7 @@ class CategoryList extends StatelessWidget {
       style: ElevatedButton.styleFrom(
         minimumSize: Size(96.w, 37.h),
         backgroundColor: isActive
-            ? AppColors.lightgreyColor
+            ? Color(0xFF534AB7)
             : AppColors.searchBarBackground,
         shadowColor: Colors.transparent,
 

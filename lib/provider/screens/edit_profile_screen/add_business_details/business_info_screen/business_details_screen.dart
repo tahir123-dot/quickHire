@@ -1,9 +1,13 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:mobile/components/top_bar_widget/top_bar_widget.dart';
 import 'package:mobile/core/themes/app_button_theme.dart';
 import 'package:mobile/core/themes/app_input_theme.dart';
 import 'package:mobile/core/themes/colors.dart';
+import 'package:mobile/utils/image.upload.dart';
 
 class BusinessDetailsScreen extends StatefulWidget {
   const BusinessDetailsScreen({super.key});
@@ -13,6 +17,23 @@ class BusinessDetailsScreen extends StatefulWidget {
 }
 
 class _BusinessDetailsScreenState extends State<BusinessDetailsScreen> {
+  File? profileImage;
+
+  Future<void> pickProfileImage() async {
+    final image = await ImagePickerService.pickImage(
+      source: ImageSource.gallery,
+      imageQuality: 80,
+      maxHeight: 500,
+      maxWidth: 500,
+    );
+
+    if (image != null) {
+      setState(() {
+        profileImage = image;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,13 +56,10 @@ class _BusinessDetailsScreenState extends State<BusinessDetailsScreen> {
             ),
 
             SizedBox(height: 25.h),
-
             Align(
               alignment: Alignment.centerLeft,
               child: GestureDetector(
-                onTap: () {
-                  // TODO: open gallery
-                },
+                onTap: pickProfileImage,
                 child: Container(
                   width: 131.w,
                   height: 131.h,
@@ -49,22 +67,69 @@ class _BusinessDetailsScreenState extends State<BusinessDetailsScreen> {
                     shape: BoxShape.circle,
                     color: Colors.grey.shade200,
                     border: Border.all(color: Colors.grey.shade400),
+
+                    // 👇 yahan magic hai
+                    image: profileImage != null
+                        ? DecorationImage(
+                            image: FileImage(profileImage!),
+                            fit: BoxFit.cover,
+                          )
+                        : null,
                   ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(Icons.camera_alt, size: 22, color: Colors.grey),
-                      SizedBox(height: 10.h),
-                      Text(
-                        "Upload",
-                        style: TextStyle(fontSize: 13.sp, color: Colors.grey),
-                      ),
-                    ],
-                  ),
+                  child: profileImage == null
+                      ? Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.camera_alt,
+                              size: 22,
+                              color: Colors.grey,
+                            ),
+                            SizedBox(height: 10.h),
+                            Text(
+                              "Upload",
+                              style: TextStyle(
+                                fontSize: 13.sp,
+                                color: Colors.grey,
+                              ),
+                            ),
+                          ],
+                        )
+                      : Stack(
+                          children: [
+                            // optional dark overlay for icon visibility
+                            Container(
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Colors.black.withValues(alpha: 0.2),
+                              ),
+                            ),
+
+                            Center(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.camera_alt,
+                                    size: 22,
+                                    color: Colors.white,
+                                  ),
+                                  SizedBox(height: 10.h),
+                                  Text(
+                                    "Change",
+                                    style: TextStyle(
+                                      fontSize: 13.sp,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
                 ),
               ),
             ),
-
             SizedBox(height: 28.h),
 
             Text(

@@ -6,7 +6,6 @@ import 'package:mobile/components/top_bar_widget/top_bar_widget.dart';
 import 'package:mobile/core/themes/colors.dart';
 import 'package:mobile/routes/shared_routes/shared_routes_constant.dart';
 import 'package:mobile/shared/bloc/blocimpl/authbloc.dart';
-import 'package:mobile/shared/bloc/event/auth_event.dart';
 
 class Setting extends StatefulWidget {
   const Setting({super.key});
@@ -56,6 +55,7 @@ class _SettingState extends State<Setting> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: AppColors.whiteColor,
         title: TopBarIconWithCenterText(pageName: 'Setting'),
       ),

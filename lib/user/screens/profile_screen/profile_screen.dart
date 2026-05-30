@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mobile/components/setting/list_widget.dart';
 import 'package:mobile/components/top_bar_widget/top_bar_widget.dart';
+import 'package:mobile/core/themes/colors.dart';
 import 'package:mobile/routes/shared_routes/public_routes_constants.dart';
 import '../../../routes/shared_routes/shared_routes_constant.dart';
 import 'package:mobile/routes/user_routes/user_routes_constants.dart';
@@ -16,7 +17,7 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   List<ListItemModel> settingsListOne = [
     ListItemModel(title: "Address", route: SharedRoutesConstant.addressScreen),
-    ListItemModel(title: "Phone", route: UserRoutesConstants.userPhone),
+    ListItemModel(title: "Phone", route: UserRoutesConstants.phone),
     ListItemModel(
       title: "Change Password",
       route: PublicRoutesConstants.passwordScreen,
@@ -24,18 +25,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
   ];
 
   List<ListItemModel> settingsListTwo = [
-    ListItemModel(
-      title: "My Payments",
-      route: SharedRoutesConstant.appVersionScreen,
-    ),
+    ListItemModel(title: "My Payments", route: UserRoutesConstants.payment),
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
+        backgroundColor: AppColors.whiteColor,
+        surfaceTintColor: Colors.transparent,
+        elevation: 2, // 👈 yahan se shadow ayega
+        shadowColor: AppColors.searchBarBackground,
         title: TopBarIconWithCenterText(pageName: "Profile"),
       ),
       body: SafeArea(
