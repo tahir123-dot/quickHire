@@ -42,8 +42,8 @@ class UserRoutes {
             StatefulShellBranch(
               routes: [
                 GoRoute(
-                  path: UserRoutesConstants.chat, // "chat"
-                  builder: (context, state) => ChatScreen(),
+                  path: UserRoutesConstants.postjob,
+                  builder: (context, state) => PostJobScreen(),
                 ),
               ],
             ),

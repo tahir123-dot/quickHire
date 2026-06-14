@@ -47,6 +47,7 @@ dependencies:
   flutter_screenutil: ^5.9.3
   image_picker: ^1.2.2
   fl_chart: ^1.2.0
+  another_flushbar: ^2.2.4
 
 dev_dependencies:
   flutter_test:

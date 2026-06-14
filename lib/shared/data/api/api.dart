@@ -1,4 +1,4 @@
-class ApiEndPoints {
+class PublicApiEndPoints {
   static const signup = "/auth/signup";
   static const login = "/auth/login";
   static const verifyOTP = "/auth/verify-otp";

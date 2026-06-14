@@ -14,7 +14,10 @@ class AuthDataSources {
   // login
   Future<VerifyOtpResponseModel> login(LoginDto dto) async {
     try {
-      final response = await dio.post(ApiEndPoints.login, data: dto.toJson());
+      final response = await dio.post(
+        PublicApiEndPoints.login,
+        data: dto.toJson(),
+      );
       print("Login response: ${response.data}");
       return VerifyOtpResponseModel.fromJson(response.data);
     } on DioException catch (e) {
@@ -27,7 +30,10 @@ class AuthDataSources {
   // signup
   Future<SignupResponseModel> signup(SignupDto dto) async {
     try {
-      final response = await dio.post(ApiEndPoints.signup, data: dto.toJson());
+      final response = await dio.post(
+        PublicApiEndPoints.signup,
+        data: dto.toJson(),
+      );
 
       return SignupResponseModel.fromJson(response.data['response']);
     } on DioException catch (e) {
@@ -41,7 +47,7 @@ class AuthDataSources {
   Future<VerifyOtpResponseModel> verifyOtp(OtpDto dto) async {
     try {
       final response = await dio.post(
-        ApiEndPoints.verifyOTP,
+        PublicApiEndPoints.verifyOTP,
         data: dto.toJson(),
       );
 
@@ -56,7 +62,7 @@ class AuthDataSources {
   // resend otp
   Future<void> resendOtp(String email) async {
     try {
-      await dio.post(ApiEndPoints.resendOTP, data: {"email": email});
+      await dio.post(PublicApiEndPoints.resendOTP, data: {"email": email});
     } on DioException catch (e) {
       throw Exception("Resend OTP failed: ${e.message}");
     } catch (e) {
@@ -68,7 +74,7 @@ class AuthDataSources {
   Future<ResponseModelToken> createUserAccount(String userId) async {
     try {
       final response = await dio.post(
-        ApiEndPoints.userCreate,
+        PublicApiEndPoints.userCreate,
         data: {"userId": userId},
       );
       return ResponseModelToken.fromJson(response.data);
@@ -83,7 +89,7 @@ class AuthDataSources {
   Future<ResponseModelToken> createServiceProviderAccount(String userId) async {
     try {
       final response = await dio.post(
-        ApiEndPoints.serviceProivderCreate,
+        PublicApiEndPoints.serviceProivderCreate,
         data: {"userId": userId},
       );
       return ResponseModelToken.fromJson(response.data);
@@ -98,7 +104,7 @@ class AuthDataSources {
   Future<ResponseModelToken> createTeamAccount(String userId) async {
     try {
       final response = await dio.post(
-        ApiEndPoints.teamCreate,
+        PublicApiEndPoints.teamCreate,
         data: {"userId": userId},
       );
       return ResponseModelToken.fromJson(response.data);

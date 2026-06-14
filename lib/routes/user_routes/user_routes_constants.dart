@@ -5,7 +5,7 @@ class UserRoutesConstants {
   static const home = "home";
   static const booking = "booking";
   static const bookingDetail = "/customer/booking/booking-detail";
-  static const chat = "chat";
+  static const postjob = "postjob";
   static const profile = "profile";
 
   static const phone = "/customer/profile/phone";

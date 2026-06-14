@@ -1,7 +1,7 @@
 export 'user_main_screen.dart';
 export 'booking_detail_screen/booking_detail_screen.dart';
 export 'booking_screen/booking_screen.dart';
-export 'chat_screen/chat_screen.dart';
+export 'post_job_screen/post_job_screen.dart';
 export 'home_screen/home_screen.dart';
 export 'profile_screen/profile_screen.dart';
 export 'user_payment/user_payment.dart';

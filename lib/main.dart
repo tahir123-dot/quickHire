@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mobile/core/injection/injection_container.dart';
 import 'package:mobile/routes/app_routes.dart';
 import 'package:mobile/shared/bloc/blocimpl/authbloc.dart';
+import 'package:mobile/shared/bloc/blocimpl/rolecubit.dart';
 import 'package:mobile/shared/bloc/event/auth_event.dart';
 
 void main() async {
@@ -22,8 +23,14 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<AuthBloc>(
-      create: (_) => getIt<AuthBloc>()..add(CheckAuthEvent()),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<AuthBloc>(
+          create: (_) => getIt<AuthBloc>()..add(CheckAuthEvent()),
+        ),
+
+        BlocProvider<RoleCubit>(create: (_) => RoleCubit()),
+      ],
 
       child: ScreenUtilInit(
         designSize: const Size(402, 874),

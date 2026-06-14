@@ -30,10 +30,11 @@ class UserMainScreen extends StatelessWidget {
           },
           icons: const [
             Icons.home_outlined,
-            Icons.calendar_month_outlined,
-            Icons.chat_outlined,
-            Icons.person_outline,
+            Icons.calendar_today_outlined,
+            Icons.workspaces_outline,
+            Icons.account_circle_outlined,
           ],
+          labels: const ['Home', 'Bookings', 'Post Job', 'Profile'],
         ),
       ),
     );

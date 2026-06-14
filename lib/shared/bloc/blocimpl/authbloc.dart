@@ -36,6 +36,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
     if (token != null && roleString != null) {
       final role = UserRoleHelper.fromString(roleString);
+
       emit(Authenticated(token: token, role: role));
     } else {
       emit(Unauthenticated());

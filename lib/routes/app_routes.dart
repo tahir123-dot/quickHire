@@ -4,11 +4,11 @@ import 'package:mobile/routes/auth/go_refresh_stream.dart';
 import 'package:mobile/routes/auth/role_permission.dart';
 import 'package:mobile/routes/professional_routes/professional_routes.dart';
 import 'package:mobile/routes/provider_routes/provider_routes.dart';
+import 'package:mobile/routes/provider_routes/provider_routes_constants.dart';
 import 'package:mobile/routes/shared_routes/public_routes.dart';
 import 'package:mobile/routes/shared_routes/public_routes_constants.dart';
 import 'package:mobile/routes/shared_routes/shared_routes.dart';
 import 'package:mobile/routes/user_routes/user_routes.dart';
-import 'package:mobile/routes/user_routes/user_routes_constants.dart';
 import 'package:mobile/shared/bloc/blocimpl/authbloc.dart';
 import 'package:mobile/shared/bloc/state/auth_state.dart';
 
@@ -21,16 +21,15 @@ class AppRoutes {
   AppRoutes({required this.authBloc});
 
   late final GoRouter router = GoRouter(
-    initialLocation:
-        '/provider/dashboard', //PublicRoutesConstants.splashScreen,
+    initialLocation: ProviderRoutesConstants
+        .serviceCategoryScreen, //PublicRoutesConstants.splashScreen,
     // refreshListenable: GoRouterRefreshStream(authBloc.stream),
     redirect: (context, state) {
       final path = state.matchedLocation;
 
-      debugPrint("📍 Current Route: $path");
+      debugPrint(" Current Route: $path");
 
-      return null;
-      /*final authState = authBloc.state;
+      /* final authState = authBloc.state;
       final currentPath = state.matchedLocation;
 
       final isPublicPath = PublicRoutesConstants.publicPaths.contains(
@@ -66,9 +65,8 @@ class AppRoutes {
           return getHomeRoute(role);
         }
       }
-
-      return null;
       */
+      return null;
     },
 
     routes: [

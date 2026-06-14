@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mobile/core/themes/colors.dart';
-import '../../../components/booking/provider_booking_card.dart';
 import '../../../components/top_bar_widget/top_bar_widget.dart';
 
 class ProfessionalHomeScreen extends StatefulWidget {
@@ -46,17 +45,8 @@ class _ProfessionalHomeScreenState extends State<ProfessionalHomeScreen> {
                   ),
                 ),
                 SizedBox(height: 25),
-                ProviderBookingCard(
-                  date: 'date',
-                  time: 'time ',
-                  duration: '30 min',
-                ),
+
                 SizedBox(height: 25),
-                ProviderBookingCard(
-                  date: 'date',
-                  time: 'time ',
-                  duration: '30 min',
-                ),
               ],
             ),
           ],

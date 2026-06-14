@@ -7,7 +7,12 @@ class ProviderRoutes {
   static List<RouteBase> routes = [
     GoRoute(
       path: '/provider',
-      builder: (context, state) => const SizedBox(),
+      redirect: (context, state) {
+        if (state.fullPath == '/provider' || state.fullPath == '/provider/') {
+          return '/provider/dashboard';
+        }
+        return null;
+      },
 
       routes: [
         StatefulShellRoute.indexedStack(

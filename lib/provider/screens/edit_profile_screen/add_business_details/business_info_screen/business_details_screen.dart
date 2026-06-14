@@ -68,7 +68,6 @@ class _BusinessDetailsScreenState extends State<BusinessDetailsScreen> {
                     color: Colors.grey.shade200,
                     border: Border.all(color: Colors.grey.shade400),
 
-                    // 👇 yahan magic hai
                     image: profileImage != null
                         ? DecorationImage(
                             image: FileImage(profileImage!),
