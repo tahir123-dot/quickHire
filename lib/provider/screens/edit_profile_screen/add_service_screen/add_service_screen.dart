@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:mobile/components/top_bar_widget/top_bar_widget.dart';
 import 'package:mobile/core/themes/app_text_theme.dart';
 import 'package:mobile/provider/bloc/blocimp/provider_bloc.dart';
 import 'package:mobile/provider/bloc/event/provider_event.dart';
 import 'package:mobile/provider/bloc/state/provider_state.dart';
 import 'package:mobile/provider/data/entity/sub_category_entity.dart';
+import 'package:mobile/routes/provider_routes/provider_routes_constants.dart';
 import '../../../../core/themes/app_button_theme.dart';
 import '../../../../core/themes/app_input_theme.dart';
 import '../../../../core/themes/colors.dart';
@@ -108,10 +110,9 @@ class _AddServiceScreenState extends State<AddServiceScreen> {
       },
       child: Scaffold(
         appBar: AppBar(
-          automaticallyImplyLeading: false,
           backgroundColor: AppColors.whiteColor,
           surfaceTintColor: AppColors.transparentBackground,
-          title: TopBarIconWithCenterText(pageName: 'Add Services'),
+          title: const Text('Add Services'),
         ),
         body: SafeArea(
           child: ListView(
@@ -227,7 +228,19 @@ class _AddServiceScreenState extends State<AddServiceScreen> {
                     ),
                   ),
 
-                  SizedBox(height: 227.h),
+                  SizedBox(height: 205.h),
+
+                  AppButtonTheme.iconTextButton(
+                    text: 'View Services',
+                    icon: Icons.view_agenda_outlined,
+                    backgroundColor: AppColors.blackColor,
+                    textColor: AppColors.whiteColor,
+                    onPressed: () => {
+                      context.push(ProviderRoutesConstants.ViewServiceScreen),
+                    },
+                  ),
+
+                  SizedBox(height: 10.h),
 
                   // Loading state mein button ki jagah loader
                   BlocBuilder<ProviderBloc, ProviderState>(
@@ -243,6 +256,8 @@ class _AddServiceScreenState extends State<AddServiceScreen> {
                             );
                     },
                   ),
+
+                  SizedBox(height: 10.h),
                 ],
               ),
             ],

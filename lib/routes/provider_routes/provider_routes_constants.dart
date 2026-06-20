@@ -36,6 +36,10 @@ class ProviderRoutesConstants {
   static const String addServiceScreen =
       "/provider/editProfile/addServiceScreen";
 
+  // this routes use to add service
+  static const String ViewServiceScreen =
+      "/provider/editProfile/addServiceScreen/viewServiceScreen";
+
   // this routes use to add shedule
   static const String addAvailability = "/provider/editProfile/addAvailability";
 

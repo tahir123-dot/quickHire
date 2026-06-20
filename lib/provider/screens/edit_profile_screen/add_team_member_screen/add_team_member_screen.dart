@@ -72,7 +72,6 @@ class _AddTeamMemberScreenState extends State<AddTeamMemberScreen> {
                 backgroundColor: AppColors.whiteColor,
                 textColor: AppColors.blackColor,
                 onPressed: () {
-                  print('move to next selectProfessional Screen');
                   context.push(ProviderRoutesConstants.teamList);
                 },
               ),

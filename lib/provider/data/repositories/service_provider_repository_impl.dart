@@ -1,6 +1,8 @@
 import 'package:mobile/provider/data/datasources/provider_data_sources.dart';
 import 'package:mobile/provider/data/dto/service_provider_dto.dart';
+import 'package:mobile/provider/data/entity/service_entity.dart';
 import 'package:mobile/provider/data/entity/sub_category_entity.dart';
+import 'package:mobile/provider/data/mapper/service_mapper.dart';
 import 'package:mobile/provider/data/mapper/sub_category_mapper.dart';
 import 'package:mobile/provider/data/repositories/service_provider_repository.dart';
 
@@ -40,5 +42,18 @@ class ServiceProviderRepositoryImpl implements ServiceProviderRepository {
   @override
   Future<void> addProviderService(AddServiceDto dto) async {
     await dataSource.addService(dto.toJson());
+  }
+
+  @override
+  Future<List<ServiceEntity>> getProviderServices(
+    String serviceProviderId,
+  ) async {
+    final models = await dataSource.getProviderServices(serviceProviderId);
+    return ServiceMapper.toEntityList(models);
+  }
+
+  @override
+  Future<void> deleteProviderService(String serviceId) async {
+    await dataSource.deleteService(serviceId);
   }
 }

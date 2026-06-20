@@ -19,6 +19,7 @@ export 'customer_reviews_screen/customer_reviews_screen.dart';
 
 // add service screen
 export 'edit_profile_screen/add_service_screen/add_service_screen.dart';
+export 'edit_profile_screen//add_service_screen/view_service_screen.dart';
 
 // provider  , edit screen,view screen, add availability screen, add team , team list screen
 export 'edit_profile_screen/edit_profile_screen.dart';

@@ -93,6 +93,12 @@ class ProviderRoutes {
         GoRoute(
           path: 'editProfile/addServiceScreen', // "chat"
           builder: (context, state) => AddServiceScreen(),
+          routes: [
+            GoRoute(
+              path: 'viewServiceScreen',
+              builder: (context, state) => ViewServiceScreen(),
+            ),
+          ],
         ),
         GoRoute(
           path: 'editProfile/addAvailability', // "chat"

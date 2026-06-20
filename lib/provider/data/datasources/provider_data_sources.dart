@@ -2,6 +2,7 @@
 
 import 'package:dio/dio.dart';
 import 'package:mobile/provider/data/api/api.dart';
+import 'package:mobile/provider/data/model/service_model.dart';
 import 'package:mobile/provider/data/model/sub_category_model.dart';
 
 class ProviderDataSources {
@@ -83,6 +84,37 @@ class ProviderDataSources {
       return response;
     } on DioException catch (e) {
       throw Exception("Failed to add service: ${e.message}");
+    } catch (e) {
+      throw Exception("Unexpected error: $e");
+    }
+  }
+
+  // get all services by provider id
+  Future<List<ServiceModel>> getProviderServices(
+    String serviceProviderId,
+  ) async {
+    try {
+      final response = await dio.get(
+        "${ProviderApiEndPoints.addService}/$serviceProviderId",
+      );
+      final List data = response.data['data'];
+      return data.map((json) => ServiceModel.fromJson(json)).toList();
+    } on DioException catch (e) {
+      throw Exception("Failed to fetch services: ${e.message}");
+    } catch (e) {
+      throw Exception("Unexpected error: $e");
+    }
+  }
+
+  // delete service
+  Future<Response> deleteService(String serviceId) async {
+    try {
+      final response = await dio.delete(
+        "${ProviderApiEndPoints.addService}/$serviceId",
+      );
+      return response;
+    } on DioException catch (e) {
+      throw Exception("Failed to delete service: ${e.message}");
     } catch (e) {
       throw Exception("Unexpected error: $e");
     }

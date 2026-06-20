@@ -1,3 +1,4 @@
+import 'package:mobile/provider/data/entity/service_entity.dart';
 import 'package:mobile/provider/data/entity/sub_category_entity.dart';
 
 abstract class ProviderState {}
@@ -33,4 +34,10 @@ class ProviderError extends ProviderState {
 class SubCategoriesLoaded extends ProviderState {
   final List<SubCategoryEntity> subCategories;
   SubCategoriesLoaded({required this.subCategories});
+}
+
+// serivces
+class ServicesLoaded extends ProviderState {
+  final List<ServiceEntity> services;
+  ServicesLoaded({required this.services});
 }

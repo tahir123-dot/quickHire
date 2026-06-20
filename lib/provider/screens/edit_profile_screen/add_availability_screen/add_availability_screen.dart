@@ -89,7 +89,7 @@ class _AddAvailabilityScreenState extends State<AddAvailabilityScreen> {
         surfaceTintColor: AppColors.transparentBackground,
         elevation: 3,
         shadowColor: AppColors.blackColor.withValues(alpha: 0.2),
-        title: TopBarIconWithCenterText(pageName: 'Availability'),
+        title: Text('Availability'),
       ),
 
       body: SafeArea(
@@ -138,6 +138,26 @@ class _AddAvailabilityScreenState extends State<AddAvailabilityScreen> {
 
             SizedBox(height: 13.h),
             const Text('Set the time range for your working hours'),
+            SizedBox(height: 26.h),
+            Row(
+              children: [
+                Expanded(
+                  child: _timeBox(
+                    label: "Start Time",
+                    time: startTime,
+                    onTap: () => pickTime(isStart: true),
+                  ),
+                ),
+                SizedBox(width: 12),
+                Expanded(
+                  child: _timeBox(
+                    label: "End Time",
+                    time: endTime,
+                    onTap: () => pickTime(isStart: false),
+                  ),
+                ),
+              ],
+            ),
 
             SizedBox(height: 23.h),
             Divider(

@@ -12,6 +12,8 @@ class ProviderBloc extends Bloc<ProviderProfileEvent, ProviderState> {
     on<ProviderBannerImageEvent>(_onBannerImage);
     on<FetchSubCategoriesEvent>(_onFetchSubCategories);
     on<AddServiceEvent>(_onAddService);
+    on<FetchProviderServicesEvent>(_onFetchServices);
+    on<DeleteServiceEvent>(_onDeleteService);
   }
 
   // create business details
@@ -81,6 +83,41 @@ class ProviderBloc extends Bloc<ProviderProfileEvent, ProviderState> {
 
       await repository.addProviderService(dto);
       emit(ProviderSuccess(message: 'Service added successfully!'));
+    } catch (e) {
+      emit(ProviderError(errorMessage: e.toString()));
+    }
+  }
+
+  // get all services of this provider
+  Future<void> _onFetchServices(
+    FetchProviderServicesEvent event,
+    Emitter<ProviderState> emit,
+  ) async {
+    emit(ProviderLoading());
+    try {
+      final services = await repository.getProviderServices(
+        event.serviceProviderId,
+      );
+      emit(ServicesLoaded(services: services));
+    } catch (e) {
+      emit(ProviderError(errorMessage: e.toString()));
+    }
+  }
+
+  // delete service
+  Future<void> _onDeleteService(
+    DeleteServiceEvent event,
+    Emitter<ProviderState> emit,
+  ) async {
+    emit(ProviderLoading());
+    try {
+      await repository.deleteProviderService(event.serviceId);
+
+      // delete ke baad list reload karo
+      final services = await repository.getProviderServices(
+        '6a1e6abbb5759b02bac59cc1',
+      );
+      emit(ServicesLoaded(services: services));
     } catch (e) {
       emit(ProviderError(errorMessage: e.toString()));
     }

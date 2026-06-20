@@ -52,3 +52,14 @@ class AddServiceEvent extends ProviderProfileEvent {
     required this.servicePrice,
   });
 }
+
+// get provider services
+class FetchProviderServicesEvent extends ProviderProfileEvent {
+  final String serviceProviderId;
+  FetchProviderServicesEvent({required this.serviceProviderId});
+}
+
+class DeleteServiceEvent extends ProviderProfileEvent {
+  final String serviceId;
+  DeleteServiceEvent({required this.serviceId});
+}
