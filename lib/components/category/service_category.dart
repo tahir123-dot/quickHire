@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mobile/core/themes/colors.dart';
 
 class ServiceCategory extends StatelessWidget {
   final String title;
-  final IconData? icon;
+  final String imageUrl;
   final String route;
 
   const ServiceCategory({
     super.key,
     required this.title,
-    this.icon,
+    required this.imageUrl,
     required this.route,
   });
 
@@ -34,7 +35,29 @@ class ServiceCategory extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(icon, size: 35.sp),
+            Center(
+              child: SizedBox(
+                width: 30.w,
+                height: 30.h,
+                child: SvgPicture.network(
+                  imageUrl,
+                  fit: BoxFit.contain,
+                  placeholderBuilder: (context) => SizedBox(
+                    width: 15.w,
+                    height: 15.h,
+                    child: CircularProgressIndicator(strokeWidth: 2),
+                  ),
+                  errorBuilder: (context, error, stackTrace) {
+                    return Icon(
+                      Icons.image_not_supported,
+                      size: 24.r,
+                      color: AppColors.blackColor,
+                    );
+                  },
+                ),
+              ),
+            ),
+
             SizedBox(height: 18.h),
             Text(
               title,

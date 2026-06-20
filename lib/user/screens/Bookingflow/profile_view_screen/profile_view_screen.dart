@@ -94,8 +94,8 @@ class _ProfileViewScreenState extends State<ProfileViewScreen> {
                   ),
 
                   SizedBox(height: 22.h),
-                  CategorySection(categories: serviceCategories),
 
+                  //CategorySection(categories: serviceCategories),
                   SizedBox(height: 28.h),
 
                   ServiceCardToggle(

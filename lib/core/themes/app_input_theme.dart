@@ -67,18 +67,18 @@ class AppInputTheme {
       fillColor: AppColors.searchBarBackground,
       suffixIcon: icon,
       border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(32.r),
+        borderRadius: BorderRadius.circular(16.r),
         borderSide: BorderSide(color: AppColors.searchBarBackground),
       ),
       enabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(32.r),
+        borderRadius: BorderRadius.circular(16.r),
         borderSide: BorderSide(color: AppColors.searchBarBackground),
       ),
       focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(32.r),
+        borderRadius: BorderRadius.circular(16.r),
         borderSide: BorderSide(color: AppColors.searchBarBorder, width: 1),
       ),
-      contentPadding: EdgeInsets.symmetric(vertical: 13.h, horizontal: 14.w),
+      contentPadding: EdgeInsets.symmetric(vertical: 3.h, horizontal: 14.w),
     );
   }
 }

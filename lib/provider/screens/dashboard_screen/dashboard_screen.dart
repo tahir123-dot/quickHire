@@ -29,7 +29,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
       ),
       body: SafeArea(
         child: ListView(
-          padding: EdgeInsets.symmetric(horizontal: 43.w),
+          padding: EdgeInsets.symmetric(horizontal: 16.w),
           children: [
             const SizedBox(height: 28),
             Text(

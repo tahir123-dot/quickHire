@@ -9,6 +9,7 @@ import 'package:mobile/routes/shared_routes/public_routes.dart';
 import 'package:mobile/routes/shared_routes/public_routes_constants.dart';
 import 'package:mobile/routes/shared_routes/shared_routes.dart';
 import 'package:mobile/routes/user_routes/user_routes.dart';
+import 'package:mobile/routes/user_routes/user_routes_constants.dart';
 import 'package:mobile/shared/bloc/blocimpl/authbloc.dart';
 import 'package:mobile/shared/bloc/state/auth_state.dart';
 
@@ -21,8 +22,9 @@ class AppRoutes {
   AppRoutes({required this.authBloc});
 
   late final GoRouter router = GoRouter(
-    initialLocation: ProviderRoutesConstants
-        .serviceCategoryScreen, //PublicRoutesConstants.splashScreen,
+    initialLocation:
+        ProviderRoutesConstants.provider, //UserRoutesConstants.customer,
+    //PublicRoutesConstants.splashScreen,
     // refreshListenable: GoRouterRefreshStream(authBloc.stream),
     redirect: (context, state) {
       final path = state.matchedLocation;

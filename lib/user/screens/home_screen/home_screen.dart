@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mobile/components/category/filter_category/category_section.dart';
@@ -6,6 +7,8 @@ import 'package:mobile/components/input_box/hero_section.dart';
 import 'package:mobile/components/service_offer/service_preview.dart';
 import 'package:mobile/components/top_bar_widget/top_bar_widget.dart';
 import 'package:mobile/core/themes/app_input_theme.dart';
+import 'package:mobile/user/bloc/blocimpl/category_bloc.dart';
+import 'package:mobile/user/bloc/state/category_state.dart';
 
 import '../../../core/themes/colors.dart';
 
@@ -17,8 +20,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  List<String> categories = ["Barber", "Electrician", "Plumber", "Doctor"];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,11 +47,14 @@ class _HomeScreenState extends State<HomeScreen> {
                         decoration: AppInputTheme.searchBar(
                           hint: 'Search services ',
                           icon: Padding(
-                            padding: EdgeInsets.all(12.h),
+                            padding: EdgeInsets.symmetric(
+                              vertical: 10.h,
+                              horizontal: 12.w,
+                            ),
                             child: SvgPicture.asset(
                               "assets/icons/search.svg",
-                              width: 24.w,
-                              height: 24.h,
+                              width: 18.w,
+                              height: 10.h,
                             ),
                           ),
                         ),
@@ -59,12 +63,33 @@ class _HomeScreenState extends State<HomeScreen> {
                     ],
                   ),
                 ),
-                // service category
-                CategorySection(categories: categories),
-                SizedBox(height: 28.h),
                 // hero section bar ads
                 HeroSection(), //we use this component in future for ads and promotions
                 SizedBox(height: 28.h),
+
+                // service category
+                BlocBuilder<CategoryBloc, CategoryState>(
+                  builder: (context, state) {
+                    if (state is CategoryLoading) {
+                      return Center(child: CircularProgressIndicator());
+                    }
+
+                    if (state is CategoryError) {
+                      return Center(child: Text(state.message));
+                    }
+
+                    if (state is CategoryLoaded) {
+                      return CategorySection(
+                        categories: state.categories,
+                      ); // 👈 pass karo
+                    }
+
+                    return SizedBox();
+                  },
+                ),
+
+                SizedBox(height: 28.h),
+
                 // service Provider cards
                 ServicePreview(),
               ],

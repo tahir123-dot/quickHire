@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mobile/components/category/filter_category/category_list.dart';
+import 'package:mobile/user/data/model/category_model.dart';
 
 class CategorySection extends StatefulWidget {
-  final List<String> categories;
+  final List<CategoryModel> categories;
+
   const CategorySection({super.key, required this.categories});
 
   @override
@@ -16,15 +18,16 @@ class _CategorySectionState extends State<CategorySection> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 45.h,
-
+      height: 120.h,
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
         padding: EdgeInsets.symmetric(horizontal: 20.w),
         itemCount: widget.categories.length,
         itemBuilder: (context, index) {
+          final category = widget.categories[index]; // ✅ widget. lagaya
           return CategoryList(
-            categoryName: widget.categories[index],
+            imageUrl: category.categoryImage,
+            categoryName: category.categoryName,
             isActive: activeIndex == index,
             onTap: () {
               setState(() {

@@ -1,3 +1,4 @@
+import 'package:mobile/provider/data/entity/sub_category_entity.dart';
 
 abstract class ProviderState {}
 
@@ -20,7 +21,7 @@ class ProviderSuccess extends ProviderState {
 }
 
 /// ================= ERROR =================
-/// Represents an error that occurred during a provider-related operation. 
+/// Represents an error that occurred during a provider-related operation.
 /// This state can be used to show an error message in the UI.
 class ProviderError extends ProviderState {
   final String errorMessage;
@@ -28,3 +29,8 @@ class ProviderError extends ProviderState {
   ProviderError({required this.errorMessage});
 }
 
+// sub categories loaded
+class SubCategoriesLoaded extends ProviderState {
+  final List<SubCategoryEntity> subCategories;
+  SubCategoriesLoaded({required this.subCategories});
+}

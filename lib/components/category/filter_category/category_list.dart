@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:mobile/core/themes/colors.dart';
 
 class CategoryList extends StatelessWidget {
+  final String imageUrl;
   final String categoryName;
   final bool isActive;
   final VoidCallback onTap;
 
   const CategoryList({
     super.key,
+    required this.imageUrl,
     required this.categoryName,
     required this.isActive,
     required this.onTap,
@@ -16,23 +19,64 @@ class CategoryList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-      onPressed: onTap,
-      style: ElevatedButton.styleFrom(
-        minimumSize: Size(96.w, 37.h),
-        backgroundColor: isActive
-            ? Color(0xFF534AB7)
-            : AppColors.searchBarBackground,
-        shadowColor: Colors.transparent,
-
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(50.r),
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        decoration: BoxDecoration(
+          color: AppColors.whiteColor,
+          borderRadius: BorderRadius.circular(12.r),
         ),
-      ),
-      child: Text(
-        categoryName,
-        style: TextStyle(
-          color: isActive ? AppColors.isActiveText : AppColors.inActiveText,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              width: 75,
+              height: 64,
+              decoration: BoxDecoration(
+                color: isActive
+                    ? Color(0xffeeedfe)
+                    : AppColors.searchBarBackground,
+                borderRadius: BorderRadius.circular(10.r),
+                border: isActive
+                    ? Border.all(width: 1.5, color: Color(0xff534ab7))
+                    : null,
+              ),
+              child: Center(
+                child: SizedBox(
+                  width: 24,
+                  height: 24,
+                  child: SvgPicture.network(
+                    imageUrl,
+                    fit: BoxFit.contain,
+                    placeholderBuilder: (context) => SizedBox(
+                      width: 15.w,
+                      height: 15.h,
+                      child: CircularProgressIndicator(strokeWidth: 2),
+                    ),
+                    errorBuilder: (context, error, stackTrace) {
+                      return Icon(
+                        Icons.image_not_supported,
+                        size: 24.r,
+                        color: AppColors.blackColor,
+                      );
+                    },
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(height: 8.h),
+            Text(
+              categoryName,
+              style: TextStyle(
+                fontSize: 13.sp,
+                fontWeight: FontWeight.w400,
+                color: Colors.black87,
+              ),
+              textAlign: TextAlign.center,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ],
         ),
       ),
     );
