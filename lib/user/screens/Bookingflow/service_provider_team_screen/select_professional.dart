@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:mobile/core/themes/app_button_theme.dart';
 import 'package:mobile/core/themes/app_text_theme.dart';
+import 'package:mobile/provider/data/entity/team_member_entity.dart';
 import 'package:mobile/routes/user_routes/user_routes_constants.dart';
 
 import '../../../../components/team_card/team_card.dart';
@@ -42,16 +43,44 @@ class SelectProfessional extends StatelessWidget {
 
               SizedBox(height: 60.h),
 
-              TeamCard(actionText: "Select", isSelectable: true),
+              TeamCard(
+                member: _staticMember,
+                isSelectable: true,
+                showDelete: false,
+                onSelectChanged: (isSelected) {
+                  print("Selected member:");
+                },
+              ),
               SizedBox(height: 28.h),
 
-              TeamCard(actionText: "Select", isSelectable: true),
+              TeamCard(
+                member: _staticMember,
+                isSelectable: true,
+                showDelete: false,
+                onSelectChanged: (isSelected) {
+                  print("Selected member:");
+                },
+              ),
               SizedBox(height: 28.h),
 
-              TeamCard(actionText: "Select", isSelectable: true),
+              TeamCard(
+                member: _staticMember,
+                isSelectable: true,
+                showDelete: false,
+                onSelectChanged: (isSelected) {
+                  print("Selected member:");
+                },
+              ),
               SizedBox(height: 28.h),
 
-              TeamCard(actionText: "Select", isSelectable: true),
+              TeamCard(
+                member: _staticMember,
+                isSelectable: true,
+                showDelete: false,
+                onSelectChanged: (isSelected) {
+                  print("Selected member:");
+                },
+              ),
               SizedBox(height: 28.h),
 
               AppButtonTheme.iconTextButton(
@@ -72,3 +101,11 @@ class SelectProfessional extends StatelessWidget {
     );
   }
 }
+
+final _staticMember = TeamMemberEntity(
+  id: '123',
+  serviceProviderId: '6a1e6abbb5759b02bac59cc1',
+  ownerId: '6a1e6abbb5759b02bac59cc1',
+  ownerType: 'Member', // ✅ Member rakho ta ke Select dikhay
+  name: 'Tahir Rashid',
+);

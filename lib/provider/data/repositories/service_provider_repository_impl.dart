@@ -2,8 +2,10 @@ import 'package:mobile/provider/data/datasources/provider_data_sources.dart';
 import 'package:mobile/provider/data/dto/service_provider_dto.dart';
 import 'package:mobile/provider/data/entity/service_entity.dart';
 import 'package:mobile/provider/data/entity/sub_category_entity.dart';
+import 'package:mobile/provider/data/entity/team_member_entity.dart';
 import 'package:mobile/provider/data/mapper/service_mapper.dart';
 import 'package:mobile/provider/data/mapper/sub_category_mapper.dart';
+import 'package:mobile/provider/data/mapper/team_member_mapper.dart';
 import 'package:mobile/provider/data/repositories/service_provider_repository.dart';
 
 class ServiceProviderRepositoryImpl implements ServiceProviderRepository {
@@ -55,5 +57,11 @@ class ServiceProviderRepositoryImpl implements ServiceProviderRepository {
   @override
   Future<void> deleteProviderService(String serviceId) async {
     await dataSource.deleteService(serviceId);
+  }
+
+  @override
+  Future<List<TeamMemberEntity>> getTeamList(String serviceProviderId) async {
+    final models = await dataSource.getTeamList(serviceProviderId);
+    return TeamMemberMapper.toEntityList(models);
   }
 }

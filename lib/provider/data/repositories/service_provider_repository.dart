@@ -1,6 +1,7 @@
 import 'package:mobile/provider/data/dto/service_provider_dto.dart';
 import 'package:mobile/provider/data/entity/service_entity.dart';
 import 'package:mobile/provider/data/entity/sub_category_entity.dart';
+import 'package:mobile/provider/data/entity/team_member_entity.dart';
 
 abstract class ServiceProviderRepository {
   Future<void> createProviderProfile(InitServiceProviderDto dto);
@@ -10,4 +11,5 @@ abstract class ServiceProviderRepository {
   Future<void> addProviderService(AddServiceDto dto);
   Future<List<ServiceEntity>> getProviderServices(String serviceProviderId);
   Future<void> deleteProviderService(String serviceId);
+  Future<List<TeamMemberEntity>> getTeamList(String serviceProviderId);
 }

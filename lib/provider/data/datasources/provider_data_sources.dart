@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:mobile/provider/data/api/api.dart';
 import 'package:mobile/provider/data/model/service_model.dart';
 import 'package:mobile/provider/data/model/sub_category_model.dart';
+import 'package:mobile/provider/data/model/team_member_model.dart';
 
 class ProviderDataSources {
   final Dio dio;
@@ -115,6 +116,20 @@ class ProviderDataSources {
       return response;
     } on DioException catch (e) {
       throw Exception("Failed to delete service: ${e.message}");
+    } catch (e) {
+      throw Exception("Unexpected error: $e");
+    }
+  }
+
+  Future<List<TeamMemberModel>> getTeamList(String serviceProviderId) async {
+    try {
+      final response = await dio.get(
+        "${ProviderApiEndPoints.listTeam}/$serviceProviderId",
+      );
+      final List data = response.data['data'];
+      return data.map((json) => TeamMemberModel.fromJson(json)).toList();
+    } on DioException catch (e) {
+      throw Exception("Failed to fetch team: ${e.message}");
     } catch (e) {
       throw Exception("Unexpected error: $e");
     }

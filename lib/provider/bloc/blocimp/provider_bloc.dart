@@ -14,6 +14,7 @@ class ProviderBloc extends Bloc<ProviderProfileEvent, ProviderState> {
     on<AddServiceEvent>(_onAddService);
     on<FetchProviderServicesEvent>(_onFetchServices);
     on<DeleteServiceEvent>(_onDeleteService);
+    on<FetchTeamListEvent>(_onFetchTeamList);
   }
 
   // create business details
@@ -118,6 +119,20 @@ class ProviderBloc extends Bloc<ProviderProfileEvent, ProviderState> {
         '6a1e6abbb5759b02bac59cc1',
       );
       emit(ServicesLoaded(services: services));
+    } catch (e) {
+      emit(ProviderError(errorMessage: e.toString()));
+    }
+  }
+
+  // fetch team list
+  Future<void> _onFetchTeamList(
+    FetchTeamListEvent event,
+    Emitter<ProviderState> emit,
+  ) async {
+    emit(ProviderLoading());
+    try {
+      final members = await repository.getTeamList(event.serviceProviderId);
+      emit(TeamListLoaded(members: members));
     } catch (e) {
       emit(ProviderError(errorMessage: e.toString()));
     }

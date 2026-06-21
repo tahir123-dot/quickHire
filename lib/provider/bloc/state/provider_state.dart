@@ -1,5 +1,6 @@
 import 'package:mobile/provider/data/entity/service_entity.dart';
 import 'package:mobile/provider/data/entity/sub_category_entity.dart';
+import 'package:mobile/provider/data/entity/team_member_entity.dart';
 
 abstract class ProviderState {}
 
@@ -40,4 +41,10 @@ class SubCategoriesLoaded extends ProviderState {
 class ServicesLoaded extends ProviderState {
   final List<ServiceEntity> services;
   ServicesLoaded({required this.services});
+}
+
+// teal fetch
+class TeamListLoaded extends ProviderState {
+  final List<TeamMemberEntity> members;
+  TeamListLoaded({required this.members});
 }
