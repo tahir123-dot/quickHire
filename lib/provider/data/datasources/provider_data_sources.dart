@@ -2,6 +2,7 @@
 
 import 'package:dio/dio.dart';
 import 'package:mobile/provider/data/api/api.dart';
+import 'package:mobile/provider/data/model/availability_model.dart';
 import 'package:mobile/provider/data/model/service_model.dart';
 import 'package:mobile/provider/data/model/sub_category_model.dart';
 import 'package:mobile/provider/data/model/team_member_model.dart';
@@ -145,6 +146,35 @@ class ProviderDataSources {
       return response;
     } on DioException catch (e) {
       throw Exception("Failed to delete member: ${e.message}");
+    } catch (e) {
+      throw Exception("Unexpected error: $e");
+    }
+  }
+
+  // add availability
+  Future<Response> addAvailability(Map<String, dynamic> data) async {
+    try {
+      final response = await dio.post(
+        ProviderApiEndPoints.availability,
+        data: data,
+      );
+      return response;
+    } on DioException catch (e) {
+      throw Exception("Failed to add availability: ${e.message}");
+    } catch (e) {
+      throw Exception("Unexpected error: $e");
+    }
+  }
+
+  // get availability
+  Future<AvailabilityModel> getAvailability(String ownerId) async {
+    try {
+      final response = await dio.get(
+        "${ProviderApiEndPoints.availability}/$ownerId",
+      );
+      return AvailabilityModel.fromJson(response.data['data']);
+    } on DioException catch (e) {
+      throw Exception("Failed to fetch availability: ${e.message}");
     } catch (e) {
       throw Exception("Unexpected error: $e");
     }

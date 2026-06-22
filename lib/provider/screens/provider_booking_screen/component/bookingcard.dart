@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class BookingCardR extends StatelessWidget {
   final String url;
@@ -30,18 +31,19 @@ class BookingCardR extends StatelessWidget {
     required this.status,
   });
 
-  // Status badge config
   Color get _statusColor => switch (status.toLowerCase()) {
-    'confirmed' => const Color(0xFF3B6D11),
+    'confirmed' => const Color.fromARGB(255, 247, 247, 247),
     'pending' => const Color(0xFF854F0B),
-    'cancelled' => const Color(0xFFA32D2D),
+    'cancelled' => const Color.fromARGB(255, 32, 32, 32),
+    'done' => const Color(0xFF534AB7),
     _ => Colors.grey,
   };
 
   Color get _statusBg => switch (status.toLowerCase()) {
-    'confirmed' => const Color(0xFFEAF3DE),
+    'confirmed' => const Color(0xFF534AB7),
     'pending' => const Color(0xFFFAEEDA),
     'cancelled' => const Color(0xFFFCEBEB),
+    'done' => const Color(0xFFEEEDFE),
     _ => Colors.grey.shade100,
   };
 
@@ -50,64 +52,63 @@ class BookingCardR extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(
-          color: Colors.grey.withValues(alpha: 0.15),
-          width: 0.5,
-        ),
+        borderRadius: BorderRadius.circular(14.r),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.04),
+            blurRadius: 8,
+            offset: const Offset(0, 2),
+          ),
+        ],
       ),
       child: Column(
         children: [
           // ── Top: Avatar + Name + Location + Status ──
           Padding(
-            padding: const EdgeInsets.all(14),
+            padding: EdgeInsets.all(14.r),
             child: Row(
               children: [
-                // Avatar
                 CircleAvatar(
-                  radius: 24,
+                  radius: 22.r,
                   backgroundImage: url.isNotEmpty ? NetworkImage(url) : null,
                   backgroundColor: const Color(0xFFEEEDFE),
                   child: url.isEmpty
                       ? Text(
                           name[0],
-                          style: const TextStyle(
-                            color: Color(0xFF534AB7),
-                            fontWeight: FontWeight.w500,
-                            fontSize: 16,
+                          style: TextStyle(
+                            color: const Color(0xFF534AB7),
+                            fontWeight: FontWeight.w600,
+                            fontSize: 15.sp,
                           ),
                         )
                       : null,
                 ),
-
-                const SizedBox(width: 10),
-
-                // Name + location
+                SizedBox(width: 10.w),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         name,
-                        style: const TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.w500,
-                          color: Color(0xFF1A1A1A),
+                        style: TextStyle(
+                          fontSize: 14.sp,
+                          fontWeight: FontWeight.w600,
+                          color: const Color(0xFF1A1A1A),
                         ),
                       ),
-                      const SizedBox(height: 3),
+                      SizedBox(height: 3.h),
                       Row(
                         children: [
                           const Icon(
                             Icons.location_on_outlined,
-                            size: 13,
+                            size: 12,
                             color: Colors.grey,
                           ),
                           const SizedBox(width: 2),
                           Text(
                             location,
-                            style: const TextStyle(
-                              fontSize: 12,
+                            style: TextStyle(
+                              fontSize: 11.sp,
                               color: Colors.grey,
                             ),
                           ),
@@ -116,12 +117,10 @@ class BookingCardR extends StatelessWidget {
                     ],
                   ),
                 ),
-
-                // Status badge
                 Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 10,
-                    vertical: 5,
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 10.w,
+                    vertical: 5.h,
                   ),
                   decoration: BoxDecoration(
                     color: _statusBg,
@@ -130,8 +129,8 @@ class BookingCardR extends StatelessWidget {
                   child: Text(
                     status,
                     style: TextStyle(
-                      fontSize: 11,
-                      fontWeight: FontWeight.w500,
+                      fontSize: 11.sp,
+                      fontWeight: FontWeight.w600,
                       color: _statusColor,
                     ),
                   ),
@@ -140,174 +139,102 @@ class BookingCardR extends StatelessWidget {
             ),
           ),
 
-          // ── Divider ──
-          Divider(height: 1, color: Colors.grey.withValues(alpha: 0.15)),
+          _divider(),
 
-          // ── Tarikh | Waqt | Total ──
+          // ── Date | Time | Total ──
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+            padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 12.h),
             child: IntrinsicHeight(
               child: Row(
                 children: [
-                  // Tarikh
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text(
-                          'Tarikh',
-                          style: TextStyle(fontSize: 11, color: Colors.grey),
-                        ),
-                        const SizedBox(height: 4),
-                        Text(
-                          dateAndday.split(' ').take(4).join(' '), // date line
-                          style: const TextStyle(
-                            fontSize: 13,
-                            fontWeight: FontWeight.w500,
-                            color: Color(0xFF1A1A1A),
-                          ),
-                        ),
-                        Text(
-                          dateAndday.split(' ').last, // day
-                          style: const TextStyle(
-                            fontSize: 11,
-                            color: Colors.grey,
-                          ),
-                        ),
-                      ],
-                    ),
+                  _infoCell(
+                    label: 'Date',
+                    main: dateAndday.split(' ').take(4).join(' '),
+                    sub: dateAndday.split(' ').last,
                   ),
-
-                  VerticalDivider(
-                    color: Colors.grey.withValues(alpha: 0.2),
-                    width: 24,
-                  ),
-
-                  // Waqt
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text(
-                          'Waqt',
-                          style: TextStyle(fontSize: 11, color: Colors.grey),
-                        ),
-                        const SizedBox(height: 4),
-                        Text(
-                          time,
-                          style: const TextStyle(
-                            fontSize: 13,
-                            fontWeight: FontWeight.w500,
-                            color: Color(0xFF1A1A1A),
-                          ),
-                        ),
-                        Text(
-                          duration,
-                          style: const TextStyle(
-                            fontSize: 11,
-                            color: Colors.grey,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-
-                  VerticalDivider(
-                    color: Colors.grey.withValues(alpha: 0.2),
-                    width: 24,
-                  ),
-
-                  // Total
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text(
-                          'Total',
-                          style: TextStyle(fontSize: 11, color: Colors.grey),
-                        ),
-                        const SizedBox(height: 4),
-                        Text(
-                          'Rs $price',
-                          style: const TextStyle(
-                            fontSize: 13,
-                            fontWeight: FontWeight.w500,
-                            color: Color(0xFF534AB7),
-                          ),
-                        ),
-                        Text(
-                          '$totalServices service',
-                          style: const TextStyle(
-                            fontSize: 11,
-                            color: Colors.grey,
-                          ),
-                        ),
-                      ],
-                    ),
+                  _verticalDivider(),
+                  _infoCell(label: 'Time', main: time, sub: duration),
+                  _verticalDivider(),
+                  _infoCell(
+                    label: 'Total',
+                    main: 'Rs $price',
+                    sub: '$totalServices service',
+                    mainColor: const Color(0xFF534AB7),
                   ),
                 ],
               ),
             ),
           ),
 
-          // ── Divider ──
-          Divider(height: 1, color: Colors.grey.withValues(alpha: 0.15)),
+          _divider(),
 
-          // ── Services chips + Team member ──
+          // ── Services + Team ──
           Padding(
-            padding: const EdgeInsets.all(14),
+            padding: EdgeInsets.all(14.r),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // Services chips
                 Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    const Icon(Icons.content_cut, size: 16, color: Colors.grey),
-                    const SizedBox(width: 8),
-                    Wrap(
-                      spacing: 6,
-                      children: services
-                          .map(
-                            (s) => Container(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 10,
-                                vertical: 4,
-                              ),
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                  color: Colors.grey.withValues(alpha: 0.3),
+                    const Icon(Icons.content_cut, size: 15, color: Colors.grey),
+                    SizedBox(width: 8.w),
+                    Expanded(
+                      child: Wrap(
+                        spacing: 6,
+                        runSpacing: 6,
+                        children: services
+                            .map(
+                              (s) => Container(
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: 10.w,
+                                  vertical: 4.h,
                                 ),
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                              child: Text(
-                                s,
-                                style: const TextStyle(
-                                  fontSize: 11,
-                                  color: Color(0xFF1A1A1A),
+                                decoration: BoxDecoration(
+                                  color: const Color(0xFFF4F4FF),
+                                  border: Border.all(
+                                    color: const Color(
+                                      0xFF534AB7,
+                                    ).withValues(alpha: 0.2),
+                                  ),
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                child: Text(
+                                  s,
+                                  style: TextStyle(
+                                    fontSize: 11.sp,
+                                    color: const Color(0xFF534AB7),
+                                    fontWeight: FontWeight.w500,
+                                  ),
                                 ),
                               ),
-                            ),
-                          )
-                          .toList(),
+                            )
+                            .toList(),
+                      ),
                     ),
                   ],
                 ),
 
-                const SizedBox(height: 10),
+                SizedBox(height: 10.h),
 
                 // Team member
                 Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 10,
-                    vertical: 10,
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 12.w,
+                    vertical: 10.h,
                   ),
                   decoration: BoxDecoration(
                     color: const Color(0xFFF8F8F8),
-                    borderRadius: BorderRadius.circular(10),
+                    borderRadius: BorderRadius.circular(10.r),
+                    border: Border.all(
+                      color: Colors.grey.withValues(alpha: 0.12),
+                    ),
                   ),
                   child: Row(
                     children: [
                       CircleAvatar(
-                        radius: 16,
+                        radius: 15.r,
                         backgroundImage: teamUrl.isNotEmpty
                             ? NetworkImage(teamUrl)
                             : null,
@@ -315,36 +242,47 @@ class BookingCardR extends StatelessWidget {
                         child: teamUrl.isEmpty
                             ? Text(
                                 teamName[0],
-                                style: const TextStyle(
-                                  fontSize: 12,
-                                  color: Color(0xFF534AB7),
+                                style: TextStyle(
+                                  fontSize: 11.sp,
+                                  color: const Color(0xFF534AB7),
+                                  fontWeight: FontWeight.w600,
                                 ),
                               )
                             : null,
                       ),
-                      const SizedBox(width: 10),
+                      SizedBox(width: 10.w),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text(
-                            'Team member',
-                            style: TextStyle(fontSize: 10, color: Colors.grey),
+                          Text(
+                            'Team Member',
+                            style: TextStyle(
+                              fontSize: 10.sp,
+                              color: Colors.grey,
+                            ),
                           ),
                           Text(
                             teamName,
-                            style: const TextStyle(
-                              fontSize: 13,
-                              fontWeight: FontWeight.w500,
-                              color: Color(0xFF1A1A1A),
+                            style: TextStyle(
+                              fontSize: 13.sp,
+                              fontWeight: FontWeight.w600,
+                              color: const Color(0xFF1A1A1A),
                             ),
                           ),
                         ],
                       ),
                       const Spacer(),
-                      const Icon(
-                        Icons.manage_accounts_outlined,
-                        color: Color(0xFF534AB7),
-                        size: 22,
+                      Container(
+                        padding: EdgeInsets.all(6.r),
+                        decoration: BoxDecoration(
+                          color: const Color(0xFFEEEDFE),
+                          borderRadius: BorderRadius.circular(8.r),
+                        ),
+                        child: const Icon(
+                          Icons.manage_accounts_outlined,
+                          color: Color(0xFF534AB7),
+                          size: 18,
+                        ),
                       ),
                     ],
                   ),
@@ -353,55 +291,100 @@ class BookingCardR extends StatelessWidget {
             ),
           ),
 
-          // ── Divider ──
-          Divider(height: 1, color: Colors.grey.withValues(alpha: 0.15)),
+          _divider(),
 
-          // ── Buttons ──
+          // ── Action Buttons ──
           Padding(
-            padding: const EdgeInsets.all(12),
+            padding: EdgeInsets.all(12.r),
             child: Row(
               children: [
-                // Cancel
                 Expanded(
                   child: OutlinedButton(
                     onPressed: () {},
                     style: OutlinedButton.styleFrom(
-                      side: const BorderSide(color: Color(0xFFF09595)),
+                      side: const BorderSide(
+                        color: Color(0xFFF09595),
+                        width: 1.2,
+                      ),
                       foregroundColor: const Color(0xFFA32D2D),
-                      padding: const EdgeInsets.symmetric(vertical: 12),
+                      padding: EdgeInsets.symmetric(vertical: 11.h),
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: BorderRadius.circular(10.r),
                       ),
                     ),
-                    child: const Text(
+                    child: Text(
                       'Cancel',
-                      style: TextStyle(fontWeight: FontWeight.w500),
+                      style: TextStyle(
+                        fontSize: 13.sp,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                   ),
                 ),
-
-                const SizedBox(width: 10),
-
-                // Done Mark karo
+                SizedBox(width: 10.w),
                 Expanded(
                   child: ElevatedButton(
                     onPressed: () {},
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xFF534AB7),
                       foregroundColor: Colors.white,
-                      padding: const EdgeInsets.symmetric(vertical: 12),
+                      elevation: 0,
+                      padding: EdgeInsets.symmetric(vertical: 11.h),
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: BorderRadius.circular(10.r),
                       ),
                     ),
-                    child: const Text(
-                      'Done Mark karo',
-                      style: TextStyle(fontWeight: FontWeight.w500),
+                    child: Text(
+                      'Mark as Done',
+                      style: TextStyle(
+                        fontSize: 13.sp,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                   ),
                 ),
               ],
             ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  // ─── Helpers ───
+
+  Widget _divider() =>
+      Divider(height: 1, color: Colors.grey.withValues(alpha: 0.12));
+
+  Widget _verticalDivider() =>
+      VerticalDivider(color: Colors.grey.withValues(alpha: 0.2), width: 24);
+
+  Widget _infoCell({
+    required String label,
+    required String main,
+    required String sub,
+    Color mainColor = const Color(0xFF1A1A1A),
+  }) {
+    return Expanded(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            label,
+            style: TextStyle(fontSize: 10.sp, color: Colors.grey),
+          ),
+          const SizedBox(height: 4),
+          Text(
+            main,
+            style: TextStyle(
+              fontSize: 12.sp,
+              fontWeight: FontWeight.w600,
+              color: mainColor,
+            ),
+          ),
+          Text(
+            sub,
+            style: TextStyle(fontSize: 10.sp, color: Colors.grey),
           ),
         ],
       ),

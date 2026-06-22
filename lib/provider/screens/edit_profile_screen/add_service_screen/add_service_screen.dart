@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
-import 'package:mobile/core/themes/app_text_theme.dart';
 import 'package:mobile/provider/bloc/blocimp/provider_bloc.dart';
 import 'package:mobile/provider/bloc/event/provider_event.dart';
 import 'package:mobile/provider/bloc/state/provider_state.dart';
@@ -45,6 +44,8 @@ class _AddServiceScreenState extends State<AddServiceScreen> {
   }
 
   void _onAdd(BuildContext context) {
+    FocusScope.of(context).unfocus();
+
     if (_selectedSubCategory == null) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Please select a service category')),
@@ -123,15 +124,21 @@ class _AddServiceScreenState extends State<AddServiceScreen> {
         }
       },
       child: Scaffold(
+        resizeToAvoidBottomInset: true,
+        backgroundColor: AppColors.whiteColor,
         appBar: AppBar(
           backgroundColor: AppColors.whiteColor,
           surfaceTintColor: AppColors.transparentBackground,
-          title: const Text('Add Services'),
+          elevation: 0,
+          title: const Text(
+            'Add Services',
+            style: TextStyle(fontWeight: FontWeight.w600),
+          ),
         ),
         body: SafeArea(
           child: BlocBuilder<ProviderBloc, ProviderState>(
             builder: (context, state) {
-              // ✅ Loading state - poori screen centered loader
+              // ─── Loading State ───
               if (state is ProviderLoading && _subCategories.isEmpty) {
                 return Center(
                   child: Column(
@@ -153,183 +160,273 @@ class _AddServiceScreenState extends State<AddServiceScreen> {
                 );
               }
 
-              // ✅ Error state - retry
+              // ─── Error State ───
               if (state is ProviderError && _subCategories.isEmpty) {
                 return Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.wifi_off_rounded,
-                        size: 52,
-                        color: Colors.grey.shade300,
-                      ),
-                      SizedBox(height: 14.h),
-                      Text(
-                        'Failed to load categories',
-                        style: TextStyle(
-                          fontSize: 15.sp,
-                          fontWeight: FontWeight.w500,
-                          color: AppColors.blackColor,
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 32.w),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.wifi_off_rounded,
+                          size: 52,
+                          color: Colors.grey.shade300,
                         ),
-                      ),
-                      SizedBox(height: 6.h),
-                      Text(
-                        'Please check your connection and try again',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 12.sp,
-                          color: Colors.grey.shade500,
-                        ),
-                      ),
-                      SizedBox(height: 24.h),
-                      GestureDetector(
-                        onTap: () => _retryFetch(context),
-                        child: Container(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: 24.w,
-                            vertical: 12.h,
-                          ),
-                          decoration: BoxDecoration(
+                        SizedBox(height: 14.h),
+                        Text(
+                          'Failed to load categories',
+                          style: TextStyle(
+                            fontSize: 15.sp,
+                            fontWeight: FontWeight.w600,
                             color: AppColors.blackColor,
-                            borderRadius: BorderRadius.circular(8.r),
-                          ),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              const Icon(
-                                Icons.refresh,
-                                color: Colors.white,
-                                size: 18,
-                              ),
-                              SizedBox(width: 8.w),
-                              Text(
-                                'Try Again',
-                                style: TextStyle(
-                                  fontSize: 13.sp,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                            ],
                           ),
                         ),
-                      ),
-                    ],
+                        SizedBox(height: 6.h),
+                        Text(
+                          'Please check your connection and try again',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 12.sp,
+                            color: Colors.grey.shade500,
+                          ),
+                        ),
+                        SizedBox(height: 24.h),
+                        GestureDetector(
+                          onTap: () => _retryFetch(context),
+                          child: Container(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 24.w,
+                              vertical: 12.h,
+                            ),
+                            decoration: BoxDecoration(
+                              color: AppColors.blackColor,
+                              borderRadius: BorderRadius.circular(8.r),
+                            ),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                const Icon(
+                                  Icons.refresh,
+                                  color: Colors.white,
+                                  size: 18,
+                                ),
+                                SizedBox(width: 8.w),
+                                Text(
+                                  'Try Again',
+                                  style: TextStyle(
+                                    fontSize: 13.sp,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 );
               }
 
-              // ✅ Categories loaded - poori form dikhao with animation
+              // ─── Main Form ───
               return AnimatedOpacity(
                 opacity: _subCategories.isNotEmpty ? 1.0 : 0.0,
                 duration: const Duration(milliseconds: 300),
-                child: ListView(
-                  padding: EdgeInsets.symmetric(horizontal: 33.w),
+                child: Column(
                   children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(height: 42.h),
-                        Text('Add Services', style: AppTextTheme.h1),
-                        SizedBox(height: 15.h),
-                        const Text(
-                          "Add a service to make it available for customers to book.",
-                        ),
-                        SizedBox(height: 26.h),
+                    //  Scrollable form — keyboard ke saath resize hoga
+                    Expanded(
+                      child: SingleChildScrollView(
+                        physics: const BouncingScrollPhysics(),
+                        padding: EdgeInsets.symmetric(horizontal: 24.w),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(height: 20.h),
 
-                        // ✅ Dropdown
-                        DropdownButtonFormField<SubCategoryEntity>(
-                          value: _selectedSubCategory,
-                          isExpanded: true,
-                          menuMaxHeight: 250.h,
-                          dropdownColor: Colors.white,
-                          borderRadius: BorderRadius.circular(8.r),
-                          icon: Icon(
-                            Icons.keyboard_arrow_down_rounded,
-                            color: Colors.grey.shade500,
-                          ),
-                          decoration: AppInputTheme.withIcon(
-                            hint: 'Service Category',
-                            icon: Icons.category_outlined,
-                          ),
-                          hint: null,
-                          items: _subCategories.map((subCat) {
-                            return DropdownMenuItem<SubCategoryEntity>(
-                              value: subCat,
-                              child: Text(
-                                subCat.categoryServiceName,
-                                style: TextStyle(
-                                  fontSize: 14.sp,
-                                  color: AppColors.blackColor,
+                            // ─── Header ───
+                            Text(
+                              'Add Service',
+                              style: TextStyle(
+                                fontSize: 22.sp,
+                                fontWeight: FontWeight.w700,
+                                color: AppColors.blackColor,
+                              ),
+                            ),
+                            SizedBox(height: 6.h),
+                            Text(
+                              'Add a service to make it available for customers to book.',
+                              style: TextStyle(
+                                fontSize: 13.sp,
+                                color: Colors.grey.shade600,
+                              ),
+                            ),
+                            SizedBox(height: 24.h),
+
+                            Divider(color: Colors.grey.shade200, thickness: 1),
+                            SizedBox(height: 20.h),
+
+                            // ─── Category Dropdown ───
+                            _fieldLabel('Service Category'),
+                            SizedBox(height: 8.h),
+                            DropdownButtonFormField<SubCategoryEntity>(
+                              initialValue: _selectedSubCategory,
+                              isExpanded: true,
+                              menuMaxHeight: 250.h,
+                              dropdownColor: Colors.white,
+                              borderRadius: BorderRadius.circular(8.r),
+                              icon: Icon(
+                                Icons.keyboard_arrow_down_rounded,
+                                color: Colors.grey.shade500,
+                              ),
+                              decoration: AppInputTheme.withIcon(
+                                hint: 'Select a category',
+                                icon: Icons.category_outlined,
+                              ),
+                              hint: null,
+                              items: _subCategories.map((subCat) {
+                                return DropdownMenuItem<SubCategoryEntity>(
+                                  value: subCat,
+                                  child: Text(
+                                    subCat.categoryServiceName,
+                                    style: TextStyle(
+                                      fontSize: 14.sp,
+                                      color: AppColors.blackColor,
+                                    ),
+                                  ),
+                                );
+                              }).toList(),
+                              onChanged: (selected) {
+                                setState(() => _selectedSubCategory = selected);
+                              },
+                            ),
+                            SizedBox(height: 16.h),
+
+                            // ─── Service Name ───
+                            _fieldLabel('Service Name'),
+                            SizedBox(height: 8.h),
+                            TextFormField(
+                              controller: _serviceNameController,
+                              textInputAction: TextInputAction.next,
+                              decoration: AppInputTheme.withIcon(
+                                hint: 'e.g. Haircut & Styling',
+                                icon: Icons.miscellaneous_services_outlined,
+                              ),
+                            ),
+                            SizedBox(height: 16.h),
+
+                            // ─── Price & Duration in a Row ───
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      _fieldLabel('Price (Rs)'),
+                                      SizedBox(height: 8.h),
+                                      TextFormField(
+                                        controller: _priceController,
+                                        keyboardType: TextInputType.number,
+                                        textInputAction: TextInputAction.next,
+                                        decoration: AppInputTheme.withIcon(
+                                          hint: '300',
+                                          icon: Icons.money_outlined,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
+                                SizedBox(width: 12.w),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      _fieldLabel('Duration (min)'),
+                                      SizedBox(height: 8.h),
+                                      TextFormField(
+                                        controller: _durationController,
+                                        keyboardType: TextInputType.number,
+                                        textInputAction: TextInputAction.done,
+                                        onFieldSubmitted: (_) =>
+                                            _onAdd(context),
+                                        decoration: AppInputTheme.withIcon(
+                                          hint: '60',
+                                          icon: Icons.watch_later_outlined,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+
+                            SizedBox(height: 24.h),
+                          ],
+                        ),
+                      ),
+                    ),
+
+                    // Buttons — fixed at bottom, keyboard ke upar
+                    Container(
+                      color: AppColors.whiteColor,
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 24.w,
+                        vertical: 16.h,
+                      ),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          // View Services - outlined style
+                          OutlinedButton.icon(
+                            onPressed: () => context.push(
+                              ProviderRoutesConstants.ViewServiceScreen,
+                            ),
+                            icon: const Icon(
+                              Icons.view_agenda_outlined,
+                              color: AppColors.blackColor,
+                              size: 18,
+                            ),
+                            label: Text(
+                              'View Services',
+                              style: TextStyle(
+                                fontSize: 14.sp,
+                                fontWeight: FontWeight.w600,
+                                color: AppColors.blackColor,
                               ),
-                            );
-                          }).toList(),
-                          onChanged: (selected) {
-                            setState(() => _selectedSubCategory = selected);
-                          },
-                        ),
-
-                        SizedBox(height: 14.h),
-
-                        TextFormField(
-                          controller: _serviceNameController,
-                          decoration: AppInputTheme.withIcon(
-                            hint: 'Service Name',
-                            icon: Icons.miscellaneous_services,
-                          ),
-                        ),
-
-                        SizedBox(height: 14.h),
-
-                        TextFormField(
-                          controller: _priceController,
-                          keyboardType: TextInputType.number,
-                          decoration: AppInputTheme.withIcon(
-                            hint: 'Rs 300.0',
-                            icon: Icons.money,
-                          ),
-                        ),
-
-                        SizedBox(height: 14.h),
-
-                        TextFormField(
-                          controller: _durationController,
-                          keyboardType: TextInputType.number,
-                          decoration: AppInputTheme.withIcon(
-                            hint: '60 min',
-                            icon: Icons.watch_later_outlined,
-                          ),
-                        ),
-
-                        SizedBox(height: 205.h),
-
-                        AppButtonTheme.iconTextButton(
-                          text: 'View Services',
-                          icon: Icons.view_agenda_outlined,
-                          backgroundColor: AppColors.blackColor,
-                          textColor: AppColors.whiteColor,
-                          onPressed: () => context.push(
-                            ProviderRoutesConstants.ViewServiceScreen,
-                          ),
-                        ),
-
-                        SizedBox(height: 10.h),
-
-                        // ✅ Add button - loading mein loader
-                        state is ProviderLoading
-                            ? const Center(child: CircularProgressIndicator())
-                            : AppButtonTheme.iconTextButton(
-                                text: 'Add',
-                                icon: Icons.add_task,
-                                backgroundColor: AppColors.blackColor,
-                                textColor: AppColors.whiteColor,
-                                onPressed: () => _onAdd(context),
+                            ),
+                            style: OutlinedButton.styleFrom(
+                              minimumSize: Size(double.infinity, 48.h),
+                              side: const BorderSide(
+                                color: AppColors.blackColor,
+                                width: 1.5,
                               ),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10.r),
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: 10.h),
 
-                        SizedBox(height: 10.h),
-                      ],
+                          // Add — filled black button
+                          state is ProviderLoading
+                              ? const Center(
+                                  child: CircularProgressIndicator(
+                                    color: AppColors.blackColor,
+                                  ),
+                                )
+                              : AppButtonTheme.iconTextButton(
+                                  text: 'Add Service',
+                                  icon: Icons.add_task,
+                                  backgroundColor: AppColors.blackColor,
+                                  textColor: AppColors.whiteColor,
+                                  onPressed: () => _onAdd(context),
+                                ),
+                        ],
+                      ),
                     ),
                   ],
                 ),
@@ -337,6 +434,17 @@ class _AddServiceScreenState extends State<AddServiceScreen> {
             },
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _fieldLabel(String label) {
+    return Text(
+      label,
+      style: TextStyle(
+        fontSize: 13.sp,
+        fontWeight: FontWeight.w600,
+        color: AppColors.blackColor,
       ),
     );
   }

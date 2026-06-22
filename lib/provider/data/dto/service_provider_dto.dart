@@ -90,3 +90,36 @@ class AddServiceDto {
     'service_price': servicePrice,
   };
 }
+
+class AddAvailabilityDto {
+  final String ownerId;
+  final String ownerType;
+  final List<String> days;
+  final String startTime;
+  final String endTime;
+  final int slotDuration;
+  final String? breakStart;
+  final String? breakEnd;
+
+  AddAvailabilityDto({
+    required this.ownerId,
+    required this.ownerType,
+    required this.days,
+    required this.startTime,
+    required this.endTime,
+    required this.slotDuration,
+    this.breakStart,
+    this.breakEnd,
+  });
+
+  Map<String, dynamic> toJson() => {
+    'owner_id': ownerId,
+    'ownerType': ownerType,
+    'days': days,
+    'start_time': startTime,
+    'end_time': endTime,
+    'slot_duration': slotDuration,
+    'break_start': breakStart,
+    'break_end': breakEnd,
+  };
+}

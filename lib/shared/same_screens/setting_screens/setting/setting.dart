@@ -55,9 +55,9 @@ class _SettingState extends State<Setting> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        automaticallyImplyLeading: false,
         backgroundColor: AppColors.whiteColor,
-        title: TopBarIconWithCenterText(pageName: 'Setting'),
+        surfaceTintColor: AppColors.transparentBackground,
+        title: const Text('Setting'),
       ),
       body: SafeArea(
         child: BlocListener<AuthBloc, dynamic>(

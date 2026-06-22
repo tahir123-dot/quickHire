@@ -22,59 +22,94 @@ class _ProviderBookingScreenState extends State<ProviderBookingScreen> {
         headerSliverBuilder: (context, _) => [
           SliverAppBar(
             pinned: true,
+            floating: true,
             backgroundColor: AppColors.whiteColor,
             surfaceTintColor: AppColors.transparentBackground,
+            elevation: 0,
+            titleSpacing: 16.w,
             title: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text('Bookings', style: TextStyle(fontSize: 19)),
+                Text(
+                  'Bookings',
+                  style: TextStyle(
+                    fontSize: 20.sp,
+                    fontWeight: FontWeight.w700,
+                    color: AppColors.blackColor,
+                  ),
+                ),
                 Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 20,
-                    vertical: 10,
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 14.w,
+                    vertical: 7.h,
                   ),
                   decoration: BoxDecoration(
                     color: const Color(0xFFEEEDFE),
                     borderRadius: BorderRadius.circular(50),
                   ),
-                  child: const Text(
-                    'Today 6',
-                    style: TextStyle(fontSize: 13, color: Color(0xFF534AB7)),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Icon(
+                        Icons.calendar_today_outlined,
+                        size: 13,
+                        color: Color(0xFF534AB7),
+                      ),
+                      const SizedBox(width: 5),
+                      Text(
+                        'Today  6',
+                        style: TextStyle(
+                          fontSize: 12.sp,
+                          fontWeight: FontWeight.w600,
+                          color: const Color(0xFF534AB7),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ],
             ),
             bottom: PreferredSize(
-              preferredSize: const Size.fromHeight(52),
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 23.w, vertical: 8),
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Wrap(
-                    spacing: 6,
+              preferredSize: Size.fromHeight(50.h),
+              child: Container(
+                width: double.infinity,
+                padding: EdgeInsets.only(left: 16.w, right: 16.w, bottom: 10.h),
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  physics: const BouncingScrollPhysics(),
+                  child: Row(
                     children: filter.map((item) {
                       final isSelected = selectedFilter == item;
                       return GestureDetector(
                         onTap: () => setState(() => selectedFilter = item),
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 16,
-                            vertical: 8,
+                        child: AnimatedContainer(
+                          duration: const Duration(milliseconds: 180),
+                          margin: EdgeInsets.only(right: 8.w),
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 18.w,
+                            vertical: 8.h,
                           ),
                           decoration: BoxDecoration(
                             color: isSelected
                                 ? const Color(0xFF534AB7)
                                 : Colors.white,
                             borderRadius: BorderRadius.circular(20),
-                            border: Border.all(color: const Color(0xFF534AB7)),
+                            border: Border.all(
+                              color: isSelected
+                                  ? const Color(0xFF534AB7)
+                                  : Colors.grey.shade300,
+                            ),
                           ),
                           child: Text(
                             item,
                             style: TextStyle(
+                              fontSize: 13.sp,
+                              fontWeight: isSelected
+                                  ? FontWeight.w600
+                                  : FontWeight.w400,
                               color: isSelected
                                   ? Colors.white
-                                  : const Color(0xFF534AB7),
-                              fontSize: 14.sp,
+                                  : Colors.grey.shade600,
                             ),
                           ),
                         ),
@@ -87,11 +122,11 @@ class _ProviderBookingScreenState extends State<ProviderBookingScreen> {
           ),
         ],
         body: ListView.separated(
-          padding: EdgeInsets.symmetric(horizontal: 43.w, vertical: 16),
+          padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
           physics: const BouncingScrollPhysics(),
           itemCount: 4,
-          separatorBuilder: (_, __) => const SizedBox(height: 12),
-          itemBuilder: (_, index) => BookingCardR(
+          separatorBuilder: (_, __) => SizedBox(height: 12.h),
+          itemBuilder: (_, index) => const BookingCardR(
             url: '',
             name: 'Salman Ahmed',
             location: 'Gulberg, Lahore',
@@ -103,7 +138,7 @@ class _ProviderBookingScreenState extends State<ProviderBookingScreen> {
             services: ['Haircut', 'Shave'],
             teamUrl: '',
             teamName: 'Raza Bhai',
-            status: 'Confirmed',
+            status: 'done',
           ),
         ),
       ),

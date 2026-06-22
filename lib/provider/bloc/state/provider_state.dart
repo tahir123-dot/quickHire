@@ -1,3 +1,4 @@
+import 'package:mobile/provider/data/entity/availability_entity.dart';
 import 'package:mobile/provider/data/entity/service_entity.dart';
 import 'package:mobile/provider/data/entity/sub_category_entity.dart';
 import 'package:mobile/provider/data/entity/team_member_entity.dart';
@@ -47,4 +48,10 @@ class ServicesLoaded extends ProviderState {
 class TeamListLoaded extends ProviderState {
   final List<TeamMemberEntity> members;
   TeamListLoaded({required this.members});
+}
+
+//
+class AvailabilityLoaded extends ProviderState {
+  final AvailabilityEntity availability;
+  AvailabilityLoaded({required this.availability});
 }

@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:mobile/provider/data/dto/service_provider_dto.dart';
+
 abstract class ProviderProfileEvent {}
 
 // create provider profile
@@ -73,4 +75,16 @@ class FetchTeamListEvent extends ProviderProfileEvent {
 class DeleteTeamMemberEvent extends ProviderProfileEvent {
   final String teamMemberId;
   DeleteTeamMemberEvent({required this.teamMemberId});
+}
+
+// add Availability
+class AddAvailabilityEvent extends ProviderProfileEvent {
+  final AddAvailabilityDto dto;
+  AddAvailabilityEvent({required this.dto});
+}
+
+// fetch availability for service provider
+class FetchAvailabilityEvent extends ProviderProfileEvent {
+  final String ownerId;
+  FetchAvailabilityEvent({required this.ownerId});
 }

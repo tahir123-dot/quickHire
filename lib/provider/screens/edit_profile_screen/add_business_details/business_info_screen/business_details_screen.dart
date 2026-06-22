@@ -24,18 +24,44 @@ class _BusinessDetailsScreenState extends State<BusinessDetailsScreen> {
   final _descController = TextEditingController();
   final _phoneController = TextEditingController();
 
+  // ✅ ScrollController + FocusNodes for keyboard-aware scrolling
+  final _scrollController = ScrollController();
+  final _phoneFocusNode = FocusNode();
+  final _descFocusNode = FocusNode();
+
+  @override
+  void initState() {
+    super.initState();
+
+    // Jab phone field focus ho, scroll down karo taake visible rahe
+    _phoneFocusNode.addListener(() {
+      if (_phoneFocusNode.hasFocus) {
+        Future.delayed(const Duration(milliseconds: 300), () {
+          _scrollController.animateTo(
+            _scrollController.position.maxScrollExtent,
+            duration: const Duration(milliseconds: 300),
+            curve: Curves.easeOut,
+          );
+        });
+      }
+    });
+  }
+
   @override
   void dispose() {
     _nameController.dispose();
     _descController.dispose();
     _phoneController.dispose();
+    _scrollController.dispose();
+    _phoneFocusNode.dispose();
+    _descFocusNode.dispose();
     super.dispose();
   }
 
   Future<void> pickProfileImage() async {
     final image = await ImagePickerService.pickImage(
       source: ImageSource.gallery,
-      imageQuality: 70, // ✅ compress - upload fast hoga
+      imageQuality: 70,
       maxHeight: 500,
       maxWidth: 500,
     );
@@ -43,11 +69,13 @@ class _BusinessDetailsScreenState extends State<BusinessDetailsScreen> {
   }
 
   void _onSave(BuildContext context) {
+    // Keyboard band karo pehle
+    FocusScope.of(context).unfocus();
+
     final name = _nameController.text.trim();
     final desc = _descController.text.trim();
     final phone = _phoneController.text.trim();
 
-    // basic validation
     if (name.isEmpty || desc.isEmpty || phone.isEmpty) {
       ScaffoldMessenger.of(
         context,
@@ -60,7 +88,7 @@ class _BusinessDetailsScreenState extends State<BusinessDetailsScreen> {
         businessName: name,
         businessDescription: desc,
         businessPhone: phone,
-        profileImage: profileImage, // null bhi ho sakta hai - optional hai
+        profileImage: profileImage,
       ),
     );
   }
@@ -73,7 +101,6 @@ class _BusinessDetailsScreenState extends State<BusinessDetailsScreen> {
           ScaffoldMessenger.of(
             context,
           ).showSnackBar(SnackBar(content: Text(state.message)));
-          // Navigator.pushNamed(context, '/next-screen'); // next screen pe jana ho to
         }
         if (state is ProviderError) {
           ScaffoldMessenger.of(
@@ -82,169 +109,259 @@ class _BusinessDetailsScreenState extends State<BusinessDetailsScreen> {
         }
       },
       child: Scaffold(
+        // ✅ KEY FIX: ye true rakho taake keyboard pe body resize ho
+        resizeToAvoidBottomInset: true,
+        backgroundColor: AppColors.whiteColor,
         appBar: AppBar(
           backgroundColor: AppColors.whiteColor,
           surfaceTintColor: AppColors.transparentBackground,
-          title: const Text('Business Info'),
+          elevation: 0,
+          title: const Text(
+            'Business Info',
+            style: TextStyle(fontWeight: FontWeight.w600),
+          ),
         ),
         body: SafeArea(
-          child: ListView(
-            physics: const BouncingScrollPhysics(),
-            padding: EdgeInsets.symmetric(horizontal: 43.w),
+          child: Column(
             children: [
-              SizedBox(height: 22.h),
-              Text(
-                'Business details',
-                style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.w500),
-              ),
-              SizedBox(height: 25.h),
+              // ✅ Scrollable content - keyboard ke saath resize hoga
+              Expanded(
+                child: SingleChildScrollView(
+                  controller: _scrollController,
+                  physics: const BouncingScrollPhysics(),
+                  // ✅ bottom padding taake last field keyboard ke peeche na chhuppe
+                  padding: EdgeInsets.only(
+                    left: 24.w,
+                    right: 24.w,
+                    top: 16.h,
+                    bottom: 24.h,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Business Details',
+                        style: TextStyle(
+                          fontSize: 22.sp,
+                          fontWeight: FontWeight.w700,
+                          color: AppColors.blackColor,
+                        ),
+                      ),
+                      SizedBox(height: 6.h),
+                      Text(
+                        'Choose the name displayed on your online booking profile',
+                        style: TextStyle(
+                          fontSize: 13.sp,
+                          color: Colors.grey.shade600,
+                        ),
+                      ),
+                      SizedBox(height: 24.h),
 
-              // ✅ Image Picker
-              Align(
-                alignment: Alignment.centerLeft,
-                child: GestureDetector(
-                  onTap: pickProfileImage,
-                  child: Container(
-                    width: 131.w,
-                    height: 131.h,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Colors.grey.shade200,
-                      border: Border.all(color: Colors.grey.shade400),
-                      image: profileImage != null
-                          ? DecorationImage(
-                              image: FileImage(profileImage!),
-                              fit: BoxFit.cover,
-                            )
-                          : null,
-                    ),
-                    child: profileImage == null
-                        ? Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const Icon(
-                                Icons.camera_alt,
-                                size: 22,
-                                color: Colors.grey,
-                              ),
-                              SizedBox(height: 10.h),
-                              Text(
-                                "Upload",
-                                style: TextStyle(
-                                  fontSize: 13.sp,
-                                  color: Colors.grey,
+                      // ✅ Image Picker - Row layout: image left, hint text right
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          GestureDetector(
+                            onTap: pickProfileImage,
+                            child: Container(
+                              width: 100.w,
+                              height: 100.h,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Colors.grey.shade100,
+                                border: Border.all(
+                                  color: Colors.grey.shade300,
+                                  width: 1.5,
                                 ),
+                                image: profileImage != null
+                                    ? DecorationImage(
+                                        image: FileImage(profileImage!),
+                                        fit: BoxFit.cover,
+                                      )
+                                    : null,
                               ),
-                            ],
-                          )
-                        : Stack(
-                            children: [
-                              Container(
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: Colors.black.withValues(alpha: 0.2),
-                                ),
-                              ),
-                              Center(
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    const Icon(
-                                      Icons.camera_alt,
-                                      size: 22,
-                                      color: Colors.white,
+                              child: profileImage == null
+                                  ? Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Icon(
+                                          Icons.camera_alt_outlined,
+                                          size: 24.sp,
+                                          color: Colors.grey.shade500,
+                                        ),
+                                        SizedBox(height: 6.h),
+                                        Text(
+                                          "Upload",
+                                          style: TextStyle(
+                                            fontSize: 12.sp,
+                                            color: Colors.grey.shade500,
+                                          ),
+                                        ),
+                                      ],
+                                    )
+                                  : Stack(
+                                      children: [
+                                        Container(
+                                          decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            color: Colors.black.withValues(
+                                              alpha: 0.25,
+                                            ),
+                                          ),
+                                        ),
+                                        Center(
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              const Icon(
+                                                Icons.camera_alt,
+                                                size: 22,
+                                                color: Colors.white,
+                                              ),
+                                              SizedBox(height: 6.h),
+                                              Text(
+                                                "Change",
+                                                style: TextStyle(
+                                                  fontSize: 12.sp,
+                                                  color: Colors.white,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                    SizedBox(height: 10.h),
-                                    Text(
-                                      "Change",
-                                      style: TextStyle(
-                                        fontSize: 13.sp,
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
+                            ),
                           ),
+                          SizedBox(width: 16.w),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Business Logo',
+                                  style: TextStyle(
+                                    fontSize: 14.sp,
+                                    fontWeight: FontWeight.w600,
+                                    color: AppColors.blackColor,
+                                  ),
+                                ),
+                                SizedBox(height: 4.h),
+                                Text(
+                                  'Tap to upload a profile photo for your business',
+                                  style: TextStyle(
+                                    fontSize: 12.sp,
+                                    color: Colors.grey.shade500,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+
+                      SizedBox(height: 28.h),
+
+                      // ─── Divider ───
+                      Divider(color: Colors.grey.shade200, thickness: 1),
+                      SizedBox(height: 20.h),
+
+                      // ─── Business Name ───
+                      _fieldLabel('Business Name'),
+                      SizedBox(height: 8.h),
+                      TextFormField(
+                        controller: _nameController,
+                        textInputAction: TextInputAction.next,
+                        onFieldSubmitted: (_) =>
+                            FocusScope.of(context).requestFocus(_descFocusNode),
+                        decoration: AppInputTheme.withIcon(
+                          hint: 'e.g. Vibrex Studio',
+                          icon: Icons.business_outlined,
+                        ),
+                      ),
+                      SizedBox(height: 16.h),
+
+                      // ─── Description ───
+                      _fieldLabel('Description'),
+                      SizedBox(height: 8.h),
+                      TextFormField(
+                        controller: _descController,
+                        focusNode: _descFocusNode,
+                        maxLines: 5,
+                        minLines: 4,
+                        textInputAction: TextInputAction.next,
+                        keyboardType: TextInputType.multiline,
+                        onFieldSubmitted: (_) => FocusScope.of(
+                          context,
+                        ).requestFocus(_phoneFocusNode),
+                        decoration: AppInputTheme.withIcon(
+                          hint: 'Tell customers about your business...',
+                          icon: null,
+                        ),
+                      ),
+                      SizedBox(height: 16.h),
+
+                      // ─── Business Phone ───
+                      _fieldLabel('Business Phone'),
+                      SizedBox(height: 8.h),
+                      TextFormField(
+                        controller: _phoneController,
+                        focusNode: _phoneFocusNode,
+                        keyboardType: TextInputType.phone,
+                        textInputAction: TextInputAction.done,
+                        onFieldSubmitted: (_) => _onSave(context),
+                        decoration: AppInputTheme.withIcon(
+                          hint: '+92 300 1234567',
+                          icon: Icons.phone_outlined,
+                        ),
+                      ),
+
+                      // ✅ Extra bottom space taake phone field keyboard ke upar rahe
+                      SizedBox(height: 16.h),
+                    ],
                   ),
                 ),
               ),
-              SizedBox(height: 28.h),
 
-              Text(
-                'Business Info',
-                style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.w500),
-              ),
-              SizedBox(height: 17.h),
-              const Text(
-                'Choose the name displayed on your online booking profile',
-              ),
-              SizedBox(height: 42.h),
-
-              // Business Name
-              const Text(
-                "Business name",
-                style: TextStyle(color: Colors.black),
-              ),
-              const SizedBox(height: 8),
-              TextFormField(
-                controller: _nameController, // ✅ controller
-                decoration: AppInputTheme.withIcon(
-                  hint: 'Vibrex',
-                  icon: Icons.business,
-                ),
-              ),
-              SizedBox(height: 19.h),
-
-              // Description
-              const Text("Description", style: TextStyle(color: Colors.black)),
-              const SizedBox(height: 8),
-              TextFormField(
-                controller: _descController, // ✅ controller
-                maxLines: 7,
-                minLines: 5,
-                keyboardType: TextInputType.multiline,
-                decoration: AppInputTheme.withIcon(
-                  hint: 'About your business...',
-                  icon: null,
-                ),
-              ),
-              SizedBox(height: 19.h),
-
-              // Phone
-              const Text(
-                "Business Phone",
-                style: TextStyle(color: Colors.black),
-              ),
-              const SizedBox(height: 8),
-              TextFormField(
-                controller: _phoneController, // ✅ controller
-                keyboardType: TextInputType.phone,
-                decoration: AppInputTheme.withIcon(
-                  hint: '+92 300 1234567',
-                  icon: Icons.phone,
-                ),
+              // Save button - Column ke andar fixed at bottom
+              // Keyboard aaye toh bhi ye neeche rahega aur scroll ke saath nahi jayega
+              BlocBuilder<ProviderBloc, ProviderState>(
+                builder: (context, state) {
+                  return Container(
+                    color: AppColors.whiteColor,
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 24.w,
+                      vertical: 16.h,
+                    ),
+                    child: state is ProviderLoading
+                        ? const Center(child: CircularProgressIndicator())
+                        : AppButtonTheme.iconTextButton(
+                            text: 'Save',
+                            icon: null,
+                            backgroundColor: AppColors.blackColor,
+                            textColor: AppColors.whiteColor,
+                            onPressed: () => _onSave(context),
+                          ),
+                  );
+                },
               ),
             ],
           ),
         ),
-        bottomNavigationBar: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 43.w, vertical: 20.h),
-          child: BlocBuilder<ProviderBloc, ProviderState>(
-            builder: (context, state) {
-              return state is ProviderLoading
-                  ? const Center(child: CircularProgressIndicator())
-                  : AppButtonTheme.iconTextButton(
-                      text: 'Save',
-                      icon: null,
-                      backgroundColor: AppColors.blackColor,
-                      textColor: AppColors.whiteColor,
-                      onPressed: () => _onSave(context),
-                    );
-            },
-          ),
-        ),
+      ),
+    );
+  }
+
+  //  Helper: consistent field labels
+  Widget _fieldLabel(String label) {
+    return Text(
+      label,
+      style: TextStyle(
+        fontSize: 13.sp,
+        fontWeight: FontWeight.w600,
+        color: AppColors.blackColor,
       ),
     );
   }

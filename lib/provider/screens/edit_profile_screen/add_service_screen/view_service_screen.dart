@@ -87,32 +87,75 @@ class _ViewServiceScreenState extends State<ViewServiceScreen> {
             // error
             if (state is ProviderError) {
               return Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.error_outline,
-                      size: 48,
-                      color: Colors.red.shade300,
-                    ),
-                    SizedBox(height: 12.h),
-                    Text(
-                      state.errorMessage,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(color: Colors.red.shade400),
-                    ),
-                    SizedBox(height: 16.h),
-                    TextButton(
-                      onPressed: () {
-                        context.read<ProviderBloc>().add(
-                          FetchProviderServicesEvent(
-                            serviceProviderId: _serviceProviderId,
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 32.w),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.wifi_off_rounded,
+                        size: 52,
+                        color: Colors.grey.shade300,
+                      ),
+                      SizedBox(height: 14.h),
+                      Text(
+                        'Failed to load services',
+                        style: TextStyle(
+                          fontSize: 15.sp,
+                          fontWeight: FontWeight.w600,
+                          color: AppColors.blackColor,
+                        ),
+                      ),
+                      SizedBox(height: 6.h),
+                      Text(
+                        'Please check your connection and try again',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 12.sp,
+                          color: Colors.grey.shade500,
+                        ),
+                      ),
+                      SizedBox(height: 24.h),
+                      GestureDetector(
+                        onTap: () {
+                          context.read<ProviderBloc>().add(
+                            FetchProviderServicesEvent(
+                              serviceProviderId: _serviceProviderId,
+                            ),
+                          );
+                        },
+                        child: Container(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 24.w,
+                            vertical: 12.h,
                           ),
-                        );
-                      },
-                      child: const Text('Retry'),
-                    ),
-                  ],
+                          decoration: BoxDecoration(
+                            color: AppColors.blackColor,
+                            borderRadius: BorderRadius.circular(8.r),
+                          ),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              const Icon(
+                                Icons.refresh,
+                                color: Colors.white,
+                                size: 18,
+                              ),
+                              SizedBox(width: 8.w),
+                              Text(
+                                'Try Again',
+                                style: TextStyle(
+                                  fontSize: 13.sp,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               );
             }

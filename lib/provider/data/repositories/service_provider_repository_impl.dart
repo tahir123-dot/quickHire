@@ -1,8 +1,10 @@
 import 'package:mobile/provider/data/datasources/provider_data_sources.dart';
 import 'package:mobile/provider/data/dto/service_provider_dto.dart';
+import 'package:mobile/provider/data/entity/availability_entity.dart';
 import 'package:mobile/provider/data/entity/service_entity.dart';
 import 'package:mobile/provider/data/entity/sub_category_entity.dart';
 import 'package:mobile/provider/data/entity/team_member_entity.dart';
+import 'package:mobile/provider/data/mapper/availability_mapper.dart';
 import 'package:mobile/provider/data/mapper/service_mapper.dart';
 import 'package:mobile/provider/data/mapper/sub_category_mapper.dart';
 import 'package:mobile/provider/data/mapper/team_member_mapper.dart';
@@ -68,5 +70,16 @@ class ServiceProviderRepositoryImpl implements ServiceProviderRepository {
   @override
   Future<void> deleteTeamMember(String teamMemberId) async {
     await dataSource.deleteTeamMember(teamMemberId);
+  }
+
+  @override
+  Future<void> addAvailability(AddAvailabilityDto dto) async {
+    await dataSource.addAvailability(dto.toJson());
+  }
+
+  @override
+  Future<AvailabilityEntity> getAvailability(String ownerId) async {
+    final model = await dataSource.getAvailability(ownerId);
+    return AvailabilityMapper.toEntity(model);
   }
 }

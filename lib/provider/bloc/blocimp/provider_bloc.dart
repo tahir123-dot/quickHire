@@ -16,6 +16,8 @@ class ProviderBloc extends Bloc<ProviderProfileEvent, ProviderState> {
     on<DeleteServiceEvent>(_onDeleteService);
     on<FetchTeamListEvent>(_onFetchTeamList);
     on<DeleteTeamMemberEvent>(_onDeleteTeamMember);
+    on<AddAvailabilityEvent>(_onAddAvailability);
+    on<FetchAvailabilityEvent>(_onFetchAvailability);
   }
 
   // create business details
@@ -150,6 +152,32 @@ class ProviderBloc extends Bloc<ProviderProfileEvent, ProviderState> {
 
       final members = await repository.getTeamList('6a1e6abbb5759b02bac59cc1');
       emit(TeamListLoaded(members: members));
+    } catch (e) {
+      emit(ProviderError(errorMessage: e.toString()));
+    }
+  }
+
+  Future<void> _onAddAvailability(
+    AddAvailabilityEvent event,
+    Emitter<ProviderState> emit,
+  ) async {
+    emit(ProviderLoading());
+    try {
+      await repository.addAvailability(event.dto);
+      emit(ProviderSuccess(message: 'Availability saved successfully!'));
+    } catch (e) {
+      emit(ProviderError(errorMessage: e.toString()));
+    }
+  }
+
+  Future<void> _onFetchAvailability(
+    FetchAvailabilityEvent event,
+    Emitter<ProviderState> emit,
+  ) async {
+    emit(ProviderLoading());
+    try {
+      final availability = await repository.getAvailability(event.ownerId);
+      emit(AvailabilityLoaded(availability: availability));
     } catch (e) {
       emit(ProviderError(errorMessage: e.toString()));
     }

@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../components/top_bar_widget/top_bar_widget.dart';
 import '../../../core/themes/app_button_theme.dart';
 import '../../../core/themes/app_input_theme.dart';
-import '../../../core/themes/app_text_theme.dart';
 import '../../../core/themes/colors.dart';
 
 class ProviderPayment extends StatefulWidget {
@@ -18,292 +16,274 @@ class _ProviderPaymentState extends State<ProviderPayment> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: true,
+      backgroundColor: AppColors.whiteColor,
       appBar: AppBar(
-        automaticallyImplyLeading: false,
         backgroundColor: AppColors.whiteColor,
         elevation: 0,
-        title: TopBarIconWithCenterText(pageName: 'Payment'),
+        surfaceTintColor: AppColors.transparentBackground,
+        title: const Text('Payment'),
       ),
       body: SafeArea(
-        child: ListView(
-          physics: const BouncingScrollPhysics(),
-          padding: EdgeInsets.symmetric(horizontal: 24.w),
+        child: Column(
           children: [
-            SizedBox(height: 33.h),
+            // ✅ Scrollable content
+            Expanded(
+              child: SingleChildScrollView(
+                physics: const BouncingScrollPhysics(),
+                padding: EdgeInsets.symmetric(horizontal: 24.w),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(height: 20.h),
 
-            /// Title
-            Text('Payment method', style: AppTextTheme.h1),
-
-            SizedBox(height: 10.h),
-
-            /// Description
-            Text(
-              "Kindly provide your payment account details to receive your service earnings directly in this account.",
-              style: AppTextTheme.paragraph,
-            ),
-
-            SizedBox(height: 47.h),
-
-            /// Swift Code
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                RichText(
-                  text: const TextSpan(
-                    text: "Swift Code ",
-                    style: TextStyle(color: Colors.black),
-                  ),
-                ),
-                const SizedBox(height: 8),
-                TextFormField(
-                  decoration: AppInputTheme.withIcon(
-                    hint: 'Add swift code of you Bank',
-                    icon: Icons.person_2,
-                  ),
-                ),
-              ],
-            ),
-
-            SizedBox(height: 25.h),
-
-            /// Branch Name
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                RichText(
-                  text: const TextSpan(
-                    text: "Branch Name",
-                    style: TextStyle(color: Colors.black),
-                  ),
-                ),
-                const SizedBox(height: 8),
-                TextFormField(
-                  decoration: AppInputTheme.withIcon(
-                    hint: 'Add card holder full name',
-                    icon: Icons.person_2,
-                  ),
-                ),
-              ],
-            ),
-
-            SizedBox(height: 25.h),
-
-            // city and country
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start, // 👈 IMPORTANT
-              children: [
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      /// Label
-                      RichText(
-                        text: const TextSpan(
-                          text: "City",
-                          style: TextStyle(color: Colors.black),
-                        ),
+                    // ─── Header ───
+                    Text(
+                      'Payment Method',
+                      style: TextStyle(
+                        fontSize: 22.sp,
+                        fontWeight: FontWeight.w700,
+                        color: AppColors.blackColor,
                       ),
-
-                      const SizedBox(height: 8),
-
-                      /// Input
-                      TextFormField(
-                        decoration: AppInputTheme.withIcon(
-                          hint: 'city',
-                          icon: Icons.date_range_sharp,
-                        ),
+                    ),
+                    SizedBox(height: 6.h),
+                    Text(
+                      'Provide your payment account details to receive your service earnings directly.',
+                      style: TextStyle(
+                        fontSize: 13.sp,
+                        color: Colors.grey.shade600,
                       ),
-                    ],
-                  ),
+                    ),
+
+                    SizedBox(height: 20.h),
+                    Divider(color: Colors.grey.shade200, thickness: 1),
+                    SizedBox(height: 20.h),
+
+                    // ─── Bank Details Section ───
+                    _sectionLabel('Bank Details'),
+                    SizedBox(height: 14.h),
+
+                    _fieldLabel('Swift Code'),
+                    SizedBox(height: 8.h),
+                    TextFormField(
+                      textInputAction: TextInputAction.next,
+                      decoration: AppInputTheme.withIcon(
+                        hint: 'e.g. HABIPKKA',
+                        icon: Icons.account_balance_outlined,
+                      ),
+                    ),
+                    SizedBox(height: 14.h),
+
+                    _fieldLabel('Branch Name'),
+                    SizedBox(height: 8.h),
+                    TextFormField(
+                      textInputAction: TextInputAction.next,
+                      decoration: AppInputTheme.withIcon(
+                        hint: 'e.g. Main Branch Karachi',
+                        icon: Icons.business_outlined,
+                      ),
+                    ),
+                    SizedBox(height: 14.h),
+
+                    // City & Country in a Row
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              _fieldLabel('City'),
+                              SizedBox(height: 8.h),
+                              TextFormField(
+                                textInputAction: TextInputAction.next,
+                                decoration: AppInputTheme.withIcon(
+                                  hint: 'Karachi',
+                                  icon: Icons.location_city_outlined,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(width: 12.w),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              _fieldLabel('Country'),
+                              SizedBox(height: 8.h),
+                              TextFormField(
+                                textInputAction: TextInputAction.next,
+                                decoration: AppInputTheme.withIcon(
+                                  hint: 'Pakistan',
+                                  icon: Icons.flag_outlined,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 14.h),
+
+                    _fieldLabel('Branch Address'),
+                    SizedBox(height: 8.h),
+                    TextFormField(
+                      textInputAction: TextInputAction.next,
+                      decoration: AppInputTheme.withIcon(
+                        hint: 'e.g. 123 Main Street, Block A',
+                        icon: Icons.location_on_outlined,
+                      ),
+                    ),
+
+                    SizedBox(height: 24.h),
+                    Divider(color: Colors.grey.shade200, thickness: 1),
+                    SizedBox(height: 20.h),
+
+                    // ─── Card Details Section ───
+                    _sectionLabel('Card Details'),
+                    SizedBox(height: 14.h),
+
+                    _fieldLabel('Name on Card'),
+                    SizedBox(height: 8.h),
+                    TextFormField(
+                      textInputAction: TextInputAction.next,
+                      decoration: AppInputTheme.withIcon(
+                        hint: 'e.g. Ahmed Ali',
+                        icon: Icons.person_outline,
+                      ),
+                    ),
+                    SizedBox(height: 14.h),
+
+                    _fieldLabel('Card Number'),
+                    SizedBox(height: 8.h),
+                    TextFormField(
+                      keyboardType: TextInputType.number,
+                      textInputAction: TextInputAction.next,
+                      decoration: AppInputTheme.withIcon(
+                        hint: '0000  0000  0000  0000',
+                        icon: Icons.credit_card_outlined,
+                      ),
+                    ),
+                    SizedBox(height: 14.h),
+
+                    // Expiry & CVV in a Row
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              _fieldLabel('Expiry Date'),
+                              SizedBox(height: 8.h),
+                              TextFormField(
+                                keyboardType: TextInputType.datetime,
+                                textInputAction: TextInputAction.next,
+                                decoration: AppInputTheme.withIcon(
+                                  hint: 'MM / YY',
+                                  icon: Icons.date_range_outlined,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(width: 12.w),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              _fieldLabel('CVV'),
+                              SizedBox(height: 8.h),
+                              TextFormField(
+                                keyboardType: TextInputType.number,
+                                textInputAction: TextInputAction.done,
+                                obscureText: true,
+                                decoration: AppInputTheme.withIcon(
+                                  hint: '•••',
+                                  icon: Icons.lock_outline,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+
+                    SizedBox(height: 16.h),
+
+                    // ─── Card Icons ───
+                    Row(
+                      children: [
+                        _cardIcon(Icons.payments_rounded),
+                        SizedBox(width: 8.w),
+                        _cardIcon(Icons.payments_rounded),
+                        SizedBox(width: 8.w),
+                        _cardIcon(Icons.payments_rounded),
+                        SizedBox(width: 8.w),
+                        _cardIcon(Icons.payments_rounded),
+                      ],
+                    ),
+
+                    SizedBox(height: 24.h),
+                  ],
                 ),
-
-                SizedBox(width: 10.w),
-
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      /// Label
-                      RichText(
-                        text: const TextSpan(
-                          text: "Country",
-                          style: TextStyle(color: Colors.black),
-                        ),
-                      ),
-
-                      const SizedBox(height: 8),
-
-                      /// Input
-                      TextFormField(
-                        decoration: AppInputTheme.withIcon(
-                          hint: 'country',
-                          icon: Icons.flag,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
+              ),
             ),
 
-            SizedBox(height: 25.h),
-
-            /// Branch Addresss
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                RichText(
-                  text: const TextSpan(
-                    text: "Branch Address",
-                    style: TextStyle(color: Colors.black),
-                  ),
-                ),
-                const SizedBox(height: 8),
-                TextFormField(
-                  decoration: AppInputTheme.withIcon(
-                    hint: 'Add bank address',
-                    icon: Icons.person_2,
-                  ),
-                ),
-              ],
+            // ✅ Save button — fixed at bottom
+            Container(
+              color: AppColors.whiteColor,
+              padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 16.h),
+              child: AppButtonTheme.iconTextButton(
+                text: 'Save',
+                icon: null,
+                backgroundColor: AppColors.blackColor,
+                textColor: AppColors.whiteColor,
+                onPressed: () {
+                  print("Confirm save");
+                },
+              ),
             ),
-
-            SizedBox(height: 25.h),
-
-            /// Name on Card
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                RichText(
-                  text: const TextSpan(
-                    text: "Name on card",
-                    style: TextStyle(color: Colors.black),
-                  ),
-                ),
-                const SizedBox(height: 8),
-                TextFormField(
-                  decoration: AppInputTheme.withIcon(
-                    hint: 'Add card holder full name',
-                    icon: Icons.person_2,
-                  ),
-                ),
-              ],
-            ),
-
-            SizedBox(height: 25.h),
-
-            /// Card Number
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                RichText(
-                  text: const TextSpan(
-                    text: "Card number",
-                    style: TextStyle(color: Colors.black),
-                  ),
-                ),
-                const SizedBox(height: 8),
-                TextFormField(
-                  decoration: AppInputTheme.withIcon(
-                    hint: 'Credit or debit card number',
-                    icon: Icons.person_2,
-                  ),
-                ),
-              ],
-            ),
-
-            SizedBox(height: 25.h),
-
-            // expire date securiyt code
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start, // 👈 IMPORTANT
-              children: [
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      /// Label
-                      RichText(
-                        text: const TextSpan(
-                          text: "Expiry date",
-                          style: TextStyle(color: Colors.black),
-                        ),
-                      ),
-
-                      const SizedBox(height: 8),
-
-                      /// Input
-                      TextFormField(
-                        decoration: AppInputTheme.withIcon(
-                          hint: 'MM/YY',
-                          icon: Icons.date_range_sharp,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-
-                SizedBox(width: 10.w),
-
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      /// Label
-                      RichText(
-                        text: const TextSpan(
-                          text: "Security code",
-                          style: TextStyle(color: Colors.black),
-                        ),
-                      ),
-
-                      const SizedBox(height: 8),
-
-                      /// Input
-                      TextFormField(
-                        decoration: AppInputTheme.withIcon(
-                          hint: '123',
-                          icon: Icons.security,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(height: 15.h),
-
-            /// Payment icons
-            Row(
-              children: const [
-                Icon(Icons.payments_rounded),
-                SizedBox(width: 6),
-                Icon(Icons.payments_rounded),
-                SizedBox(width: 6),
-                Icon(Icons.payments_rounded),
-                SizedBox(width: 6),
-                Icon(Icons.payments_rounded),
-              ],
-            ),
-
-            SizedBox(height: 60.h),
-
-            /// Button
-            AppButtonTheme.iconTextButton(
-              text: 'Save',
-              icon: null,
-              backgroundColor: AppColors.blackColor,
-              textColor: AppColors.whiteColor,
-              onPressed: () {
-                print("Confirm save");
-              },
-            ),
-
-            /// Bottom safe space
-            SizedBox(height: 20.h),
           ],
         ),
       ),
+    );
+  }
+
+  // ─── Helpers ───
+
+  Widget _sectionLabel(String label) {
+    return Text(
+      label,
+      style: TextStyle(
+        fontSize: 15.sp,
+        fontWeight: FontWeight.w700,
+        color: AppColors.blackColor,
+      ),
+    );
+  }
+
+  Widget _fieldLabel(String label) {
+    return Text(
+      label,
+      style: TextStyle(
+        fontSize: 13.sp,
+        fontWeight: FontWeight.w600,
+        color: AppColors.blackColor,
+      ),
+    );
+  }
+
+  Widget _cardIcon(IconData icon) {
+    return Container(
+      padding: EdgeInsets.all(6.r),
+      decoration: BoxDecoration(
+        color: Colors.grey.shade100,
+        borderRadius: BorderRadius.circular(6.r),
+        border: Border.all(color: Colors.grey.shade200),
+      ),
+      child: Icon(icon, size: 20.sp, color: Colors.grey.shade600),
     );
   }
 }
