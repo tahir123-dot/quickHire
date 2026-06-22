@@ -12,4 +12,5 @@ abstract class ServiceProviderRepository {
   Future<List<ServiceEntity>> getProviderServices(String serviceProviderId);
   Future<void> deleteProviderService(String serviceId);
   Future<List<TeamMemberEntity>> getTeamList(String serviceProviderId);
+  Future<void> deleteTeamMember(String teamMemberId);
 }

@@ -6,7 +6,6 @@ import 'package:mobile/core/themes/app_text_theme.dart';
 import 'package:mobile/provider/bloc/blocimp/provider_bloc.dart';
 import 'package:mobile/provider/bloc/event/provider_event.dart';
 import 'package:mobile/provider/bloc/state/provider_state.dart';
-import '../../../../../components/top_bar_widget/top_bar_widget.dart';
 import '../../../../../core/themes/colors.dart';
 
 class TeamListScreen extends StatefulWidget {
@@ -161,8 +160,10 @@ class _TeamListScreenState extends State<TeamListScreen> {
           TextButton(
             onPressed: () {
               Navigator.pop(context);
-              // ✅ baad mein delete event yahan aayega
-              print("Delete member: $memberId");
+              // ✅ event dispatch
+              context.read<ProviderBloc>().add(
+                DeleteTeamMemberEvent(teamMemberId: memberId),
+              );
             },
             child: Text('Remove', style: TextStyle(color: Colors.red.shade400)),
           ),

@@ -121,15 +121,30 @@ class ProviderDataSources {
     }
   }
 
+  // get all team member of srevice providers
   Future<List<TeamMemberModel>> getTeamList(String serviceProviderId) async {
     try {
       final response = await dio.get(
-        "${ProviderApiEndPoints.listTeam}/$serviceProviderId",
+        "${ProviderApiEndPoints.team}/$serviceProviderId",
       );
       final List data = response.data['data'];
       return data.map((json) => TeamMemberModel.fromJson(json)).toList();
     } on DioException catch (e) {
       throw Exception("Failed to fetch team: ${e.message}");
+    } catch (e) {
+      throw Exception("Unexpected error: $e");
+    }
+  }
+
+  // delete team member
+  Future<Response> deleteTeamMember(String teamMemberId) async {
+    try {
+      final response = await dio.delete(
+        "${ProviderApiEndPoints.team}/$teamMemberId",
+      );
+      return response;
+    } on DioException catch (e) {
+      throw Exception("Failed to delete member: ${e.message}");
     } catch (e) {
       throw Exception("Unexpected error: $e");
     }

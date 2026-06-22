@@ -64,4 +64,9 @@ class ServiceProviderRepositoryImpl implements ServiceProviderRepository {
     final models = await dataSource.getTeamList(serviceProviderId);
     return TeamMemberMapper.toEntityList(models);
   }
+
+  @override
+  Future<void> deleteTeamMember(String teamMemberId) async {
+    await dataSource.deleteTeamMember(teamMemberId);
+  }
 }

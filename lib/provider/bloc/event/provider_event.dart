@@ -68,3 +68,9 @@ class FetchTeamListEvent extends ProviderProfileEvent {
   final String serviceProviderId;
   FetchTeamListEvent({required this.serviceProviderId});
 }
+
+// event
+class DeleteTeamMemberEvent extends ProviderProfileEvent {
+  final String teamMemberId;
+  DeleteTeamMemberEvent({required this.teamMemberId});
+}
