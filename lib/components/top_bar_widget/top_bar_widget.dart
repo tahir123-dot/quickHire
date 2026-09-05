@@ -183,7 +183,7 @@ class TopBarThreeThings extends StatelessWidget {
 
                 onSelected: (value) {
                   if (value == 'edit') {
-                    context.push(ProviderRoutesConstants.editProfile);
+                    context.push(ProviderRoutesConstants.editProfilePath);
                   } else if (value == 'delete') {
                     print('Delete clicked');
                   }

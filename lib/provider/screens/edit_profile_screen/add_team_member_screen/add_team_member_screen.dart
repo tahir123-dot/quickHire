@@ -72,7 +72,7 @@ class _AddTeamMemberScreenState extends State<AddTeamMemberScreen> {
                 backgroundColor: AppColors.whiteColor,
                 textColor: AppColors.blackColor,
                 onPressed: () {
-                  context.push(ProviderRoutesConstants.teamList);
+                  context.push(ProviderRoutesConstants.teamListPath);
                 },
               ),
             ],

@@ -1,12 +1,8 @@
 class ProfessionalRoutesConstants {
-  static const String professionalMainScreen = "/professionalMainScreen";
-  static const String professionalHomeScreen = "/professionalHomeScreen";
-  static const String professionalScheduleScreen =
-      "/professionalScheduleScreen";
+  static const String professional = "/professional";
 
-  static const List<String> all = [
-    professionalMainScreen,
-    professionalHomeScreen,
-    professionalScheduleScreen,
-  ];
+  // relative segments — used inside nested GoRoute definitions
+  static const String mainScreen = "mainScreen";
+  static const String homeScreen = "homeScreen";
+  static const String scheduleScreen = "scheduleScreen";
 }

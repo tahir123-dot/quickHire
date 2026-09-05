@@ -29,6 +29,14 @@ class SignupSuccess extends AuthState {
   SignupSuccess({required this.message});
 }
 
+/// ================= Logout  =================
+
+class LogoutSuccess extends AuthState {
+  final String message;
+
+  LogoutSuccess({required this.message});
+}
+
 /// ================= OTP VERIFY =================
 
 class OtpVerifySuccess extends AuthState {

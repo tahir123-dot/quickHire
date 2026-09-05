@@ -18,12 +18,11 @@ class AddAvailabilityScreen extends StatefulWidget {
 
 class _AddAvailabilityScreenState extends State<AddAvailabilityScreen> {
   bool _isEditMode = false;
-  static const _ownerId = '6a1e6abbb5759b02bac59cc1';
 
   @override
   void initState() {
     super.initState();
-    context.read<ProviderBloc>().add(FetchAvailabilityEvent(ownerId: _ownerId));
+    context.read<ProviderBloc>().add(FetchAvailabilityEvent());
   }
 
   void _populateFields(AvailabilityEntity availability) {
@@ -41,10 +40,9 @@ class _AddAvailabilityScreenState extends State<AddAvailabilityScreen> {
     });
   }
 
-  // ✅ FIX — 00:00 handle kiya
   String _to12Hour(String time24) {
     if (time24.isEmpty) return "";
-    if (time24 == "00:00") return ""; // ✅ backend se aane wali empty value
+    if (time24 == "00:00") return "";
     final parts = time24.split(':');
     int hour = int.parse(parts[0]);
     final minute = parts[1];
@@ -154,8 +152,6 @@ class _AddAvailabilityScreenState extends State<AddAvailabilityScreen> {
     }
 
     final dto = AddAvailabilityDto(
-      ownerId: _ownerId,
-      ownerType: 'ServiceProvider',
       days: selectedDays,
       startTime: _to24Hour(startTime),
       endTime: _to24Hour(endTime),
@@ -179,9 +175,7 @@ class _AddAvailabilityScreenState extends State<AddAvailabilityScreen> {
             context,
           ).showSnackBar(SnackBar(content: Text(state.message)));
           setState(() => _isEditMode = false);
-          context.read<ProviderBloc>().add(
-            FetchAvailabilityEvent(ownerId: _ownerId),
-          );
+          context.read<ProviderBloc>().add(FetchAvailabilityEvent());
         }
         if (state is ProviderError) {
           ScaffoldMessenger.of(
@@ -212,12 +206,9 @@ class _AddAvailabilityScreenState extends State<AddAvailabilityScreen> {
               ),
           ],
         ),
-
-        // ✅ FIX — loading state body mein
         body: SafeArea(
           child: BlocBuilder<ProviderBloc, ProviderState>(
             builder: (context, state) {
-              // ✅ pehli baar loading - centered loader
               if (state is ProviderLoading) {
                 return Center(
                   child: Column(
@@ -239,7 +230,6 @@ class _AddAvailabilityScreenState extends State<AddAvailabilityScreen> {
                 );
               }
 
-              // ✅ error state
               if (state is ProviderError) {
                 return Center(
                   child: Column(
@@ -269,7 +259,7 @@ class _AddAvailabilityScreenState extends State<AddAvailabilityScreen> {
                       SizedBox(height: 24.h),
                       GestureDetector(
                         onTap: () => context.read<ProviderBloc>().add(
-                          FetchAvailabilityEvent(ownerId: _ownerId),
+                          FetchAvailabilityEvent(),
                         ),
                         child: Container(
                           padding: EdgeInsets.symmetric(
@@ -306,197 +296,171 @@ class _AddAvailabilityScreenState extends State<AddAvailabilityScreen> {
                 );
               }
 
-              // ✅ data loaded ya initial - form dikhao
-              return ListView(
-                physics: const BouncingScrollPhysics(),
-                padding: EdgeInsets.symmetric(horizontal: 31.w),
-                children: [
-                  SizedBox(height: 46.h),
-
-                  // edit mode banner
-                  if (_isEditMode)
-                    Container(
-                      margin: EdgeInsets.only(bottom: 20.h),
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 14.w,
-                        vertical: 10.h,
-                      ),
-                      decoration: BoxDecoration(
-                        color: AppColors.blackColor.withValues(alpha: 0.05),
-                        borderRadius: BorderRadius.circular(8.r),
-                        border: Border.all(
-                          color: AppColors.blackColor.withValues(alpha: 0.1),
-                        ),
-                      ),
-                      child: Row(
-                        children: [
-                          const Icon(Icons.edit_outlined, size: 16),
-                          SizedBox(width: 8.w),
-                          Text(
-                            'Edit mode — make your changes and save',
-                            style: TextStyle(fontSize: 12.sp),
-                          ),
-                        ],
-                      ),
-                    ),
-
-                  // ===================== DAYS =====================
-                  Text(
-                    'Select Working Days',
-                    style: TextStyle(
-                      fontSize: 18.sp,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  SizedBox(height: 13.h),
-                  const Text('Choose the days you are available to work'),
-                  SizedBox(height: 26.h),
-                  Wrap(
-                    spacing: 15,
-                    runSpacing: 10,
-                    children: List.generate(days.length, (index) {
-                      final day = days[index];
-                      final isSelected = day["selected"];
-                      return _buildDayItem(day, isSelected, index);
-                    }),
-                  ),
-
-                  SizedBox(height: 23.h),
-                  Divider(
-                    thickness: 1,
-                    height: 1,
-                    color: AppColors.lightHorizontalLine,
-                  ),
-                  SizedBox(height: 23.h),
-
-                  // ===================== WORKING HOURS =====================
-                  Text(
-                    'Select Working Hours',
-                    style: TextStyle(
-                      fontSize: 18.sp,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  SizedBox(height: 13.h),
-                  const Text('Set the time range for your working hours'),
-                  SizedBox(height: 26.h),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: _timeBox(
-                          label: "Start Time",
-                          time: startTime,
-                          onTap: () => pickTime(isStart: true),
-                          isEditMode: _isEditMode,
-                        ),
-                      ),
-                      const SizedBox(width: 12),
-                      Expanded(
-                        child: _timeBox(
-                          label: "End Time",
-                          time: endTime,
-                          onTap: () => pickTime(isStart: false),
-                          isEditMode: _isEditMode,
-                        ),
-                      ),
-                    ],
-                  ),
-
-                  SizedBox(height: 23.h),
-                  Divider(
-                    thickness: 1,
-                    height: 1,
-                    color: AppColors.lightHorizontalLine,
-                  ),
-                  SizedBox(height: 23.h),
-
-                  // ===================== SLOT DURATION =====================
-                  Text(
-                    'Select Slot Duration',
-                    style: TextStyle(
-                      fontSize: 18.sp,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  SizedBox(height: 13.h),
-                  const Text('Choose the duration of each booking slot'),
-                  SizedBox(height: 26.h),
-                  Wrap(
-                    spacing: 15,
-                    runSpacing: 10,
-                    children: List.generate(durations.length, (index) {
-                      final item = durations[index];
-                      final isSelected = selectedDurationIndex == index;
-                      return _buildDurationItem(item, isSelected, index);
-                    }),
-                  ),
-
-                  SizedBox(height: 23.h),
-                  Divider(
-                    thickness: 1,
-                    height: 1,
-                    color: AppColors.lightHorizontalLine,
-                  ),
-                  SizedBox(height: 23.h),
-
-                  // ===================== BREAK TIME =====================
-                  Text(
-                    'Add Break Time',
-                    style: TextStyle(
-                      fontSize: 18.sp,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  SizedBox(height: 13.h),
-                  const Text('Add break time if you want to block some time'),
-                  SizedBox(height: 26.h),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: _timeBox(
-                          label: "Break Start",
-                          time: breakStartTime,
-                          onTap: () => pickTime(isStart: true, isBreak: true),
-                          isEditMode: _isEditMode,
-                        ),
-                      ),
-                      const SizedBox(width: 12),
-                      Expanded(
-                        child: _timeBox(
-                          label: "Break End",
-                          time: breakEndTime,
-                          onTap: () => pickTime(isStart: false, isBreak: true),
-                          isEditMode: _isEditMode,
-                        ),
-                      ),
-                    ],
-                  ),
-
-                  SizedBox(height: 26.h),
-                  Divider(
-                    thickness: 1,
-                    height: 1,
-                    color: AppColors.lightHorizontalLine,
-                  ),
-                  SizedBox(height: 23.h),
-
-                  // ===================== SAVE BUTTON =====================
-                  if (_isEditMode)
-                    AppButtonTheme.iconTextButton(
-                      text: 'Save Availability',
-                      icon: null,
-                      backgroundColor: AppColors.blackColor,
-                      textColor: AppColors.whiteColor,
-                      onPressed: () => _onSave(context),
-                    ),
-
-                  SizedBox(height: 20.h),
-                ],
-              );
+              // yahan AvailabilityNotSet ka koi alag UI nahi banaya —
+              // pehli baar wala user bhi seedha form hi dekhega neeche wale return se
+              return _buildForm();
             },
           ),
         ),
       ),
+    );
+  }
+
+  // ===================== FORM =====================
+  Widget _buildForm() {
+    return ListView(
+      physics: const BouncingScrollPhysics(),
+      padding: EdgeInsets.symmetric(horizontal: 31.w),
+      children: [
+        SizedBox(height: 46.h),
+
+        if (_isEditMode)
+          Container(
+            margin: EdgeInsets.only(bottom: 20.h),
+            padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 10.h),
+            decoration: BoxDecoration(
+              color: AppColors.blackColor.withValues(alpha: 0.05),
+              borderRadius: BorderRadius.circular(8.r),
+              border: Border.all(
+                color: AppColors.blackColor.withValues(alpha: 0.1),
+              ),
+            ),
+            child: Row(
+              children: [
+                const Icon(Icons.edit_outlined, size: 16),
+                SizedBox(width: 8.w),
+                Text(
+                  'Edit mode — make your changes and save',
+                  style: TextStyle(fontSize: 12.sp),
+                ),
+              ],
+            ),
+          ),
+
+        // ===================== DAYS =====================
+        Text(
+          'Select Working Days',
+          style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.w600),
+        ),
+        SizedBox(height: 13.h),
+        const Text('Choose the days you are available to work'),
+        SizedBox(height: 26.h),
+        Wrap(
+          spacing: 15,
+          runSpacing: 10,
+          children: List.generate(days.length, (index) {
+            final day = days[index];
+            final isSelected = day["selected"];
+            return _buildDayItem(day, isSelected, index);
+          }),
+        ),
+
+        SizedBox(height: 23.h),
+        Divider(thickness: 1, height: 1, color: AppColors.lightHorizontalLine),
+        SizedBox(height: 23.h),
+
+        // ===================== WORKING HOURS =====================
+        Text(
+          'Select Working Hours',
+          style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.w600),
+        ),
+        SizedBox(height: 13.h),
+        const Text('Set the time range for your working hours'),
+        SizedBox(height: 26.h),
+        Row(
+          children: [
+            Expanded(
+              child: _timeBox(
+                label: "Start Time",
+                time: startTime,
+                onTap: () => pickTime(isStart: true),
+                isEditMode: _isEditMode,
+              ),
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: _timeBox(
+                label: "End Time",
+                time: endTime,
+                onTap: () => pickTime(isStart: false),
+                isEditMode: _isEditMode,
+              ),
+            ),
+          ],
+        ),
+
+        SizedBox(height: 23.h),
+        Divider(thickness: 1, height: 1, color: AppColors.lightHorizontalLine),
+        SizedBox(height: 23.h),
+
+        // ===================== SLOT DURATION =====================
+        Text(
+          'Select Slot Duration',
+          style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.w600),
+        ),
+        SizedBox(height: 13.h),
+        const Text('Choose the duration of each booking slot'),
+        SizedBox(height: 26.h),
+        Wrap(
+          spacing: 15,
+          runSpacing: 10,
+          children: List.generate(durations.length, (index) {
+            final item = durations[index];
+            final isSelected = selectedDurationIndex == index;
+            return _buildDurationItem(item, isSelected, index);
+          }),
+        ),
+
+        SizedBox(height: 23.h),
+        Divider(thickness: 1, height: 1, color: AppColors.lightHorizontalLine),
+        SizedBox(height: 23.h),
+
+        // ===================== BREAK TIME =====================
+        Text(
+          'Add Break Time',
+          style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.w600),
+        ),
+        SizedBox(height: 13.h),
+        const Text('Add break time if you want to block some time'),
+        SizedBox(height: 26.h),
+        Row(
+          children: [
+            Expanded(
+              child: _timeBox(
+                label: "Break Start",
+                time: breakStartTime,
+                onTap: () => pickTime(isStart: true, isBreak: true),
+                isEditMode: _isEditMode,
+              ),
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: _timeBox(
+                label: "Break End",
+                time: breakEndTime,
+                onTap: () => pickTime(isStart: false, isBreak: true),
+                isEditMode: _isEditMode,
+              ),
+            ),
+          ],
+        ),
+
+        SizedBox(height: 26.h),
+        Divider(thickness: 1, height: 1, color: AppColors.lightHorizontalLine),
+        SizedBox(height: 23.h),
+
+        // ===================== SAVE BUTTON =====================
+        if (_isEditMode)
+          AppButtonTheme.iconTextButton(
+            text: 'Save Availability',
+            icon: null,
+            backgroundColor: AppColors.blackColor,
+            textColor: AppColors.whiteColor,
+            onPressed: () => _onSave(context),
+          ),
+
+        SizedBox(height: 20.h),
+      ],
     );
   }
 

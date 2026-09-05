@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:mobile/core/themes/colors.dart';
 
 class CategoryList extends StatelessWidget {
+  final String id;
   final String imageUrl;
   final String categoryName;
   final bool isActive;
@@ -11,6 +12,7 @@ class CategoryList extends StatelessWidget {
 
   const CategoryList({
     super.key,
+    required this.id,
     required this.imageUrl,
     required this.categoryName,
     required this.isActive,

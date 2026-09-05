@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:mobile/components/setting/list_widget.dart';
-import 'package:mobile/components/top_bar_widget/top_bar_widget.dart';
+import 'package:go_router/go_router.dart';
+import 'package:mobile/shared/same_screens/setting_screens/setting/listwidget.dart';
 import 'package:mobile/core/themes/colors.dart';
+import 'package:mobile/routes/shared_routes/public_routes_constants.dart';
 import 'package:mobile/routes/shared_routes/shared_routes_constant.dart';
 import 'package:mobile/shared/bloc/blocimpl/authbloc.dart';
+import 'package:mobile/shared/bloc/event/auth_event.dart';
+import 'package:mobile/shared/bloc/state/auth_state.dart';
 
 class Setting extends StatefulWidget {
   const Setting({super.key});
@@ -15,16 +18,20 @@ class Setting extends StatefulWidget {
 }
 
 class _SettingState extends State<Setting> {
+  // Sab lists 100% pure DATA hain - koi onTap closure, koi context nahi.
   final List<ListItemModel> settingsListOne = [
     ListItemModel(
+      id: 'notifications',
       title: "Notifications",
       route: SharedRoutesConstant.notificationScreen,
     ),
     ListItemModel(
+      id: 'language',
       title: "Language",
       route: SharedRoutesConstant.languageScreen,
     ),
     ListItemModel(
+      id: 'app_version',
       title: "App Version",
       route: SharedRoutesConstant.appVersionScreen,
     ),
@@ -32,6 +39,7 @@ class _SettingState extends State<Setting> {
 
   final List<ListItemModel> settingListTwo = [
     ListItemModel(
+      id: 'terms_conditions',
       title: "Terms & Conditions",
       route: SharedRoutesConstant.termsConditionScreen,
     ),
@@ -39,17 +47,30 @@ class _SettingState extends State<Setting> {
 
   final List<ListItemModel> settingListThree = [
     ListItemModel(
+      id: 'invite_friends',
       title: "Invite friends",
       route: SharedRoutesConstant.inviteFriendScreen,
     ),
-    ListItemModel(
-      title: "Switch account",
-      onTap: () {
-        print("Switch account clicked");
-      },
-    ),
-    ListItemModel(title: "Logout", onTap: null),
+    ListItemModel(id: 'switch_account', title: "Switch account"),
+    ListItemModel(id: 'logout', title: "Logout"),
   ];
+
+  void _handleItemTap(BuildContext context, ListItemModel item) {
+    switch (item.id) {
+      case 'logout':
+        context.read<AuthBloc>().add(LogoutEvent());
+        break;
+
+      case 'switch_account':
+        print("Switch account clicked");
+        break;
+
+      default:
+        if (item.route != null) {
+          context.push(item.route!);
+        }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -60,8 +81,12 @@ class _SettingState extends State<Setting> {
         title: const Text('Setting'),
       ),
       body: SafeArea(
-        child: BlocListener<AuthBloc, dynamic>(
-          listener: (context, state) {},
+        child: BlocListener<AuthBloc, AuthState>(
+          listener: (context, state) {
+            if (state is LogoutSuccess) {
+              context.go(PublicRoutesConstants.loginScreen);
+            }
+          },
           child: ListView(
             physics: const BouncingScrollPhysics(),
             padding: EdgeInsets.symmetric(horizontal: 43.w),
@@ -73,33 +98,27 @@ class _SettingState extends State<Setting> {
 
                   Text('App Preferences', style: TextStyle(fontSize: 19.sp)),
                   SizedBox(height: 16.h),
-                  ListWidget(items: settingsListOne),
+                  ListWidget(
+                    items: settingsListOne,
+                    onItemTap: (item) => _handleItemTap(context, item),
+                  ),
 
                   SizedBox(height: 18.h),
 
                   Text('Legal', style: TextStyle(fontSize: 19.sp)),
                   SizedBox(height: 16.h),
-                  ListWidget(items: settingListTwo),
+                  ListWidget(
+                    items: settingListTwo,
+                    onItemTap: (item) => _handleItemTap(context, item),
+                  ),
 
                   SizedBox(height: 18.h),
 
                   Text('Account Control', style: TextStyle(fontSize: 19.sp)),
                   SizedBox(height: 16.h),
-
-                  // 🔥 Logout yahan handle karo (context safe)
                   ListWidget(
-                    items: settingListThree.map((item) {
-                      if (item.title == "Logout") {
-                        return ListItemModel(
-                          title: "Logout",
-                          onTap: () {
-                            print("Logout clicked");
-                            //context.read<AuthBloc>().add(LogoutEvent());
-                          },
-                        );
-                      }
-                      return item;
-                    }).toList(),
+                    items: settingListThree,
+                    onItemTap: (item) => _handleItemTap(context, item),
                   ),
                 ],
               ),

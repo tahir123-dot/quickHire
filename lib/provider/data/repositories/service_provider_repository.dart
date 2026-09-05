@@ -8,12 +8,12 @@ abstract class ServiceProviderRepository {
   Future<void> createProviderProfile(InitServiceProviderDto dto);
   Future<void> createProviderBusinessDetails(UpdateBusinessDetailsDto dto);
   Future<void> createProviderBannerImage(UpdateBannerDto dto);
-  Future<List<SubCategoryEntity>> getSubCategories(String categoryId);
+  Future<List<SubCategoryEntity>> getSubCategories();
   Future<void> addProviderService(AddServiceDto dto);
-  Future<List<ServiceEntity>> getProviderServices(String serviceProviderId);
+  Future<List<ServiceEntity>> getProviderServices();
   Future<void> deleteProviderService(String serviceId);
-  Future<List<TeamMemberEntity>> getTeamList(String serviceProviderId);
+  Future<List<TeamMemberEntity>> getTeamList();
   Future<void> deleteTeamMember(String teamMemberId);
   Future<void> addAvailability(AddAvailabilityDto dto);
-  Future<AvailabilityEntity> getAvailability(String ownerId);
+  Future<AvailabilityEntity?> getAvailability();
 }

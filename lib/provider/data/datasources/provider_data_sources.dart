@@ -19,6 +19,7 @@ class ProviderDataSources {
         ProviderApiEndPoints.providerProfile,
         data: data,
       );
+
       return response;
     } on DioException catch (e) {
       throw Exception("Failed to create provider profile: ${e.message}");
@@ -28,10 +29,10 @@ class ProviderDataSources {
   }
 
   // create business details
-  Future<Response> createBusinessDetails(FormData formData, String id) async {
+  Future<Response> createBusinessDetails(FormData formData) async {
     try {
       final response = await dio.patch(
-        "${ProviderApiEndPoints.businessDetails}/$id",
+        ProviderApiEndPoints.businessDetails,
         data: formData,
         options: Options(contentType: 'multipart/form-data'),
       );
@@ -44,10 +45,10 @@ class ProviderDataSources {
   }
 
   // banner image upload
-  Future<Response> createBannerImage(FormData formData, String id) async {
+  Future<Response> createBannerImage(FormData formData) async {
     try {
       final response = await dio.patch(
-        "${ProviderApiEndPoints.businessDetails}/$id/banner-image",
+        ProviderApiEndPoints.banner,
         data: formData,
         options: Options(contentType: 'multipart/form-data'),
       );
@@ -61,11 +62,9 @@ class ProviderDataSources {
 
   // get sub category for services for add service with the link or sub category
 
-  Future<List<SubCategoryModel>> getSubCategories(String categoryId) async {
+  Future<List<SubCategoryModel>> getSubCategories() async {
     try {
-      final response = await dio.get(
-        "${ProviderApiEndPoints.getSubCategories}/$categoryId",
-      );
+      final response = await dio.get(ProviderApiEndPoints.getSubCategories);
 
       final List data = response.data['data'];
       return data.map((json) => SubCategoryModel.fromJson(json)).toList();
@@ -91,14 +90,10 @@ class ProviderDataSources {
     }
   }
 
-  // get all services by provider id
-  Future<List<ServiceModel>> getProviderServices(
-    String serviceProviderId,
-  ) async {
+  // get all services by provider id through token
+  Future<List<ServiceModel>> getProviderServices() async {
     try {
-      final response = await dio.get(
-        "${ProviderApiEndPoints.addService}/$serviceProviderId",
-      );
+      final response = await dio.get(ProviderApiEndPoints.addService);
       final List data = response.data['data'];
       return data.map((json) => ServiceModel.fromJson(json)).toList();
     } on DioException catch (e) {
@@ -123,11 +118,9 @@ class ProviderDataSources {
   }
 
   // get all team member of srevice providers
-  Future<List<TeamMemberModel>> getTeamList(String serviceProviderId) async {
+  Future<List<TeamMemberModel>> getTeamList() async {
     try {
-      final response = await dio.get(
-        "${ProviderApiEndPoints.team}/$serviceProviderId",
-      );
+      final response = await dio.get(ProviderApiEndPoints.teamList);
       final List data = response.data['data'];
       return data.map((json) => TeamMemberModel.fromJson(json)).toList();
     } on DioException catch (e) {
@@ -167,11 +160,14 @@ class ProviderDataSources {
   }
 
   // get availability
-  Future<AvailabilityModel> getAvailability(String ownerId) async {
+  Future<AvailabilityModel?> getAvailability() async {
     try {
-      final response = await dio.get(
-        "${ProviderApiEndPoints.availability}/$ownerId",
-      );
+      final response = await dio.get(ProviderApiEndPoints.availability);
+
+      if (response.data['success'] == false) {
+        return null;
+      }
+
       return AvailabilityModel.fromJson(response.data['data']);
     } on DioException catch (e) {
       throw Exception("Failed to fetch availability: ${e.message}");

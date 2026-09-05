@@ -4,11 +4,9 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:go_router/go_router.dart';
 import 'package:mobile/core/injection/injection_container.dart';
 import 'package:mobile/core/navigation/circle_button.dart';
 import 'package:mobile/core/themes/app_input_theme.dart';
-import 'package:mobile/routes/provider_routes/provider_routes_constants.dart';
 import 'package:mobile/shared/bloc/blocimpl/authbloc.dart';
 import 'package:mobile/shared/bloc/event/auth_event.dart';
 import 'package:mobile/shared/bloc/state/auth_state.dart';
@@ -109,7 +107,6 @@ class _OtpScreenState extends State<OtpScreen> {
             message: "Verification Successfully",
             type: FlushbarType.success,
           );
-          context.push(ProviderRoutesConstants.serviceCategoryScreen);
         }
         if (state is AuthError) {
           showFlushbar(

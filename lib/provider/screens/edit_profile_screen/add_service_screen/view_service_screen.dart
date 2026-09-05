@@ -15,14 +15,10 @@ class ViewServiceScreen extends StatefulWidget {
 }
 
 class _ViewServiceScreenState extends State<ViewServiceScreen> {
-  static const _serviceProviderId = '6a1e6abbb5759b02bac59cc1';
-
   @override
   void initState() {
     super.initState();
-    context.read<ProviderBloc>().add(
-      FetchProviderServicesEvent(serviceProviderId: _serviceProviderId),
-    );
+    context.read<ProviderBloc>().add(FetchProviderServicesEvent());
   }
 
   @override
@@ -119,9 +115,7 @@ class _ViewServiceScreenState extends State<ViewServiceScreen> {
                       GestureDetector(
                         onTap: () {
                           context.read<ProviderBloc>().add(
-                            FetchProviderServicesEvent(
-                              serviceProviderId: _serviceProviderId,
-                            ),
+                            FetchProviderServicesEvent(),
                           );
                         },
                         child: Container(

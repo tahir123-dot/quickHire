@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mobile/components/category/filter_category/category_list.dart';
+import 'package:mobile/user/bloc/blocimpl/provider_list_bloc.dart';
+import 'package:mobile/user/bloc/event/provider_list_event.dart';
 import 'package:mobile/user/data/model/category_model.dart';
 
 class CategorySection extends StatefulWidget {
@@ -24,8 +27,9 @@ class _CategorySectionState extends State<CategorySection> {
         padding: EdgeInsets.symmetric(horizontal: 20.w),
         itemCount: widget.categories.length,
         itemBuilder: (context, index) {
-          final category = widget.categories[index]; // ✅ widget. lagaya
+          final category = widget.categories[index]; // widget. lagaya
           return CategoryList(
+            id: category.id,
             imageUrl: category.categoryImage,
             categoryName: category.categoryName,
             isActive: activeIndex == index,
@@ -33,6 +37,10 @@ class _CategorySectionState extends State<CategorySection> {
               setState(() {
                 activeIndex = index;
               });
+
+              context.read<ProviderListBloc>().add(
+                FetchProvidersHomeEvent(categoryId: category.id),
+              );
             },
           );
         },

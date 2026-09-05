@@ -13,7 +13,7 @@ class ErrorScreen extends StatelessWidget {
           Center(child: Text('Page not Found not')),
           ElevatedButton(
             onPressed: () {
-              context.go(UserRoutesConstants.home);
+              context.go(UserRoutesConstants.homePath);
             },
             child: Text('Go To Home Page'),
           ),

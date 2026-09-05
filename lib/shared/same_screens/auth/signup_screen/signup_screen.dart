@@ -99,7 +99,7 @@ class _SignupScreenState extends State<SignupScreen> {
 
                   SizedBox(height: 19.h),
 
-                  // 🟢 EMAIL
+                  // EMAIL
                   TextFormField(
                     controller: emailController,
                     decoration: AppInputTheme.withIcon(
@@ -125,7 +125,7 @@ class _SignupScreenState extends State<SignupScreen> {
 
                   SizedBox(height: 19.h),
 
-                  // 🟢 PASSWORD
+                  // PASSWORD
                   TextFormField(
                     controller: passwordController,
                     obscureText: true,

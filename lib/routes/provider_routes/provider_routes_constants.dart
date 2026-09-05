@@ -1,48 +1,38 @@
 class ProviderRoutesConstants {
   static const String provider = "/provider";
 
-  static const String serviceCategoryScreen = "/provider/serviceCategoryScreen";
-
-  // for check stats
+  // relative segments — sirf GoRoute(path: ...) definitions ke liye
   static const String dashboard = "dashboard";
-
-  // list of bookings today
   static const String booking = "booking";
-
-  // for subscriptoin plan
   static const String boost = "boost";
-
-  // for profile edit
   static const String editProfile = "editProfile";
+  static const String serviceCategoryScreen = "serviceCategoryScreen";
+  static const String businessDetails = "editProfile/businessDetails";
+  static const String banner = "editProfile/banner";
+  static const String payment = "editProfile/payment";
+  static const String customerReview = "editProfile/customerReview";
+  static const String addTeam = "editProfile/addTeam";
+  static const String teamList = "teamList";
+  static const String addServiceScreen = "editProfile/addServiceScreen";
+  static const String viewServiceScreen = "viewServiceScreen";
+  static const String addAvailability = "editProfile/addAvailability";
 
-  // this route use to add business details
-  static const String businessDetails = "/provider/editProfile/businessDetails";
+  // full paths — sirf navigation calls (push/go) ke liye
+  static String get editProfilePath => '$provider/$editProfile';
+  static String get businessDetailsPath => '$provider/$businessDetails';
+  static String get bannerPath => '$provider/$banner';
+  static String get paymentPath => '$provider/$payment';
+  static String get customerReviewPath => '$provider/$customerReview';
+  static String get addTeamPath => '$provider/$addTeam';
+  static String get teamListPath => '$provider/$addTeam/$teamList';
+  static String get addServiceScreenPath => '$provider/$addServiceScreen';
+  static String get viewServiceScreenPath =>
+      '$provider/$addServiceScreen/$viewServiceScreen';
+  static String get addAvailabilityPath => '$provider/$addAvailability';
+  static String get serviceCategoryScreenPath =>
+      '$provider/$serviceCategoryScreen';
 
-  // this routes use to add cover picture
-  static const String banner = "/provider/editProfile/banner";
-
-  // this routes use to add payment method
-  static const String payment = "/provider/editProfile/payment";
-
-  // this route use to see customer reveiws
-  static const String customerReview = "/provider/editProfile/customerReview";
-
-  // this routes ue to addd team
-  static const String addTeam = "/provider/editProfile/addTeam";
-  // this route use to list team
-  static const String teamList = "/provider/editProfile/addTeam/teamList";
-
-  // this routes use to add service
-  static const String addServiceScreen =
-      "/provider/editProfile/addServiceScreen";
-
-  // this routes use to add service
-  static const String ViewServiceScreen =
-      "/provider/editProfile/addServiceScreen/viewServiceScreen";
-
-  // this routes use to add shedule
-  static const String addAvailability = "/provider/editProfile/addAvailability";
-
+  // standalone top-level routes (already full path — /provider ke bahar hain route file mein)
   static const String providerAddCampaign = "/providerAddCampaign";
   static const String providerAdsPlan = "/providerAdsPlan";
   static const String providerProfile = "/providerProfile";

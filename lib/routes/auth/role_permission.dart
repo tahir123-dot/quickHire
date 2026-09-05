@@ -6,5 +6,19 @@ import 'package:mobile/routes/user_routes/user_routes_constants.dart';
 final rolePermissions = {
   UserRole.customer: [UserRoutesConstants.customer],
   UserRole.serviceProvider: [ProviderRoutesConstants.provider],
-  UserRole.member: ProfessionalRoutesConstants.all,
+  UserRole.member: [ProfessionalRoutesConstants.professional],
 };
+
+bool isPathAllowedForRole(UserRole role, String path) {
+  final allowedPrefixes = rolePermissions[role];
+
+  if (allowedPrefixes == null) return false;
+
+  for (final prefix in allowedPrefixes) {
+    if (path.startsWith(prefix)) {
+      return true;
+    }
+  }
+
+  return false;
+}

@@ -16,30 +16,27 @@ class ServiceProviderRepositoryImpl implements ServiceProviderRepository {
   ServiceProviderRepositoryImpl(this.dataSource);
 
   @override
-  Future<void> createProviderBusinessDetails(
-    UpdateBusinessDetailsDto dto,
-  ) async {
-    const serviceProviderId = '6a1e6abbb5759b02bac59cc1';
-
-    final formData = await dto.toFormData();
-    await dataSource.createBusinessDetails(formData, serviceProviderId);
+  Future<void> createProviderProfile(InitServiceProviderDto dto) async {
+    await dataSource.createProviderProfile(dto.toJson());
   }
 
   @override
-  Future<void> createProviderProfile(InitServiceProviderDto dto) {
-    throw UnimplementedError();
+  Future<void> createProviderBusinessDetails(
+    UpdateBusinessDetailsDto dto,
+  ) async {
+    final formData = await dto.toFormData();
+    await dataSource.createBusinessDetails(formData);
   }
 
   @override
   Future<void> createProviderBannerImage(UpdateBannerDto dto) async {
-    const serviceProviderId = '6a1e6abbb5759b02bac59cc1';
     final formData = await dto.toFormData();
-    await dataSource.createBannerImage(formData, serviceProviderId);
+    await dataSource.createBannerImage(formData);
   }
 
   @override
-  Future<List<SubCategoryEntity>> getSubCategories(String categoryId) async {
-    final models = await dataSource.getSubCategories(categoryId);
+  Future<List<SubCategoryEntity>> getSubCategories() async {
+    final models = await dataSource.getSubCategories();
     return SubCategoryMapper.toEntityList(models); // Model → Entity
   }
 
@@ -49,10 +46,8 @@ class ServiceProviderRepositoryImpl implements ServiceProviderRepository {
   }
 
   @override
-  Future<List<ServiceEntity>> getProviderServices(
-    String serviceProviderId,
-  ) async {
-    final models = await dataSource.getProviderServices(serviceProviderId);
+  Future<List<ServiceEntity>> getProviderServices() async {
+    final models = await dataSource.getProviderServices();
     return ServiceMapper.toEntityList(models);
   }
 
@@ -62,8 +57,8 @@ class ServiceProviderRepositoryImpl implements ServiceProviderRepository {
   }
 
   @override
-  Future<List<TeamMemberEntity>> getTeamList(String serviceProviderId) async {
-    final models = await dataSource.getTeamList(serviceProviderId);
+  Future<List<TeamMemberEntity>> getTeamList() async {
+    final models = await dataSource.getTeamList();
     return TeamMemberMapper.toEntityList(models);
   }
 
@@ -78,8 +73,9 @@ class ServiceProviderRepositoryImpl implements ServiceProviderRepository {
   }
 
   @override
-  Future<AvailabilityEntity> getAvailability(String ownerId) async {
-    final model = await dataSource.getAvailability(ownerId);
+  Future<AvailabilityEntity?> getAvailability() async {
+    final model = await dataSource.getAvailability();
+    if (model == null) return null;
     return AvailabilityMapper.toEntity(model);
   }
 }

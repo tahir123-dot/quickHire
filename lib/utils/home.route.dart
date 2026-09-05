@@ -6,10 +6,10 @@ import 'package:mobile/routes/user_routes/user_routes_constants.dart';
 String getHomeRoute(UserRole role) {
   switch (role) {
     case UserRole.customer:
-      return UserRoutesConstants.mainScreen;
+      return UserRoutesConstants.customer;
     case UserRole.serviceProvider:
-      return ProviderRoutesConstants.provider;
+      return '${ProviderRoutesConstants.provider}/${ProviderRoutesConstants.serviceCategoryScreen}';
     case UserRole.member:
-      return ProfessionalRoutesConstants.professionalMainScreen;
+      return '${ProfessionalRoutesConstants.professional}/${ProfessionalRoutesConstants.mainScreen}';
   }
 }

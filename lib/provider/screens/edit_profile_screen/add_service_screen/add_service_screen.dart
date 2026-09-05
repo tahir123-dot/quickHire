@@ -19,8 +19,6 @@ class AddServiceScreen extends StatefulWidget {
 }
 
 class _AddServiceScreenState extends State<AddServiceScreen> {
-  static const _categoryId = '69e393ea536653b9bd085a54';
-
   SubCategoryEntity? _selectedSubCategory;
   List<SubCategoryEntity> _subCategories = [];
   final _serviceNameController = TextEditingController();
@@ -30,9 +28,7 @@ class _AddServiceScreenState extends State<AddServiceScreen> {
   @override
   void initState() {
     super.initState();
-    context.read<ProviderBloc>().add(
-      FetchSubCategoriesEvent(categoryId: _categoryId),
-    );
+    context.read<ProviderBloc>().add(FetchSubCategoriesEvent());
   }
 
   @override
@@ -89,9 +85,7 @@ class _AddServiceScreenState extends State<AddServiceScreen> {
   }
 
   void _retryFetch(BuildContext context) {
-    context.read<ProviderBloc>().add(
-      FetchSubCategoriesEvent(categoryId: _categoryId),
-    );
+    context.read<ProviderBloc>().add(FetchSubCategoriesEvent());
   }
 
   @override
@@ -106,9 +100,7 @@ class _AddServiceScreenState extends State<AddServiceScreen> {
             context,
           ).showSnackBar(SnackBar(content: Text(state.message)));
           _clearFields();
-          context.read<ProviderBloc>().add(
-            FetchSubCategoriesEvent(categoryId: _categoryId),
-          );
+          context.read<ProviderBloc>().add(FetchSubCategoriesEvent());
         }
         if (state is ProviderError) {
           ScaffoldMessenger.of(context).showSnackBar(
@@ -383,7 +375,7 @@ class _AddServiceScreenState extends State<AddServiceScreen> {
                           // View Services - outlined style
                           OutlinedButton.icon(
                             onPressed: () => context.push(
-                              ProviderRoutesConstants.ViewServiceScreen,
+                              ProviderRoutesConstants.viewServiceScreenPath,
                             ),
                             icon: const Icon(
                               Icons.view_agenda_outlined,

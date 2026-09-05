@@ -6,10 +6,9 @@ abstract class ProviderProfileEvent {}
 
 // create provider profile
 class CreateProviderProfileEvent extends ProviderProfileEvent {
-  final String userId;
   final String categoryId;
 
-  CreateProviderProfileEvent({required this.userId, required this.categoryId});
+  CreateProviderProfileEvent({required this.categoryId});
 }
 
 // create provider profile business details
@@ -35,10 +34,7 @@ class ProviderBannerImageEvent extends ProviderProfileEvent {
 }
 
 // get sub categoires
-class FetchSubCategoriesEvent extends ProviderProfileEvent {
-  final String categoryId;
-  FetchSubCategoriesEvent({required this.categoryId});
-}
+class FetchSubCategoriesEvent extends ProviderProfileEvent {}
 
 // add service
 class AddServiceEvent extends ProviderProfileEvent {
@@ -56,20 +52,14 @@ class AddServiceEvent extends ProviderProfileEvent {
 }
 
 // get provider services
-class FetchProviderServicesEvent extends ProviderProfileEvent {
-  final String serviceProviderId;
-  FetchProviderServicesEvent({required this.serviceProviderId});
-}
+class FetchProviderServicesEvent extends ProviderProfileEvent {}
 
 class DeleteServiceEvent extends ProviderProfileEvent {
   final String serviceId;
   DeleteServiceEvent({required this.serviceId});
 }
 
-class FetchTeamListEvent extends ProviderProfileEvent {
-  final String serviceProviderId;
-  FetchTeamListEvent({required this.serviceProviderId});
-}
+class FetchTeamListEvent extends ProviderProfileEvent {}
 
 // event
 class DeleteTeamMemberEvent extends ProviderProfileEvent {
@@ -84,7 +74,4 @@ class AddAvailabilityEvent extends ProviderProfileEvent {
 }
 
 // fetch availability for service provider
-class FetchAvailabilityEvent extends ProviderProfileEvent {
-  final String ownerId;
-  FetchAvailabilityEvent({required this.ownerId});
-}
+class FetchAvailabilityEvent extends ProviderProfileEvent {}

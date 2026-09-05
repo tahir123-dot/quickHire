@@ -6,15 +6,11 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 
 class InitServiceProviderDto {
-  final String userId;
   final String categoryId;
 
-  InitServiceProviderDto({required this.userId, required this.categoryId});
+  InitServiceProviderDto({required this.categoryId});
 
-  Map<String, dynamic> toJson() => {
-    'userId': userId,
-    'category_id': categoryId,
-  };
+  Map<String, dynamic> toJson() => {'category_id': categoryId};
 }
 
 // Step 2 — Business Details
@@ -68,14 +64,12 @@ class UpdateBannerDto {
 
 // Step 4 — Add Service
 class AddServiceDto {
-  final String serviceProviderId;
   final String categoryServiceId;
   final String serviceName;
   final int serviceDuration;
   final double servicePrice;
 
   AddServiceDto({
-    required this.serviceProviderId,
     required this.categoryServiceId,
     required this.serviceName,
     required this.serviceDuration,
@@ -83,7 +77,6 @@ class AddServiceDto {
   });
 
   Map<String, dynamic> toJson() => {
-    'service_provider_Id': serviceProviderId,
     'category_serviceId': categoryServiceId,
     'service_name': serviceName,
     'service_duration': serviceDuration,
@@ -92,8 +85,6 @@ class AddServiceDto {
 }
 
 class AddAvailabilityDto {
-  final String ownerId;
-  final String ownerType;
   final List<String> days;
   final String startTime;
   final String endTime;
@@ -102,8 +93,6 @@ class AddAvailabilityDto {
   final String? breakEnd;
 
   AddAvailabilityDto({
-    required this.ownerId,
-    required this.ownerType,
     required this.days,
     required this.startTime,
     required this.endTime,
@@ -113,8 +102,6 @@ class AddAvailabilityDto {
   });
 
   Map<String, dynamic> toJson() => {
-    'owner_id': ownerId,
-    'ownerType': ownerType,
     'days': days,
     'start_time': startTime,
     'end_time': endTime,

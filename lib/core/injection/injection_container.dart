@@ -11,9 +11,12 @@ import 'package:mobile/shared/data/datasources/auth_data_sources.dart';
 import 'package:mobile/shared/data/repositories/auth_repository.dart';
 import 'package:mobile/shared/data/repositories/auth_repository_impl.dart';
 import 'package:mobile/user/bloc/blocimpl/category_bloc.dart';
+import 'package:mobile/user/bloc/blocimpl/provider_list_bloc.dart';
 import 'package:mobile/user/data/datasources/user_data_sources.dart';
 import 'package:mobile/user/data/repositories/main_categories_repository.dart';
 import 'package:mobile/user/data/repositories/main_categories_repository_impl.dart';
+import 'package:mobile/user/data/repositories/provider_list/provider_list_repository.dart';
+import 'package:mobile/user/data/repositories/provider_list/provider_list_repository_impl.dart';
 import 'package:mobile/utils/storage.dart';
 
 final getIt = GetIt.instance;
@@ -22,16 +25,20 @@ void setup() {
   // =========================
   // 1. EXTERNAL (3rd party libs)
   // =========================
-  getIt.registerLazySingleton<Dio>(() => DioClient.getDio());
-
   getIt.registerLazySingleton<FlutterSecureStorage>(
     () => FlutterSecureStorage(),
   );
 
   // =========================
   // 2. CORE SERVICES
+  // (StorageService pehle — kyunke Dio ko iski zaroorat hai token ke liye)
   // =========================
   getIt.registerLazySingleton<IStorageService>(() => StorageService(getIt()));
+
+  // Ab Dio ko yahan register karo — IStorageService already ban chuka hai
+  getIt.registerLazySingleton<Dio>(
+    () => DioClient.getDio(getIt<IStorageService>()),
+  );
 
   // =========================
   // 3. DATA SOURCES
@@ -68,9 +75,19 @@ void setup() {
     () => MainCategoriesRepositoryImpl(getIt<UserDataSources>()),
   );
 
+  // repository for provider list
+  getIt.registerLazySingleton<ProviderListRepository>(
+    () => ProviderListRepositoryImpl(getIt<UserDataSources>()),
+  );
+
   // bloc
   getIt.registerFactory<CategoryBloc>(
     () => CategoryBloc(getIt<MainCategoriesRepository>()),
+  );
+
+  // bloc for provider list
+  getIt.registerFactory<ProviderListBloc>(
+    () => ProviderListBloc(getIt<ProviderListRepository>()),
   );
 
   // provider side registery

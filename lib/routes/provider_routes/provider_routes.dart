@@ -6,10 +6,11 @@ import 'package:mobile/routes/provider_routes/provider_routes_constants.dart';
 class ProviderRoutes {
   static List<RouteBase> routes = [
     GoRoute(
-      path: '/provider',
+      path: ProviderRoutesConstants.provider,
       redirect: (context, state) {
-        if (state.fullPath == '/provider' || state.fullPath == '/provider/') {
-          return '/provider/dashboard';
+        if (state.fullPath == ProviderRoutesConstants.provider ||
+            state.fullPath == '${ProviderRoutesConstants.provider}/') {
+          return '${ProviderRoutesConstants.provider}/${ProviderRoutesConstants.dashboard}';
         }
         return null;
       },
@@ -23,7 +24,7 @@ class ProviderRoutes {
             StatefulShellBranch(
               routes: [
                 GoRoute(
-                  path: ProviderRoutesConstants.dashboard, // "booking"
+                  path: ProviderRoutesConstants.dashboard,
                   builder: (context, state) => DashboardScreen(),
                 ),
               ],
@@ -41,7 +42,7 @@ class ProviderRoutes {
             StatefulShellBranch(
               routes: [
                 GoRoute(
-                  path: ProviderRoutesConstants.boost, // "chat"
+                  path: ProviderRoutesConstants.boost,
                   builder: (context, state) => BoostProfileScreen(),
                 ),
               ],
@@ -49,7 +50,7 @@ class ProviderRoutes {
             StatefulShellBranch(
               routes: [
                 GoRoute(
-                  path: ProviderRoutesConstants.editProfile, // "chat"
+                  path: ProviderRoutesConstants.editProfile,
                   builder: (context, state) => EditProfileScreen(),
                 ),
               ],
@@ -58,50 +59,50 @@ class ProviderRoutes {
         ),
 
         GoRoute(
-          path: 'editProfile/businessDetails',
+          path: ProviderRoutesConstants.businessDetails,
           builder: (context, state) => BusinessDetailsScreen(),
         ),
 
         GoRoute(
-          path: 'editProfile/banner',
+          path: ProviderRoutesConstants.banner,
           builder: (context, state) => BusinessBannerScreen(),
         ),
 
         GoRoute(
-          path: 'serviceCategoryScreen', // "chat"
+          path: ProviderRoutesConstants.serviceCategoryScreen,
           builder: (context, state) => ServicesCategoryScreen(),
         ),
 
         GoRoute(
-          path: 'editProfile/payment',
+          path: ProviderRoutesConstants.payment,
           builder: (context, state) => ProviderPayment(),
         ),
         GoRoute(
-          path: 'editProfile/customerReview',
+          path: ProviderRoutesConstants.customerReview,
           builder: (context, state) => CustomerReviewsScreen(),
         ),
         GoRoute(
-          path: 'editProfile/addTeam',
+          path: ProviderRoutesConstants.addTeam,
           builder: (context, state) => AddTeamMemberScreen(),
           routes: [
             GoRoute(
-              path: 'teamList',
+              path: ProviderRoutesConstants.teamList,
               builder: (context, state) => TeamListScreen(),
             ),
           ],
         ),
         GoRoute(
-          path: 'editProfile/addServiceScreen', // "chat"
+          path: ProviderRoutesConstants.addServiceScreen,
           builder: (context, state) => AddServiceScreen(),
           routes: [
             GoRoute(
-              path: 'viewServiceScreen',
+              path: ProviderRoutesConstants.viewServiceScreen,
               builder: (context, state) => ViewServiceScreen(),
             ),
           ],
         ),
         GoRoute(
-          path: 'editProfile/addAvailability', // "chat"
+          path: ProviderRoutesConstants.addAvailability,
           builder: (context, state) => AddAvailabilityScreen(),
         ),
       ],

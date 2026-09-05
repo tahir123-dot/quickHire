@@ -16,10 +16,9 @@ class _NotificationScreenState extends State<NotificationScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        automaticallyImplyLeading: false,
         backgroundColor: AppColors.whiteColor,
-
-        title: TopBarIconWithCenterText(pageName: 'Notification'),
+        surfaceTintColor: AppColors.transparentBackground,
+        title: const Text('Notification'),
       ),
       body: SafeArea(
         child: ListView.separated(

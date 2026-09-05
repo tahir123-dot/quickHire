@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:go_router/go_router.dart';
 import 'package:mobile/core/themes/colors.dart';
+import 'package:mobile/provider/bloc/blocimp/provider_bloc.dart';
+import 'package:mobile/provider/bloc/event/provider_event.dart';
 
 class ServiceCategory extends StatelessWidget {
+  final String id;
   final String title;
   final String imageUrl;
   final String route;
 
   const ServiceCategory({
     super.key,
+    required this.id,
     required this.title,
     required this.imageUrl,
     required this.route,
@@ -21,7 +25,9 @@ class ServiceCategory extends StatelessWidget {
     return InkWell(
       borderRadius: BorderRadius.circular(12.r),
       onTap: () {
-        context.go(route);
+        context.read<ProviderBloc>().add(
+          CreateProviderProfileEvent(categoryId: id),
+        );
       },
       child: Container(
         width: 160.w,

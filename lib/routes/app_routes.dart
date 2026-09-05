@@ -4,12 +4,11 @@ import 'package:mobile/routes/auth/go_refresh_stream.dart';
 import 'package:mobile/routes/auth/role_permission.dart';
 import 'package:mobile/routes/professional_routes/professional_routes.dart';
 import 'package:mobile/routes/provider_routes/provider_routes.dart';
-import 'package:mobile/routes/provider_routes/provider_routes_constants.dart';
 import 'package:mobile/routes/shared_routes/public_routes.dart';
 import 'package:mobile/routes/shared_routes/public_routes_constants.dart';
 import 'package:mobile/routes/shared_routes/shared_routes.dart';
+import 'package:mobile/routes/shared_routes/shared_routes_constant.dart';
 import 'package:mobile/routes/user_routes/user_routes.dart';
-import 'package:mobile/routes/user_routes/user_routes_constants.dart';
 import 'package:mobile/shared/bloc/blocimpl/authbloc.dart';
 import 'package:mobile/shared/bloc/state/auth_state.dart';
 
@@ -23,22 +22,23 @@ class AppRoutes {
 
   late final GoRouter router = GoRouter(
     initialLocation:
-        ProviderRoutesConstants.provider, //UserRoutesConstants.customer,
-    //PublicRoutesConstants.splashScreen,
-    // refreshListenable: GoRouterRefreshStream(authBloc.stream),
+        //ProviderRoutesConstants.provider, //UserRoutesConstants.customer,
+        PublicRoutesConstants.splashScreen,
+    refreshListenable: GoRouterRefreshStream(authBloc.stream),
     redirect: (context, state) {
-      final path = state.matchedLocation;
-
-      debugPrint(" Current Route: $path");
-
-      /* final authState = authBloc.state;
       final currentPath = state.matchedLocation;
+
+      debugPrint(" Current Route: $currentPath");
+
+      final authState = authBloc.state;
 
       final isPublicPath = PublicRoutesConstants.publicPaths.contains(
         currentPath,
       );
 
-      if (authState is AuthLoading || authState is AuthInitial) {
+      final isSharedPath = SharedRoutesConstant.all.contains(currentPath);
+
+      if (authState is AuthInitial) {
         return PublicRoutesConstants.splashScreen;
       }
 
@@ -51,23 +51,22 @@ class AppRoutes {
       if (authState is Authenticated) {
         final role = authState.role;
 
+        // authenticated user public/auth screen pe jaane ki koshish kare -> home bhej do
         if (isPublicPath) {
           return getHomeRoute(role);
         }
 
-        final allowedPrefixes = rolePermissions[role] ?? [];
-        final isAllowed = allowedPrefixes.any(
-          (prefix) =>
-              currentPath.startsWith('/$prefix') ||
-              currentPath.startsWith(prefix),
-        );
+        // shared screens sab authenticated roles ke liye allowed hain
+        if (isSharedPath) {
+          return null;
+        }
 
-        if (!isAllowed) {
-          // Wrong role for this route — send them to their home
+        // role-check: kya ye path is role ka hai?
+        if (!isPathAllowedForRole(role, currentPath)) {
           return getHomeRoute(role);
         }
       }
-      */
+
       return null;
     },
 

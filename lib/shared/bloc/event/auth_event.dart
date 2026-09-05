@@ -4,6 +4,10 @@ abstract class AuthEvent {}
 
 class CheckAuthEvent extends AuthEvent {}
 
+// logout event
+
+class LogoutEvent extends AuthEvent {}
+
 // login event
 class LoginEvent extends AuthEvent {
   final String email;

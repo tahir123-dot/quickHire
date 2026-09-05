@@ -8,6 +8,7 @@ class ProviderBloc extends Bloc<ProviderProfileEvent, ProviderState> {
   final ServiceProviderRepository repository;
 
   ProviderBloc(this.repository) : super(ProviderInitial()) {
+    on<CreateProviderProfileEvent>(_onCreateProviderProfile);
     on<ProviderBusinessDetailsEvent>(_onBusinessDetails);
     on<ProviderBannerImageEvent>(_onBannerImage);
     on<FetchSubCategoriesEvent>(_onFetchSubCategories);
@@ -18,6 +19,22 @@ class ProviderBloc extends Bloc<ProviderProfileEvent, ProviderState> {
     on<DeleteTeamMemberEvent>(_onDeleteTeamMember);
     on<AddAvailabilityEvent>(_onAddAvailability);
     on<FetchAvailabilityEvent>(_onFetchAvailability);
+  }
+
+  // create provider profile
+  Future<void> _onCreateProviderProfile(
+    CreateProviderProfileEvent event,
+    Emitter<ProviderState> emit,
+  ) async {
+    emit(ProviderLoading());
+    try {
+      final dto = InitServiceProviderDto(categoryId: event.categoryId);
+
+      await repository.createProviderProfile(dto);
+      emit(ProviderSuccess(message: 'Profile created successfully!'));
+    } catch (e) {
+      emit(ProviderError(errorMessage: e.toString()));
+    }
   }
 
   // create business details
@@ -35,6 +52,7 @@ class ProviderBloc extends Bloc<ProviderProfileEvent, ProviderState> {
       );
 
       await repository.createProviderBusinessDetails(dto);
+
       emit(ProviderSuccess(message: 'Business details saved!'));
     } catch (e) {
       emit(ProviderError(errorMessage: e.toString()));
@@ -63,7 +81,7 @@ class ProviderBloc extends Bloc<ProviderProfileEvent, ProviderState> {
   ) async {
     emit(ProviderLoading());
     try {
-      final subCategories = await repository.getSubCategories(event.categoryId);
+      final subCategories = await repository.getSubCategories();
       emit(SubCategoriesLoaded(subCategories: subCategories));
     } catch (e) {
       emit(ProviderError(errorMessage: e.toString()));
@@ -78,7 +96,6 @@ class ProviderBloc extends Bloc<ProviderProfileEvent, ProviderState> {
     emit(ProviderLoading());
     try {
       final dto = AddServiceDto(
-        serviceProviderId: '6a1e6abbb5759b02bac59cc1',
         categoryServiceId: event.categoryServiceId,
         serviceName: event.serviceName,
         serviceDuration: event.serviceDuration,
@@ -99,9 +116,7 @@ class ProviderBloc extends Bloc<ProviderProfileEvent, ProviderState> {
   ) async {
     emit(ProviderLoading());
     try {
-      final services = await repository.getProviderServices(
-        event.serviceProviderId,
-      );
+      final services = await repository.getProviderServices();
       emit(ServicesLoaded(services: services));
     } catch (e) {
       emit(ProviderError(errorMessage: e.toString()));
@@ -118,9 +133,7 @@ class ProviderBloc extends Bloc<ProviderProfileEvent, ProviderState> {
       await repository.deleteProviderService(event.serviceId);
 
       // delete ke baad list reload karo
-      final services = await repository.getProviderServices(
-        '6a1e6abbb5759b02bac59cc1',
-      );
+      final services = await repository.getProviderServices();
       emit(ServicesLoaded(services: services));
     } catch (e) {
       emit(ProviderError(errorMessage: e.toString()));
@@ -134,7 +147,7 @@ class ProviderBloc extends Bloc<ProviderProfileEvent, ProviderState> {
   ) async {
     emit(ProviderLoading());
     try {
-      final members = await repository.getTeamList(event.serviceProviderId);
+      final members = await repository.getTeamList();
       emit(TeamListLoaded(members: members));
     } catch (e) {
       emit(ProviderError(errorMessage: e.toString()));
@@ -150,7 +163,7 @@ class ProviderBloc extends Bloc<ProviderProfileEvent, ProviderState> {
     try {
       await repository.deleteTeamMember(event.teamMemberId);
 
-      final members = await repository.getTeamList('6a1e6abbb5759b02bac59cc1');
+      final members = await repository.getTeamList();
       emit(TeamListLoaded(members: members));
     } catch (e) {
       emit(ProviderError(errorMessage: e.toString()));
@@ -176,8 +189,13 @@ class ProviderBloc extends Bloc<ProviderProfileEvent, ProviderState> {
   ) async {
     emit(ProviderLoading());
     try {
-      final availability = await repository.getAvailability(event.ownerId);
-      emit(AvailabilityLoaded(availability: availability));
+      final availability = await repository.getAvailability();
+
+      if (availability == null) {
+        emit(AvailabilityNotSet());
+      } else {
+        emit(AvailabilityLoaded(availability: availability));
+      }
     } catch (e) {
       emit(ProviderError(errorMessage: e.toString()));
     }

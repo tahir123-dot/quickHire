@@ -6,8 +6,8 @@ import 'package:mobile/core/navigation/circle_button.dart';
 import 'package:mobile/core/themes/app_input_theme.dart';
 import 'package:mobile/core/themes/app_text_theme.dart';
 import 'package:mobile/routes/shared_routes/public_routes_constants.dart';
-import 'package:mobile/routes/user_routes/user_routes_constants.dart';
 import 'package:mobile/shared/bloc/blocimpl/authbloc.dart';
+import 'package:mobile/shared/bloc/event/auth_event.dart';
 import 'package:mobile/shared/bloc/state/auth_state.dart';
 import '../../../../core/themes/app_button_theme.dart';
 import '../../../../core/themes/colors.dart';
@@ -116,29 +116,56 @@ class _LoginScreenState extends State<LoginScreen> {
                 },
                 child: Text(
                   ' Forgot Password',
-                  style: TextStyle(
-                    color: AppColors.blueColor,
-                    fontSize: 15.sp, //SizeConfig.blockWidth * 4.0,
-                  ),
+                  style: TextStyle(color: AppColors.blueColor, fontSize: 15.sp),
                 ),
               ),
 
               SizedBox(height: 55.h),
 
-              AppButtonTheme.iconTextButton(
-                text: 'Continue',
-                icon: null,
-                iconColor: AppColors.whiteColor,
-                iconSize: 30,
-                gap: 30,
-                backgroundColor: AppColors.blackColor,
-                elevation: 1,
-                textColor: AppColors.whiteColor,
-                onPressed: () {
-                  context.push(UserRoutesConstants.customer);
-                  /*if (_formKey.currentState!.validate()) {
-                        context.push(UserRoutesConstants.home);
-                      }*/
+              // 🔽 SIRF YE BUTTON BlocConsumer ke andar hai — chota scope
+              BlocConsumer<AuthBloc, AuthState>(
+                listenWhen: (previous, current) {
+                  // sirf error pe listener chale
+                  return current is AuthError;
+                },
+                listener: (context, state) {
+                  if (state is AuthError) {
+                    ScaffoldMessenger.of(
+                      context,
+                    ).showSnackBar(SnackBar(content: Text(state.message)));
+                  }
+                  // Authenticated case yahan likhne ki zaroorat nahi —
+                  // AppRoutes ka redirect khud navigate kar dega
+                },
+                buildWhen: (previous, current) {
+                  // sirf loading state change pe rebuild karo
+                  return current is AuthLoading || previous is AuthLoading;
+                },
+                builder: (context, state) {
+                  final isLoading = state is AuthLoading;
+
+                  return AppButtonTheme.iconTextButton(
+                    text: isLoading ? 'Loading...' : 'Continue',
+                    icon: null,
+                    iconColor: AppColors.whiteColor,
+                    iconSize: 30,
+                    gap: 30,
+                    backgroundColor: AppColors.blackColor,
+                    elevation: 1,
+                    textColor: AppColors.whiteColor,
+                    onPressed: isLoading
+                        ? null
+                        : () {
+                            if (_formKey.currentState!.validate()) {
+                              context.read<AuthBloc>().add(
+                                LoginEvent(
+                                  emailController.text,
+                                  passwordController.text,
+                                ),
+                              );
+                            }
+                          },
+                  );
                 },
               ),
 

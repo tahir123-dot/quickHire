@@ -20,25 +20,25 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   final List<ListItemModel> businessInfoList = [
     ListItemModel(
       title: "Business details",
-      route: ProviderRoutesConstants.businessDetails,
+      route: ProviderRoutesConstants.businessDetailsPath,
     ),
-    ListItemModel(title: "Banner", route: ProviderRoutesConstants.banner),
-    ListItemModel(title: "Payment", route: ProviderRoutesConstants.payment),
+    ListItemModel(title: "Banner", route: ProviderRoutesConstants.bannerPath),
+    ListItemModel(title: "Payment", route: ProviderRoutesConstants.paymentPath),
     ListItemModel(
       title: "Reviews",
-      route: ProviderRoutesConstants.customerReview,
+      route: ProviderRoutesConstants.customerReviewPath,
     ),
   ];
 
   final List<ListItemModel> businessSetupList = [
-    ListItemModel(title: "Team", route: ProviderRoutesConstants.addTeam),
+    ListItemModel(title: "Team", route: ProviderRoutesConstants.addTeamPath),
     ListItemModel(
       title: "Services",
-      route: ProviderRoutesConstants.addServiceScreen,
+      route: ProviderRoutesConstants.addServiceScreenPath,
     ),
     ListItemModel(
       title: "Schedule",
-      route: ProviderRoutesConstants.addAvailability,
+      route: ProviderRoutesConstants.addAvailabilityPath,
     ),
     ListItemModel(title: "Location", route: SharedRoutesConstant.addressScreen),
   ];

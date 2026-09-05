@@ -17,6 +17,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
     on<LoginEvent>(_loginEvent);
     on<SignupEvent>(_signpEvent);
+    on<LogoutEvent>(_logoutEvent);
 
     on<OtpVerificationEvent>(_otpVerificationEvent);
     on<ResendOtpEvent>(_resendOtpEvent);
@@ -41,6 +42,12 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     } else {
       emit(Unauthenticated());
     }
+  }
+
+  // ================= LOGOUT =================
+  Future<void> _logoutEvent(LogoutEvent event, Emitter<AuthState> emit) async {
+    await storage.deleteToken();
+    emit(LogoutSuccess(message: "Logged out successfully"));
   }
 
   // ================= LOGIN =================
@@ -104,6 +111,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       );
 
       final token = response.response.token;
+
+      print("Token received: $token");
 
       await storage.saveToken(token);
 

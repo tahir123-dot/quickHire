@@ -55,3 +55,5 @@ class AvailabilityLoaded extends ProviderState {
   final AvailabilityEntity availability;
   AvailabilityLoaded({required this.availability});
 }
+
+class AvailabilityNotSet extends ProviderState {}

@@ -1,13 +1,19 @@
 class UserRoutesConstants {
   static const customer = "/customer";
-  static const String mainScreen = "main";
 
+  // relative segments — sirf GoRoute(path: ...) ke liye
   static const home = "home";
   static const booking = "booking";
-  static const bookingDetail = "/customer/booking/booking-detail";
   static const postjob = "postjob";
   static const profile = "profile";
 
+  // full paths — sirf navigation calls ke liye
+  static String get homePath => '$customer/$home';
+  static String get bookingPath => '$customer/$booking';
+  static String get postjobPath => '$customer/$postjob';
+  static String get profilePath => '$customer/$profile';
+
+  static const bookingDetail = "/customer/booking/booking-detail";
   static const phone = "/customer/profile/phone";
   static const payment = "/customer/profile/payment";
   static const serviceProvider = "/customer/home/service-provider";
@@ -17,6 +23,4 @@ class UserRoutesConstants {
   static const String teamSelect = "/customer/teamSelect";
   static const String calender = "/customer/calendar";
   static const String bookingPreview = "/customer/bookingPreview";
-
-  // then use payment screen for taking payment ot the users
 }

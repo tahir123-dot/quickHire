@@ -17,6 +17,7 @@ class AuthDataSources {
       final response = await dio.post(
         PublicApiEndPoints.login,
         data: dto.toJson(),
+        options: Options(extra: {"requiresAuth": false}),
       );
       print("Login response: ${response.data}");
       return VerifyOtpResponseModel.fromJson(response.data);
@@ -33,6 +34,7 @@ class AuthDataSources {
       final response = await dio.post(
         PublicApiEndPoints.signup,
         data: dto.toJson(),
+        options: Options(extra: {"requiresAuth": false}),
       );
 
       return SignupResponseModel.fromJson(response.data['response']);
@@ -49,6 +51,7 @@ class AuthDataSources {
       final response = await dio.post(
         PublicApiEndPoints.verifyOTP,
         data: dto.toJson(),
+        options: Options(extra: {"requiresAuth": false}),
       );
 
       return VerifyOtpResponseModel.fromJson(response.data);
@@ -62,7 +65,11 @@ class AuthDataSources {
   // resend otp
   Future<void> resendOtp(String email) async {
     try {
-      await dio.post(PublicApiEndPoints.resendOTP, data: {"email": email});
+      await dio.post(
+        PublicApiEndPoints.resendOTP,
+        data: {"email": email},
+        options: Options(extra: {"requiresAuth": false}),
+      );
     } on DioException catch (e) {
       throw Exception("Resend OTP failed: ${e.message}");
     } catch (e) {

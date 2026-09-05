@@ -16,14 +16,10 @@ class TeamListScreen extends StatefulWidget {
 }
 
 class _TeamListScreenState extends State<TeamListScreen> {
-  static const _serviceProviderId = '6a1e6abbb5759b02bac59cc1';
-
   @override
   void initState() {
     super.initState();
-    context.read<ProviderBloc>().add(
-      FetchTeamListEvent(serviceProviderId: _serviceProviderId),
-    );
+    context.read<ProviderBloc>().add(FetchTeamListEvent());
   }
 
   @override
@@ -123,9 +119,7 @@ class _TeamListScreenState extends State<TeamListScreen> {
                       SizedBox(height: 12.h),
                       TextButton(
                         onPressed: () => context.read<ProviderBloc>().add(
-                          FetchTeamListEvent(
-                            serviceProviderId: _serviceProviderId,
-                          ),
+                          FetchTeamListEvent(),
                         ),
                         child: const Text('Retry'),
                       ),

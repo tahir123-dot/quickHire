@@ -19,12 +19,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFF8F8F6),
-      appBar: AppBar(
-        backgroundColor: AppColors.whiteColor,
-        surfaceTintColor: Colors.transparent,
-        elevation: 0,
-        title: TopBarWidget(),
-      ),
+      appBar: AppBar(title: TopBarWidget()),
       body: SafeArea(
         child: ListView(
           physics: const BouncingScrollPhysics(),

@@ -66,6 +66,7 @@ class _ProfileViewScreenState extends State<ProfileViewScreen> {
                   ProviderTopBarWidget(
                     providerName: 'Tahir Rashid',
                     location: "Islamabad, Pakistan",
+                    
                   ),
 
                   SizedBox(height: 10),

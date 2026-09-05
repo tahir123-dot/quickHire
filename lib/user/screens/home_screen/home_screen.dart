@@ -6,20 +6,40 @@ import 'package:mobile/components/category/filter_category/category_section.dart
 import 'package:mobile/components/input_box/hero_section.dart';
 import 'package:mobile/components/service_offer/service_preview.dart';
 import 'package:mobile/components/top_bar_widget/top_bar_widget.dart';
+import 'package:mobile/core/injection/injection_container.dart';
 import 'package:mobile/core/themes/app_input_theme.dart';
 import 'package:mobile/user/bloc/blocimpl/category_bloc.dart';
+import 'package:mobile/user/bloc/blocimpl/provider_list_bloc.dart';
+import 'package:mobile/user/bloc/event/category_event.dart';
+import 'package:mobile/user/bloc/event/provider_list_event.dart';
 import 'package:mobile/user/bloc/state/category_state.dart';
+import 'package:mobile/user/bloc/state/provider_list_state.dart';
 
 import '../../../core/themes/colors.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends StatelessWidget {
+  // StatefulWidget se StatelessWidget kar diya, kyunke local state ab yahan nahi
   const HomeScreen({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  Widget build(BuildContext context) {
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<CategoryBloc>(
+          create: (_) => getIt<CategoryBloc>()..add(FetchCategoriesEvent()),
+        ),
+        BlocProvider<ProviderListBloc>(
+          create: (_) => getIt<ProviderListBloc>(),
+        ),
+      ],
+      child: const _HomeScreenContent(),
+    );
+  }
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenContent extends StatelessWidget {
+  const _HomeScreenContent();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,14 +55,11 @@ class _HomeScreenState extends State<HomeScreen> {
           children: [
             Column(
               children: [
-                //SizedBox(height: 13.h),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 16.w),
                   child: Column(
                     children: [
-                      // top bar
                       SizedBox(height: 13.h),
-                      // search bar
                       TextFormField(
                         decoration: AppInputTheme.searchBar(
                           hint: 'Search services ',
@@ -63,35 +80,51 @@ class _HomeScreenState extends State<HomeScreen> {
                     ],
                   ),
                 ),
-                // hero section bar ads
-                HeroSection(), //we use this component in future for ads and promotions
+                HeroSection(),
                 SizedBox(height: 28.h),
 
                 // service category
-                BlocBuilder<CategoryBloc, CategoryState>(
+                BlocConsumer<CategoryBloc, CategoryState>(
+                  listener: (context, state) {
+                    if (state is CategoryLoaded &&
+                        state.categories.isNotEmpty) {
+                      context.read<ProviderListBloc>().add(
+                        FetchProvidersHomeEvent(
+                          categoryId: state.categories[0].id,
+                        ),
+                      );
+                    }
+                  },
                   builder: (context, state) {
                     if (state is CategoryLoading) {
                       return Center(child: CircularProgressIndicator());
                     }
-
                     if (state is CategoryError) {
                       return Center(child: Text(state.message));
                     }
-
                     if (state is CategoryLoaded) {
-                      return CategorySection(
-                        categories: state.categories,
-                      ); // 👈 pass karo
+                      return CategorySection(categories: state.categories);
                     }
-
                     return SizedBox();
                   },
                 ),
-
                 SizedBox(height: 28.h),
 
                 // service Provider cards
-                ServicePreview(),
+                BlocBuilder<ProviderListBloc, ProviderListState>(
+                  builder: (context, state) {
+                    if (state is ProvidersListLoading) {
+                      return Center(child: CircularProgressIndicator());
+                    }
+                    if (state is ProvidersListError) {
+                      return Center(child: Text(state.message));
+                    }
+                    if (state is ProvidersListLoaded) {
+                      return ServicePreview(providers: state.providers);
+                    }
+                    return SizedBox();
+                  },
+                ),
               ],
             ),
           ],
