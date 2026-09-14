@@ -1,17 +1,38 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:mobile/core/injection/injection_container.dart';
 import 'package:mobile/core/themes/colors.dart';
+import 'package:mobile/provider/bloc/blocimp/provider_booking_bloc.dart';
+import 'package:mobile/provider/bloc/event/provider_booking_event.dart';
+import 'package:mobile/provider/bloc/state/provider_booking_state.dart';
 import 'package:mobile/provider/screens/provider_booking_screen/component/bookingcard.dart';
 
-class ProviderBookingScreen extends StatefulWidget {
+class ProviderBookingScreen extends StatelessWidget {
   const ProviderBookingScreen({super.key});
 
   @override
-  State<ProviderBookingScreen> createState() => _ProviderBookingScreenState();
+  Widget build(BuildContext context) {
+    return BlocProvider<ProviderBookingBloc>(
+      create: (_) =>
+          getIt<ProviderBookingBloc>()..add(FetchProviderBookingsEvent()),
+      child: const _ProviderBookingScreenContent(),
+    );
+  }
 }
 
-class _ProviderBookingScreenState extends State<ProviderBookingScreen> {
+class _ProviderBookingScreenContent extends StatefulWidget {
+  const _ProviderBookingScreenContent();
+
+  @override
+  State<_ProviderBookingScreenContent> createState() =>
+      _ProviderBookingScreenContentState();
+}
+
+class _ProviderBookingScreenContentState
+    extends State<_ProviderBookingScreenContent> {
   String selectedFilter = 'All';
+
   final List<String> filter = ['All', 'Confirmed', 'Pending', 'Done'];
 
   @override
@@ -38,35 +59,6 @@ class _ProviderBookingScreenState extends State<ProviderBookingScreen> {
                     color: AppColors.blackColor,
                   ),
                 ),
-                Container(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 14.w,
-                    vertical: 7.h,
-                  ),
-                  decoration: BoxDecoration(
-                    color: const Color(0xFFEEEDFE),
-                    borderRadius: BorderRadius.circular(50),
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      const Icon(
-                        Icons.calendar_today_outlined,
-                        size: 13,
-                        color: Color(0xFF534AB7),
-                      ),
-                      const SizedBox(width: 5),
-                      Text(
-                        'Today  6',
-                        style: TextStyle(
-                          fontSize: 12.sp,
-                          fontWeight: FontWeight.w600,
-                          color: const Color(0xFF534AB7),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
               ],
             ),
             bottom: PreferredSize(
@@ -80,8 +72,13 @@ class _ProviderBookingScreenState extends State<ProviderBookingScreen> {
                   child: Row(
                     children: filter.map((item) {
                       final isSelected = selectedFilter == item;
+
                       return GestureDetector(
-                        onTap: () => setState(() => selectedFilter = item),
+                        onTap: () {
+                          setState(() {
+                            selectedFilter = item;
+                          });
+                        },
                         child: AnimatedContainer(
                           duration: const Duration(milliseconds: 180),
                           margin: EdgeInsets.only(right: 8.w),
@@ -121,24 +118,145 @@ class _ProviderBookingScreenState extends State<ProviderBookingScreen> {
             ),
           ),
         ],
-        body: ListView.separated(
-          padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
-          physics: const BouncingScrollPhysics(),
-          itemCount: 4,
-          separatorBuilder: (_, __) => SizedBox(height: 12.h),
-          itemBuilder: (_, index) => const BookingCardR(
-            url: '',
-            name: 'Salman Ahmed',
-            location: 'Gulberg, Lahore',
-            dateAndday: 'Fri, 30 May 2025 Friday',
-            time: '10:00 AM',
-            duration: '45 min',
-            price: 800,
-            totalServices: 2,
-            services: ['Haircut', 'Shave'],
-            teamUrl: '',
-            teamName: 'Raza Bhai',
-            status: 'done',
+
+        body: BlocListener<ProviderBookingBloc, ProviderBookingState>(
+          listener: (context, state) {
+            if (state is ProviderBookingStatusUpdated) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text('Booking status updated successfully'),
+                ),
+              );
+            }
+
+            if (state is ProviderBookingStatusUpdateError) {
+              ScaffoldMessenger.of(
+                context,
+              ).showSnackBar(SnackBar(content: Text(state.message)));
+            }
+          },
+
+          child: RefreshIndicator(
+            onRefresh: () async {
+              context.read<ProviderBookingBloc>().add(
+                FetchProviderBookingsEvent(),
+              );
+              await Future.delayed(const Duration(milliseconds: 600));
+            },
+            child: BlocBuilder<ProviderBookingBloc, ProviderBookingState>(
+              builder: (context, state) {
+                if (state is ProviderBookingLoading) {
+                  return ListView(
+                    physics: const AlwaysScrollableScrollPhysics(),
+                    children: [
+                      SizedBox(height: 200.h),
+                      const Center(child: CircularProgressIndicator()),
+                    ],
+                  );
+                }
+
+                if (state is ProviderBookingError) {
+                  return ListView(
+                    physics: const AlwaysScrollableScrollPhysics(),
+                    children: [
+                      SizedBox(height: 200.h),
+                      Center(child: Text(state.message)),
+                    ],
+                  );
+                }
+
+                if (state is ProviderBookingEmpty) {
+                  return ListView(
+                    physics: const AlwaysScrollableScrollPhysics(),
+                    children: [
+                      SizedBox(height: 200.h),
+                      const Center(child: Text("No bookings yet")),
+                    ],
+                  );
+                }
+
+                if (state is ProviderBookingStatusUpdating) {
+                  return ListView(
+                    physics: const AlwaysScrollableScrollPhysics(),
+                    children: [
+                      SizedBox(height: 200.h),
+                      const Center(child: CircularProgressIndicator()),
+                    ],
+                  );
+                }
+
+                if (state is ProviderBookingLoaded) {
+                  final filteredBookings = selectedFilter == 'All'
+                      ? state.bookings
+                      : state.bookings
+                            .where(
+                              (b) =>
+                                  b.status.toLowerCase() ==
+                                  selectedFilter.toLowerCase(),
+                            )
+                            .toList();
+
+                  if (filteredBookings.isEmpty) {
+                    return ListView(
+                      physics: const AlwaysScrollableScrollPhysics(),
+                      children: [
+                        SizedBox(height: 200.h),
+                        const Center(
+                          child: Text("No bookings in this category"),
+                        ),
+                      ],
+                    );
+                  }
+
+                  return ListView.separated(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 16.w,
+                      vertical: 16.h,
+                    ),
+                    physics: const AlwaysScrollableScrollPhysics(),
+                    itemCount: filteredBookings.length,
+
+                    separatorBuilder: (_, _) => SizedBox(height: 12.h),
+
+                    itemBuilder: (_, index) {
+                      final booking = filteredBookings[index];
+
+                      return BookingCardR(
+                        booking: booking,
+                        onAccept: () {
+                          context.read<ProviderBookingBloc>().add(
+                            UpdateProviderBookingStatusEvent(
+                              bookingId: booking.id,
+                              status: "confirmed",
+                            ),
+                          );
+                        },
+
+                        onDecline: () {
+                          context.read<ProviderBookingBloc>().add(
+                            UpdateProviderBookingStatusEvent(
+                              bookingId: booking.id,
+                              status: "declined",
+                            ),
+                          );
+                        },
+
+                        onMarkDone: () {
+                          context.read<ProviderBookingBloc>().add(
+                            UpdateProviderBookingStatusEvent(
+                              bookingId: booking.id,
+                              status: "done",
+                            ),
+                          );
+                        },
+                      );
+                    },
+                  );
+                }
+
+                return const SizedBox();
+              },
+            ),
           ),
         ),
       ),

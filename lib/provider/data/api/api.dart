@@ -9,4 +9,6 @@ class ProviderApiEndPoints {
   static const team = "/provider/team";
   static const teamList = "/provider/team/list";
   static const availability = "/availability";
+  static const providerBooking = "/provider/bookings";
+  static const bookingStatus = "/provider/bookings";
 }

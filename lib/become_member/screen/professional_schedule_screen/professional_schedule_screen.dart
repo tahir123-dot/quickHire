@@ -12,7 +12,6 @@ class _ProfessionalScheduleScreenState
     extends State<ProfessionalScheduleScreen> {
   @override
   Widget build(BuildContext context) {
-    DateTime today = DateTime.now();
     return Scaffold(
       appBar: AppBar(title: const Text('Availability')),
       body: SafeArea(

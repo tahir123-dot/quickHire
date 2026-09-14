@@ -8,6 +8,7 @@ import 'package:mobile/provider/data/mapper/availability_mapper.dart';
 import 'package:mobile/provider/data/mapper/service_mapper.dart';
 import 'package:mobile/provider/data/mapper/sub_category_mapper.dart';
 import 'package:mobile/provider/data/mapper/team_member_mapper.dart';
+import 'package:mobile/provider/data/model/provider_booking_model.dart';
 import 'package:mobile/provider/data/repositories/service_provider_repository.dart';
 
 class ServiceProviderRepositoryImpl implements ServiceProviderRepository {
@@ -77,5 +78,17 @@ class ServiceProviderRepositoryImpl implements ServiceProviderRepository {
     final model = await dataSource.getAvailability();
     if (model == null) return null;
     return AvailabilityMapper.toEntity(model);
+  }
+
+  // get proivder booking
+  @override
+  Future<List<ProviderBookingModel>> getProviderBookings() {
+    return dataSource.getProviderBookings();
+  }
+
+  // update booking status
+  @override
+  Future<void> updateBookingStatus(String bookingId, String status) async {
+    return dataSource.updateBookingStatus(bookingId, status);
   }
 }

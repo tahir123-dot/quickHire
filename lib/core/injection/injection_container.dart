@@ -3,6 +3,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mobile/core/network/network.dart';
 import 'package:mobile/provider/bloc/blocimp/provider_bloc.dart';
+import 'package:mobile/provider/bloc/blocimp/provider_booking_bloc.dart';
 import 'package:mobile/provider/data/datasources/provider_data_sources.dart';
 import 'package:mobile/provider/data/repositories/service_provider_repository.dart';
 import 'package:mobile/provider/data/repositories/service_provider_repository_impl.dart';
@@ -11,8 +12,12 @@ import 'package:mobile/shared/data/datasources/auth_data_sources.dart';
 import 'package:mobile/shared/data/repositories/auth_repository.dart';
 import 'package:mobile/shared/data/repositories/auth_repository_impl.dart';
 import 'package:mobile/user/bloc/blocimpl/category_bloc.dart';
+import 'package:mobile/user/bloc/blocimpl/customer_booking_bloc.dart';
 import 'package:mobile/user/bloc/blocimpl/provider_list_bloc.dart';
+import 'package:mobile/user/bloc/blocimpl/provider_profile_bloc.dart';
 import 'package:mobile/user/data/datasources/user_data_sources.dart';
+import 'package:mobile/user/data/repositories/customer_bookings/customer_booking_repository.dart';
+import 'package:mobile/user/data/repositories/customer_bookings/customer_booking_repository_impl.dart';
 import 'package:mobile/user/data/repositories/main_categories_repository.dart';
 import 'package:mobile/user/data/repositories/main_categories_repository_impl.dart';
 import 'package:mobile/user/data/repositories/provider_list/provider_list_repository.dart';
@@ -90,6 +95,10 @@ void setup() {
     () => ProviderListBloc(getIt<ProviderListRepository>()),
   );
 
+  // bloc for provider profile
+  getIt.registerFactory<ProviderProfileViewBloc>(
+    () => ProviderProfileViewBloc(getIt<ProviderListRepository>()),
+  );
   // provider side registery
 
   // ProviderDataSources
@@ -105,5 +114,18 @@ void setup() {
   // Bloc
   getIt.registerFactory<ProviderBloc>(
     () => ProviderBloc(getIt<ServiceProviderRepository>()),
+  );
+
+  getIt.registerFactory<ProviderBookingBloc>(
+    () => ProviderBookingBloc(getIt<ServiceProviderRepository>()),
+  );
+
+  // custoemr booking injection
+  getIt.registerLazySingleton<CustomerBookingRepository>(
+    () => CustomerBookingRepositoryImpl(getIt<UserDataSources>()),
+  );
+
+  getIt.registerFactory<CustomerBookingBloc>(
+    () => CustomerBookingBloc(getIt<CustomerBookingRepository>()),
   );
 }

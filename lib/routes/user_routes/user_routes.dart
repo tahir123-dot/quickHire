@@ -75,11 +75,6 @@ class UserRoutes {
         ),
 
         GoRoute(
-          path: 'home/service-provider', // ✅ relative
-          builder: (context, state) => ProfileViewScreen(),
-        ),
-
-        GoRoute(
           path: 'booking/booking-detail', // ✅ relative
           builder: (context, state) => BookingDetailScreen(),
         ),
@@ -89,19 +84,29 @@ class UserRoutes {
         // profile open of provider
         GoRoute(
           path: 'providerProfile',
-          builder: (context, state) => ProfileViewScreen(),
+
+          builder: (context, state) {
+            final providerId = state.extra as String;
+            return ProfileViewScreen(providerId: providerId);
+          },
         ),
 
         // select professional
         GoRoute(
           path: 'teamSelect',
-          builder: (context, state) => SelectProfessional(),
+          builder: (context, state) {
+            final providerId = state.extra as String;
+            return SelectProfessional(providerId: providerId);
+          },
         ),
 
         // select date and time
         GoRoute(
           path: 'calendar',
-          builder: (context, state) => UserCalenderScreen(),
+          builder: (context, state) {
+            final ownerId = state.extra as String;
+            return UserCalenderScreen(ownerId: ownerId);
+          },
         ),
 
         // see booking Preview

@@ -8,6 +8,7 @@ import 'package:mobile/routes/app_routes.dart';
 import 'package:mobile/shared/bloc/blocimpl/authbloc.dart';
 import 'package:mobile/shared/bloc/blocimpl/rolecubit.dart';
 import 'package:mobile/shared/bloc/event/auth_event.dart';
+import 'package:mobile/user/bloc/blocimpl/booking_cubit.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -31,6 +32,7 @@ class MyApp extends StatelessWidget {
         ),
 
         BlocProvider<RoleCubit>(create: (_) => RoleCubit()),
+        BlocProvider<BookingCubit>(create: (_) => BookingCubit()),
         BlocProvider<ProviderBloc>(create: (_) => getIt<ProviderBloc>()),
       ],
 

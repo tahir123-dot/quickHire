@@ -8,6 +8,7 @@ import 'package:mobile/provider/bloc/event/provider_event.dart';
 import 'package:mobile/provider/bloc/state/provider_state.dart';
 import 'package:mobile/provider/data/dto/service_provider_dto.dart';
 import 'package:mobile/provider/data/entity/availability_entity.dart';
+import 'package:mobile/utils/time_formatter.dart';
 
 class AddAvailabilityScreen extends StatefulWidget {
   const AddAvailabilityScreen({super.key});
@@ -30,38 +31,14 @@ class _AddAvailabilityScreenState extends State<AddAvailabilityScreen> {
       for (int i = 0; i < days.length; i++) {
         days[i]["selected"] = availability.days.contains(days[i]["key"]);
       }
-      startTime = _to12Hour(availability.startTime);
-      endTime = _to12Hour(availability.endTime);
-      breakStartTime = _to12Hour(availability.breakStart ?? "");
-      breakEndTime = _to12Hour(availability.breakEnd ?? "");
+      startTime = TimeFormatter.to12Hour(availability.startTime);
+      endTime = TimeFormatter.to12Hour(availability.endTime);
+      breakStartTime = TimeFormatter.to12Hour(availability.breakStart ?? "");
+      breakEndTime = TimeFormatter.to12Hour(availability.breakEnd ?? "");
       selectedDurationIndex = durations.indexWhere(
         (d) => d["duration"] == availability.slotDuration.toString(),
       );
     });
-  }
-
-  String _to12Hour(String time24) {
-    if (time24.isEmpty) return "";
-    if (time24 == "00:00") return "";
-    final parts = time24.split(':');
-    int hour = int.parse(parts[0]);
-    final minute = parts[1];
-    final period = hour >= 12 ? 'PM' : 'AM';
-    if (hour > 12) hour -= 12;
-    if (hour == 0) hour = 12;
-    return '$hour:$minute $period';
-  }
-
-  String _to24Hour(String time12) {
-    if (time12.isEmpty) return "";
-    final parts = time12.split(' ');
-    final timeParts = parts[0].split(':');
-    int hour = int.parse(timeParts[0]);
-    final minute = timeParts[1];
-    final period = parts[1];
-    if (period == 'PM' && hour != 12) hour += 12;
-    if (period == 'AM' && hour == 12) hour = 0;
-    return '${hour.toString().padLeft(2, '0')}:$minute';
   }
 
   // ===================== DAYS =====================
@@ -153,11 +130,15 @@ class _AddAvailabilityScreenState extends State<AddAvailabilityScreen> {
 
     final dto = AddAvailabilityDto(
       days: selectedDays,
-      startTime: _to24Hour(startTime),
-      endTime: _to24Hour(endTime),
+      startTime: TimeFormatter.to24Hour(startTime),
+      endTime: TimeFormatter.to24Hour(endTime),
       slotDuration: int.parse(durations[selectedDurationIndex]["duration"]!),
-      breakStart: breakStartTime.isEmpty ? null : _to24Hour(breakStartTime),
-      breakEnd: breakEndTime.isEmpty ? null : _to24Hour(breakEndTime),
+      breakStart: breakStartTime.isEmpty
+          ? null
+          : TimeFormatter.to24Hour(breakStartTime),
+      breakEnd: breakEndTime.isEmpty
+          ? null
+          : TimeFormatter.to24Hour(breakEndTime),
     );
 
     context.read<ProviderBloc>().add(AddAvailabilityEvent(dto: dto));

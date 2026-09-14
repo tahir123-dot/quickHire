@@ -3,6 +3,7 @@
 import 'package:dio/dio.dart';
 import 'package:mobile/provider/data/api/api.dart';
 import 'package:mobile/provider/data/model/availability_model.dart';
+import 'package:mobile/provider/data/model/provider_booking_model.dart';
 import 'package:mobile/provider/data/model/service_model.dart';
 import 'package:mobile/provider/data/model/sub_category_model.dart';
 import 'package:mobile/provider/data/model/team_member_model.dart';
@@ -171,6 +172,33 @@ class ProviderDataSources {
       return AvailabilityModel.fromJson(response.data['data']);
     } on DioException catch (e) {
       throw Exception("Failed to fetch availability: ${e.message}");
+    } catch (e) {
+      throw Exception("Unexpected error: $e");
+    }
+  }
+
+  // fetch all bookings
+  Future<List<ProviderBookingModel>> getProviderBookings() async {
+    try {
+      final response = await dio.get(ProviderApiEndPoints.providerBooking);
+      final List<dynamic> data = response.data['data'];
+      return data.map((json) => ProviderBookingModel.fromJson(json)).toList();
+    } on DioException catch (e) {
+      throw Exception("Failed to fetch bookings: ${e.message}");
+    } catch (e) {
+      throw Exception("Unexpected error: $e");
+    }
+  }
+
+  // update booking status
+  Future<void> updateBookingStatus(String bookingId, String status) async {
+    try {
+      await dio.patch(
+        '${ProviderApiEndPoints.bookingStatus}/$bookingId/status',
+        data: {'status': status},
+      );
+    } on DioException catch (e) {
+      throw Exception("Failed to update booking: ${e.message}");
     } catch (e) {
       throw Exception("Unexpected error: $e");
     }

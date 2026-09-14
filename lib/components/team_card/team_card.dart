@@ -43,7 +43,7 @@ class _TeamCardState extends State<TeamCard> {
       child: ListTile(
         contentPadding: EdgeInsets.zero,
 
-        // ✅ purana CircleAvatar - ab initial letter dikhega
+        // purana CircleAvatar - ab initial letter dikhega
         leading: CircleAvatar(
           radius: 25.r,
           backgroundColor: AppColors.blackColor,

@@ -5,7 +5,7 @@ class TeamMemberEntity {
   final String ownerType; // "ServiceProvider" ya "Member"
   final String name;
 
-  // ✅ helper - owner hai ya nahi
+  //  helper - owner hai ya nahi
   bool get isOwner => ownerType == 'ServiceProvider';
 
   TeamMemberEntity({

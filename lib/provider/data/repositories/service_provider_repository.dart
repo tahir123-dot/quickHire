@@ -3,6 +3,7 @@ import 'package:mobile/provider/data/entity/availability_entity.dart';
 import 'package:mobile/provider/data/entity/service_entity.dart';
 import 'package:mobile/provider/data/entity/sub_category_entity.dart';
 import 'package:mobile/provider/data/entity/team_member_entity.dart';
+import 'package:mobile/provider/data/model/provider_booking_model.dart';
 
 abstract class ServiceProviderRepository {
   Future<void> createProviderProfile(InitServiceProviderDto dto);
@@ -16,4 +17,7 @@ abstract class ServiceProviderRepository {
   Future<void> deleteTeamMember(String teamMemberId);
   Future<void> addAvailability(AddAvailabilityDto dto);
   Future<AvailabilityEntity?> getAvailability();
+
+  Future<List<ProviderBookingModel>> getProviderBookings();
+  Future<void> updateBookingStatus(String bookingId, String status);
 }
