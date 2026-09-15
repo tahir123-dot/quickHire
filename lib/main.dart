@@ -9,13 +9,20 @@ import 'package:mobile/shared/bloc/blocimpl/authbloc.dart';
 import 'package:mobile/shared/bloc/blocimpl/rolecubit.dart';
 import 'package:mobile/shared/bloc/event/auth_event.dart';
 import 'package:mobile/user/bloc/blocimpl/booking_cubit.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:mobile/firebase_options.dart';
+import 'package:mobile/core/services/local_notification_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  final localNotificationService = LocalNotificationService();
+  await localNotificationService.init();
+
   await dotenv.load(fileName: "assets/.env");
 
-  setup(); // GetIt init
+  setup();
 
   runApp(const MyApp());
 }
@@ -32,15 +39,15 @@ class MyApp extends StatelessWidget {
         ),
 
         BlocProvider<RoleCubit>(create: (_) => RoleCubit()),
+
         BlocProvider<BookingCubit>(create: (_) => BookingCubit()),
+
         BlocProvider<ProviderBloc>(create: (_) => getIt<ProviderBloc>()),
       ],
-
       child: ScreenUtilInit(
         designSize: const Size(402, 874),
         minTextAdapt: true,
         splitScreenMode: true,
-
         builder: (context, child) {
           final appRoutes = AppRoutes(authBloc: context.read<AuthBloc>());
 

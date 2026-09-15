@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mobile/core/services/fcm_service.dart';
 import 'package:mobile/routes/auth/role_enum.dart';
 import 'package:mobile/shared/bloc/event/auth_event.dart';
 import 'package:mobile/shared/bloc/state/auth_state.dart';
@@ -11,8 +12,10 @@ import 'package:mobile/utils/storage.dart';
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final AuthRepository authRepository;
   final IStorageService storage;
+  final FcmService fcmService;
 
-  AuthBloc(this.authRepository, this.storage) : super(AuthInitial()) {
+  AuthBloc(this.authRepository, this.storage, this.fcmService)
+    : super(AuthInitial()) {
     on<CheckAuthEvent>(_checkAuthEvent);
 
     on<LoginEvent>(_loginEvent);
@@ -62,6 +65,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       final token = response.response.token;
 
       await storage.saveToken(token);
+      fcmService.initAndSyncToken();
 
       final roleString = await storage.getUserRole();
 
@@ -115,6 +119,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       print("Token received: $token");
 
       await storage.saveToken(token);
+      fcmService.initAndSyncToken();
 
       final roleString = await storage.getUserRole();
 

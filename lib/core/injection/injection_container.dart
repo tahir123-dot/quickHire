@@ -2,6 +2,8 @@ import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mobile/core/network/network.dart';
+import 'package:mobile/core/services/fcm_service.dart';
+import 'package:mobile/core/services/local_notification_service.dart';
 import 'package:mobile/provider/bloc/blocimp/provider_bloc.dart';
 import 'package:mobile/provider/bloc/blocimp/provider_booking_bloc.dart';
 import 'package:mobile/provider/data/datasources/provider_data_sources.dart';
@@ -45,6 +47,14 @@ void setup() {
     () => DioClient.getDio(getIt<IStorageService>()),
   );
 
+  getIt.registerLazySingleton<LocalNotificationService>(
+    () => LocalNotificationService(),
+  );
+
+  getIt.registerLazySingleton<FcmService>(
+    () => FcmService(getIt<Dio>(), getIt<LocalNotificationService>()),
+  );
+
   // =========================
   // 3. DATA SOURCES
   // =========================
@@ -64,7 +74,11 @@ void setup() {
   // 5. BLOCS
   // =========================
   getIt.registerFactory<AuthBloc>(
-    () => AuthBloc(getIt<AuthRepository>(), getIt<IStorageService>()),
+    () => AuthBloc(
+      getIt<AuthRepository>(),
+      getIt<IStorageService>(),
+      getIt<FcmService>(),
+    ),
   );
 
   // user side registery

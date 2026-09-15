@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "639294158857",
+    "project_id": "quickhire-bd102",
+    "storage_bucket": "quickhire-bd102.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:639294158857:android:95bf325c28564589c2a0d8",
+        "android_client_info": {
+          "package_name": "com.example.mobile"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAR03gBrFfgKVoGPqOf5lro62TrsJ8_WGo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
