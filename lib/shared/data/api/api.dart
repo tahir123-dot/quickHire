@@ -9,3 +9,9 @@ class PublicApiEndPoints {
   static const teamCreate = "/team-create";
   static const switchRole = "/auth/switch-role";
 }
+
+class LocationApiEndPoints {
+  static const addLocation = "/location/add";
+  static const updateLocation = "/location/update";
+  static const getLocation = "/location/get";
+}

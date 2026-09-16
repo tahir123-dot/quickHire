@@ -73,31 +73,29 @@ class ServicePreview extends StatelessWidget {
                                   ),
                                 ],
                               ),
-                              if (provider.location != null &&
-                                  provider.location!.isNotEmpty) ...[
-                                SizedBox(height: 2.h),
-                                Row(
-                                  children: [
-                                    Icon(
-                                      Icons.location_on_outlined,
-                                      size: 13.r,
-                                      color: AppColors.lightgreyColor,
-                                    ),
-                                    SizedBox(width: 3.w),
-                                    Expanded(
-                                      child: Text(
-                                        provider.location!,
-                                        style: TextStyle(
-                                          fontSize: 12.sp,
-                                          color: AppColors.lightgreyColor,
-                                        ),
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis,
+
+                              SizedBox(height: 2.h),
+                              Row(
+                                children: [
+                                  Icon(
+                                    Icons.location_on_outlined,
+                                    size: 13.r,
+                                    color: AppColors.lightgreyColor,
+                                  ),
+                                  SizedBox(width: 3.w),
+                                  Expanded(
+                                    child: Text(
+                                      provider.distance,
+                                      style: TextStyle(
+                                        fontSize: 12.sp,
+                                        color: AppColors.lightgreyColor,
                                       ),
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
                                     ),
-                                  ],
-                                ),
-                              ],
+                                  ),
+                                ],
+                              ),
                             ],
                           ),
                         ),

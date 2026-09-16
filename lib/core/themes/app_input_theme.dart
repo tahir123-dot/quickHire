@@ -62,23 +62,45 @@ class AppInputTheme {
   }) {
     return InputDecoration(
       hintText: hint,
-      hintStyle: TextStyle(color: AppColors.inputHintPrimary, fontSize: 15.sp),
+
+      hintStyle: TextStyle(
+        color: AppColors.inputHintPrimary,
+        fontSize: 15.sp,
+        fontWeight: FontWeight.w400,
+      ),
+
       filled: true,
       fillColor: AppColors.searchBarBackground,
-      suffixIcon: icon,
+
+      // Right side icon
+      suffixIcon: Padding(
+        padding: EdgeInsets.only(right: 6.w),
+        child: icon,
+      ),
+
+      // Normal
       border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(16.r),
-        borderSide: BorderSide(color: AppColors.searchBarBackground),
+        borderRadius: BorderRadius.circular(14.r),
+        borderSide: BorderSide.none,
       ),
+
+      // When not focused
       enabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(16.r),
-        borderSide: BorderSide(color: AppColors.searchBarBackground),
+        borderRadius: BorderRadius.circular(14.r),
+        borderSide: BorderSide.none,
       ),
+
+      // When focused
       focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(16.r),
+        borderRadius: BorderRadius.circular(14.r),
         borderSide: BorderSide(color: AppColors.searchBarBorder, width: 1),
       ),
-      contentPadding: EdgeInsets.symmetric(vertical: 3.h, horizontal: 14.w),
+
+      // Internal spacing
+      contentPadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 13.h),
+
+      // Prevent excessive height from suffix icon
+      isDense: true,
     );
   }
 }

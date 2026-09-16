@@ -53,8 +53,8 @@ class _UserCalenderScreenContentState
   DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay;
 
-  int? selectedSlotIndex; // 👈 UI highlight ke liye
-  String? selectedSlotValue; // 👈 asal value jo BookingCubit mein jayegi
+  int? selectedSlotIndex;
+  String? selectedSlotValue;
 
   @override
   Widget build(BuildContext context) {
@@ -86,8 +86,7 @@ class _UserCalenderScreenContentState
                   setState(() {
                     _selectedDay = newSelectedDay;
                     _focusedDay = newFocusedDay;
-                    selectedSlotIndex =
-                        null; // 👈 naya din select hote hi purani slot-selection reset
+                    selectedSlotIndex = null;
                     selectedSlotValue = null;
                   });
 

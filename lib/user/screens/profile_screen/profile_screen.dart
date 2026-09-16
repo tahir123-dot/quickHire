@@ -34,9 +34,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
       appBar: AppBar(
         backgroundColor: AppColors.whiteColor,
         surfaceTintColor: Colors.transparent,
-        elevation: 2, // 👈 yahan se shadow ayega
-        shadowColor: AppColors.searchBarBackground,
-        title: TopBarIconWithCenterText(pageName: "Profile"),
+
+        title: Text("Profile"),
       ),
       body: SafeArea(
         child: ListView(

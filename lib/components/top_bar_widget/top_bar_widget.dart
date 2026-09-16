@@ -19,10 +19,12 @@ class TopBarWidget extends StatelessWidget {
         Row(
           children: [
             CircleAvatar(
-              radius: 25.r,
-              backgroundImage: AssetImage("assets/images/user.png"),
+              radius: 21.r,
+              backgroundImage: const AssetImage("assets/images/user.png"),
             ),
-            SizedBox(width: 10),
+
+            SizedBox(width: 10.w),
+
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -31,35 +33,41 @@ class TopBarWidget extends StatelessWidget {
                 Text(
                   'Hi, Tahir',
                   style: TextStyle(
-                    fontSize: 19.sp,
-                    fontWeight: FontWeight.w400,
+                    fontSize: 15.sp,
+                    fontWeight: FontWeight.w500,
                   ),
                 ),
               ],
             ),
           ],
         ),
+
         Row(
+          mainAxisSize: MainAxisSize.min,
           children: [
-            InkWell(
-              child: SvgPicture.asset(
-                "assets/icons/notification.svg",
-                width: 29.w,
-                height: 27.h,
+            IconButton(
+              padding: EdgeInsets.zero,
+              constraints: const BoxConstraints(),
+              visualDensity: VisualDensity.compact,
+              icon: Icon(
+                Icons.notifications_outlined,
+                size: 24.sp,
+                color: Colors.grey.shade700,
               ),
-              onTap: () {
+              onPressed: () {
                 context.push(SharedRoutesConstant.notificationScreen);
               },
             ),
-            SizedBox(width: 12),
-            InkWell(
-              child: SvgPicture.asset(
-                "assets/icons/setting.svg",
-                width: 32.w,
-                height: 32.h,
+            IconButton(
+              padding: EdgeInsets.zero,
+              constraints: const BoxConstraints(),
+              visualDensity: VisualDensity.compact,
+              icon: Icon(
+                Icons.settings_outlined,
+                size: 24.sp,
+                color: Colors.grey.shade700,
               ),
-
-              onTap: () {
+              onPressed: () {
                 context.push(SharedRoutesConstant.settingScreen);
               },
             ),

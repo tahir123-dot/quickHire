@@ -10,9 +10,13 @@ import 'package:mobile/provider/data/datasources/provider_data_sources.dart';
 import 'package:mobile/provider/data/repositories/service_provider_repository.dart';
 import 'package:mobile/provider/data/repositories/service_provider_repository_impl.dart';
 import 'package:mobile/shared/bloc/blocimpl/authbloc.dart';
+import 'package:mobile/shared/bloc/blocimpl/location_bloc.dart';
 import 'package:mobile/shared/data/datasources/auth_data_sources.dart';
+import 'package:mobile/shared/data/datasources/location_remote_datasource.dart';
 import 'package:mobile/shared/data/repositories/auth_repository.dart';
 import 'package:mobile/shared/data/repositories/auth_repository_impl.dart';
+import 'package:mobile/shared/data/repositories/location/location_repository.dart';
+import 'package:mobile/shared/data/repositories/location/location_repository_impl.dart';
 import 'package:mobile/user/bloc/blocimpl/category_bloc.dart';
 import 'package:mobile/user/bloc/blocimpl/customer_booking_bloc.dart';
 import 'package:mobile/user/bloc/blocimpl/provider_list_bloc.dart';
@@ -141,5 +145,20 @@ void setup() {
 
   getIt.registerFactory<CustomerBookingBloc>(
     () => CustomerBookingBloc(getIt<CustomerBookingRepository>()),
+  );
+
+  // location
+  // injection_container.dart mein (jo bhi tumhara GetIt setup function hai)
+
+  getIt.registerLazySingleton<LocationDataSources>(
+    () => LocationDataSourcesImpl(getIt<Dio>()),
+  );
+
+  getIt.registerLazySingleton<LocationRepository>(
+    () => LocationRepositoryImpl(getIt<LocationDataSources>()),
+  );
+
+  getIt.registerFactory<LocationBloc>(
+    () => LocationBloc(getIt<LocationRepository>()),
   );
 }

@@ -1,11 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mobile/components/top_bar_widget/top_bar_widget.dart';
-import 'package:mobile/core/themes/colors.dart';
-import 'package:mobile/provider/screens/dashboard_screen/component/bookingbarchart.dart';
-import 'package:mobile/provider/screens/dashboard_screen/component/fakedata/bookingbardata.dart';
-import 'package:mobile/provider/screens/dashboard_screen/component/statcard.dart';
-import 'package:mobile/provider/screens/dashboard_screen/component/upcoming.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
@@ -18,143 +13,307 @@ class _DashboardScreenState extends State<DashboardScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF8F8F6),
-      appBar: AppBar(title: TopBarWidget()),
+      backgroundColor: const Color(0xFFFFFFFF),
       body: SafeArea(
         child: ListView(
           physics: const BouncingScrollPhysics(),
-          padding: EdgeInsets.symmetric(horizontal: 16.w),
+          padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
           children: [
-            SizedBox(height: 20.h),
-
-            // ─── Header ───
-            _sectionHeader(title: 'Today\'s Overview', subtitle: _todayDate()),
-            SizedBox(height: 14.h),
-
-            // ─── Stat Cards ───
-            GridView.count(
-              crossAxisCount: 2,
-              crossAxisSpacing: 10,
-              mainAxisSpacing: 10,
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              childAspectRatio: 1.35,
-              children: const [
-                StatCard(
-                  icon: Icons.calendar_today_outlined,
-                  title: 'Bookings',
-                  value: '6',
-                  subtitle: '+12 from yesterday',
-                ),
-                StatCard(
-                  icon: Icons.currency_rupee_outlined,
-                  title: 'Earnings',
-                  value: 'Rs 60,000',
-                  subtitle: '+12 from yesterday',
-                ),
-                StatCard(
-                  icon: Icons.remove_red_eye_outlined,
-                  title: 'Profile Views',
-                  value: '128',
-                  subtitle: 'This week',
-                ),
-                StatCard(
-                  icon: Icons.star_outline,
-                  title: 'Rating',
-                  value: '4.7',
-                  subtitle: '48 reviews',
-                  iconColor: Color(0xFFBA7517),
-                ),
-              ],
-            ),
-
+            TopBarWidget(),
+            SizedBox(height: 16.h),
+            const _EarningsCard(),
             SizedBox(height: 24.h),
-
-            // ─── Chart Section ───
-            _sectionHeader(
-              title: 'Weekly Bookings',
-              subtitle: 'This week\'s booking trend',
+            Text(
+              "This week's bookings",
+              style: TextStyle(fontSize: 15.sp, fontWeight: FontWeight.w500),
+            ),
+            SizedBox(height: 4.h),
+            Text(
+              "Up 12% from last week",
+              style: TextStyle(fontSize: 12.sp, color: Colors.grey.shade600),
             ),
             SizedBox(height: 12.h),
-            Container(
-              decoration: BoxDecoration(
-                color: AppColors.whiteColor,
-                borderRadius: BorderRadius.circular(14.r),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withValues(alpha: 0.04),
-                    blurRadius: 10,
-                    offset: const Offset(0, 2),
-                  ),
-                ],
-              ),
-              padding: EdgeInsets.all(14.r),
-              child: BookingBarChart(data: weeklyBookings, highlightIndex: 2),
-            ),
-
+            const _WeeklyBarChart(),
             SizedBox(height: 24.h),
-
-            // ─── Upcoming Bookings ───
-            _sectionHeader(
-              title: 'Upcoming Bookings',
-              subtitle: 'Your next appointments',
+            Text(
+              "Upcoming bookings",
+              style: TextStyle(fontSize: 15.sp, fontWeight: FontWeight.w500),
             ),
             SizedBox(height: 12.h),
-
-            UpComingBooking(),
-
+            const _BookingRow(
+              initials: 'SR',
+              name: 'Sara Raza',
+              detail: 'Switchboard repair, F-10',
+              time: '4:30 PM',
+              status: 'Confirmed',
+              isConfirmed: true,
+            ),
+            SizedBox(height: 10.h),
+            const _BookingRow(
+              initials: 'BA',
+              name: 'Bilal Ahmed',
+              detail: 'Wiring check, G-9 · tomorrow',
+              time: '11:00 AM',
+              status: 'Pending',
+              isConfirmed: false,
+            ),
+            SizedBox(height: 10.h),
+            const _BookingRow(
+              initials: 'HM',
+              name: 'Hina Malik',
+              detail: 'Fan installation, E-11 · tomorrow',
+              time: '3:00 PM',
+              status: 'Confirmed',
+              isConfirmed: true,
+            ),
             SizedBox(height: 24.h),
           ],
         ),
       ),
     );
   }
+}
 
-  // ─── Helpers ───
+// ─── Earnings hero card ───
 
-  String _todayDate() {
-    final now = DateTime.now();
-    const months = [
-      'Jan',
-      'Feb',
-      'Mar',
-      'Apr',
-      'May',
-      'Jun',
-      'Jul',
-      'Aug',
-      'Sep',
-      'Oct',
-      'Nov',
-      'Dec',
-    ];
-    const weekdays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-    return '${weekdays[now.weekday - 1]}, ${now.day} ${months[now.month - 1]} ${now.year}';
+class _EarningsCard extends StatelessWidget {
+  const _EarningsCard();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      padding: EdgeInsets.all(18.r),
+      decoration: BoxDecoration(
+        color: const Color(0xFFEEEDFE), // purple-50
+        borderRadius: BorderRadius.circular(16.r),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            "Today's earnings",
+            style: TextStyle(fontSize: 13.sp, color: const Color(0xFF534AB7)),
+          ),
+          SizedBox(height: 6.h),
+          Text(
+            'Rs 60,000',
+            style: TextStyle(
+              fontSize: 32.sp,
+              fontWeight: FontWeight.w500,
+              color: const Color(0xFF26215C),
+            ),
+          ),
+          SizedBox(height: 14.h),
+          Row(
+            children: [
+              _HeroStat(value: '6', label: 'Bookings'),
+              SizedBox(width: 24.w),
+              _HeroStat(value: '4.7 ★', label: '48 reviews'),
+              SizedBox(width: 24.w),
+              _HeroStat(value: '92%', label: 'Accept rate'),
+            ],
+          ),
+        ],
+      ),
+    );
   }
+}
 
-  Widget _sectionHeader({required String title, required String subtitle}) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.end,
+class _HeroStat extends StatelessWidget {
+  final String value;
+  final String label;
+
+  const _HeroStat({required this.value, required this.label});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              title,
-              style: TextStyle(
-                fontSize: 17.sp,
-                fontWeight: FontWeight.w700,
-                color: AppColors.blackColor,
-              ),
-            ),
-            SizedBox(height: 2.h),
-            Text(
-              subtitle,
-              style: TextStyle(fontSize: 12.sp, color: Colors.grey.shade500),
-            ),
-          ],
+        Text(
+          value,
+          style: TextStyle(
+            fontSize: 17.sp,
+            fontWeight: FontWeight.w500,
+            color: const Color(0xFF26215C),
+          ),
+        ),
+        SizedBox(height: 2.h),
+        Text(
+          label,
+          style: TextStyle(fontSize: 12.sp, color: const Color(0xFF534AB7)),
         ),
       ],
+    );
+  }
+}
+
+// ─── Weekly bar chart ───
+
+class _WeeklyBarChart extends StatelessWidget {
+  const _WeeklyBarChart();
+
+  // Sun..Sat heights as a fraction of max height, highlighted day = Wed
+  static const List<double> _heights = [
+    0.26,
+    0.48,
+    1.0,
+    0.38,
+    0.60,
+    0.45,
+    0.20,
+  ];
+  static const List<String> _labels = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
+  static const int _highlightIndex = 2;
+
+  @override
+  Widget build(BuildContext context) {
+    final double chartHeight = 80.h;
+    // Extra space reserved below the bars for the gap + label text.
+    // Kept generous (and label line-height pinned to 1.0) so rounding
+    // differences across devices never overflow the column by a pixel.
+    final double labelAreaHeight = 26.h;
+
+    return SizedBox(
+      height: chartHeight + labelAreaHeight,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: List.generate(_heights.length, (i) {
+          final bool active = i == _highlightIndex;
+          return Expanded(
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 4.w),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Container(
+                    height: chartHeight * _heights[i],
+                    decoration: BoxDecoration(
+                      color: active
+                          ? const Color(0xFF7F77DD)
+                          : const Color(0xFFCECBF6),
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(5.r),
+                        topRight: Radius.circular(5.r),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 4.h),
+                  Text(
+                    _labels[i],
+                    style: TextStyle(
+                      fontSize: 10.sp,
+                      height: 1.0,
+                      fontWeight: active ? FontWeight.w500 : FontWeight.w400,
+                      color: active
+                          ? const Color(0xFF534AB7)
+                          : Colors.grey.shade500,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        }),
+      ),
+    );
+  }
+}
+
+// ─── Booking row ───
+
+class _BookingRow extends StatelessWidget {
+  final String initials;
+  final String name;
+  final String detail;
+  final String time;
+  final String status;
+  final bool isConfirmed;
+
+  const _BookingRow({
+    required this.initials,
+    required this.name,
+    required this.detail,
+    required this.time,
+    required this.status,
+    required this.isConfirmed,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final Color bg = isConfirmed
+        ? const Color(0xFFEEEDFE)
+        : const Color(0xFFFAECE7);
+    final Color fg = isConfirmed
+        ? const Color(0xFF3C3489)
+        : const Color(0xFF712B13);
+    final Color statusColor = fg;
+
+    return Container(
+      padding: EdgeInsets.all(12.r),
+      decoration: BoxDecoration(
+        color: const Color(0xFFF5F5F5), // light gray surface
+        borderRadius: BorderRadius.circular(12.r),
+      ),
+      child: Row(
+        children: [
+          CircleAvatar(
+            radius: 20.r,
+            backgroundColor: bg,
+            child: Text(
+              initials,
+              style: TextStyle(
+                color: fg,
+                fontWeight: FontWeight.w500,
+                fontSize: 13.sp,
+              ),
+            ),
+          ),
+          SizedBox(width: 12.w),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  name,
+                  style: TextStyle(
+                    fontSize: 14.sp,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                SizedBox(height: 2.h),
+                Text(
+                  detail,
+                  style: TextStyle(
+                    fontSize: 12.sp,
+                    color: Colors.grey.shade600,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Text(
+                time,
+                style: TextStyle(fontSize: 13.sp, fontWeight: FontWeight.w500),
+              ),
+              SizedBox(height: 2.h),
+              Text(
+                status,
+                style: TextStyle(
+                  fontSize: 11.sp,
+                  fontWeight: isConfirmed ? FontWeight.w500 : FontWeight.w400,
+                  color: statusColor,
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }

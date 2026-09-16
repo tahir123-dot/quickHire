@@ -1,0 +1,1 @@
+enum LocationOwnerType { ServiceProvider, Customer }
