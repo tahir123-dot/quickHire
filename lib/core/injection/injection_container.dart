@@ -6,17 +6,25 @@ import 'package:mobile/core/services/fcm_service.dart';
 import 'package:mobile/core/services/local_notification_service.dart';
 import 'package:mobile/provider/bloc/blocimp/provider_bloc.dart';
 import 'package:mobile/provider/bloc/blocimp/provider_booking_bloc.dart';
+import 'package:mobile/provider/bloc/blocimp/provider_dashboard_bloc.dart';
+import 'package:mobile/provider/data/datasources/provider_dashboard_datasource.dart';
 import 'package:mobile/provider/data/datasources/provider_data_sources.dart';
+import 'package:mobile/provider/data/repositories/provider_dashboard_repository.dart';
+import 'package:mobile/provider/data/repositories/provider_dashboard_repository_impl.dart';
 import 'package:mobile/provider/data/repositories/service_provider_repository.dart';
 import 'package:mobile/provider/data/repositories/service_provider_repository_impl.dart';
 import 'package:mobile/shared/bloc/blocimpl/authbloc.dart';
 import 'package:mobile/shared/bloc/blocimpl/location_bloc.dart';
+import 'package:mobile/shared/bloc/blocimpl/notification_bloc.dart';
 import 'package:mobile/shared/data/datasources/auth_data_sources.dart';
 import 'package:mobile/shared/data/datasources/location_remote_datasource.dart';
+import 'package:mobile/shared/data/datasources/notification_datasource.dart';
 import 'package:mobile/shared/data/repositories/auth_repository.dart';
 import 'package:mobile/shared/data/repositories/auth_repository_impl.dart';
 import 'package:mobile/shared/data/repositories/location/location_repository.dart';
 import 'package:mobile/shared/data/repositories/location/location_repository_impl.dart';
+import 'package:mobile/shared/data/repositories/notification/notification_repository.dart';
+import 'package:mobile/shared/data/repositories/notification/notification_repository_impl.dart';
 import 'package:mobile/user/bloc/blocimpl/category_bloc.dart';
 import 'package:mobile/user/bloc/blocimpl/customer_booking_bloc.dart';
 import 'package:mobile/user/bloc/blocimpl/provider_list_bloc.dart';
@@ -160,5 +168,32 @@ void setup() {
 
   getIt.registerFactory<LocationBloc>(
     () => LocationBloc(getIt<LocationRepository>()),
+  );
+
+  // proivder dashbaord
+  getIt.registerLazySingleton<ProviderDashboardDataSource>(
+    () => ProviderDashboardDataSourceImpl(dio: getIt<Dio>()),
+  );
+
+  getIt.registerLazySingleton<ProviderDashboardRepository>(
+    () => ProviderDashboardRepositoryImpl(
+      dataSource: getIt<ProviderDashboardDataSource>(),
+    ),
+  );
+
+  getIt.registerFactory<ProviderDashboardBloc>(
+    () =>
+        ProviderDashboardBloc(repository: getIt<ProviderDashboardRepository>()),
+  );
+
+  // notification
+  getIt.registerLazySingleton<NotificationDataSources>(
+    () => NotificationDataSourcesImpl(getIt<Dio>()),
+  );
+  getIt.registerLazySingleton<NotificationRepository>(
+    () => NotificationRepositoryImpl(getIt<NotificationDataSources>()),
+  );
+  getIt.registerFactory<NotificationBloc>(
+    () => NotificationBloc(getIt<NotificationRepository>()),
   );
 }

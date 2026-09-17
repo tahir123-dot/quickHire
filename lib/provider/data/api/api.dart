@@ -11,4 +11,5 @@ class ProviderApiEndPoints {
   static const availability = "/availability";
   static const providerBooking = "/provider/bookings";
   static const bookingStatus = "/provider/bookings";
+  static const providerDashboard = "/provider/my/dashboard";
 }

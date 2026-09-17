@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:mobile/core/injection/injection_container.dart';
 import 'package:mobile/export_screen/screen_exports.dart';
+import 'package:mobile/provider/bloc/blocimp/provider_dashboard_bloc.dart';
 import 'package:mobile/routes/provider_routes/provider_routes_constants.dart';
 
 class ProviderRoutes {
@@ -25,7 +28,10 @@ class ProviderRoutes {
               routes: [
                 GoRoute(
                   path: ProviderRoutesConstants.dashboard,
-                  builder: (context, state) => DashboardScreen(),
+                  builder: (context, state) => BlocProvider(
+                    create: (_) => getIt<ProviderDashboardBloc>(),
+                    child: DashboardScreen(),
+                  ),
                 ),
               ],
             ),

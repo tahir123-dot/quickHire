@@ -15,3 +15,7 @@ class LocationApiEndPoints {
   static const updateLocation = "/location/update";
   static const getLocation = "/location/get";
 }
+
+class NotficationApiEndPoints {
+  static const fetchlLocation = "/my/notifications";
+}

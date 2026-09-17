@@ -122,7 +122,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
               SizedBox(height: 55.h),
 
-              // 🔽 SIRF YE BUTTON BlocConsumer ke andar hai — chota scope
+              //  SIRF YE BUTTON BlocConsumer ke andar hai — chota scope
               BlocConsumer<AuthBloc, AuthState>(
                 listenWhen: (previous, current) {
                   // sirf error pe listener chale
